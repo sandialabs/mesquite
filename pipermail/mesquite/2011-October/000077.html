@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] mesquite compilation problem
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20mesquite%20compilation%20problem&In-Reply-To=%3C4EA08C97.3050803%404raccoons.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000078.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] mesquite compilation problem</H1>
+    <B>Wayne Christopher</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20mesquite%20compilation%20problem&In-Reply-To=%3C4EA08C97.3050803%404raccoons.com%3E"
+       TITLE="[Mesquite] mesquite compilation problem">wayne at 4raccoons.com
+       </A><BR>
+    <I>Thu Oct 20 15:03:19 MDT 2011</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000078.html">[Mesquite] mesquite compilation problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#77">[ date ]</a>
+              <a href="thread.html#77">[ thread ]</a>
+              <a href="subject.html#77">[ subject ]</a>
+              <a href="author.html#77">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>I'm trying to compile mesquite-2.1.4 on ubuntu 11.04 with gcc version 
+4.5.2.  It fails with undefined symbols.  Any thoughts?
+
+Thanks,
+
+     Wayne
+
+./configure --enable-64bit --enable-shared --enable-debug
+make
+
+....
+
+/bin/bash ../libtool --tag=CXX   --mode=link c++ -Wall -pipe -g  -m64   
+-o vtkrandom randomize.o domain.o ../libmesquite.la libmsqutil.la -lm
+libtool: link: c++ -Wall -pipe -g -m64 -o .libs/vtkrandom randomize.o 
+domain.o  ../.libs/libmesquite.so ./.libs/libmsqutil.a -lm -Wl,-rpath 
+-Wl,/home/wayne/mesquite/mesquite-install-2.1.4/lib
+../.libs/libmesquite.so: undefined reference to `iMesh_setIntArrData'
+../.libs/libmesquite.so: undefined reference to `iMesh_getArrData'
+../.libs/libmesquite.so: undefined reference to `iMesh_setVtxCoord'
+../.libs/libmesquite.so: undefined reference to `iMesh_getTagSizeBytes'
+../.libs/libmesquite.so: undefined reference to `iMesh_getTagHandle'
+../.libs/libmesquite.so: undefined reference to `iMesh_getTagSizeValues'
+../.libs/libmesquite.so: undefined reference to 
+`iMesh_getGeometricDimension'
+../.libs/libmesquite.so: undefined reference to `iMesh_destroyTag'
+../.libs/libmesquite.so: undefined reference to `iMesh_getNumOfType'
+../.libs/libmesquite.so: undefined reference to `iGeom_getArrType'
+../.libs/libmesquite.so: undefined reference to `iMesh_getEntities'
+../.libs/libmesquite.so: undefined reference to `iMesh_getEntArrAdj'
+../.libs/libmesquite.so: undefined reference to `iMesh_getIntData'
+../.libs/libmesquite.so: undefined reference to `iMesh_getEntArrTopo'
+../.libs/libmesquite.so: undefined reference to `iGeom_getEntNrmlPlXYZ'
+../.libs/libmesquite.so: undefined reference to `iMesh_getRootSet'
+../.libs/libmesquite.so: undefined reference to `iMesh_getTagName'
+../.libs/libmesquite.so: undefined reference to `iMesh_createTag'
+../.libs/libmesquite.so: undefined reference to `iGeom_getEntNrmlXYZ'
+../.libs/libmesquite.so: undefined reference to `iRel_getEntEntRelation'
+../.libs/libmesquite.so: undefined reference to `iMesh_getTagType'
+../.libs/libmesquite.so: undefined reference to `iMesh_isEntContained'
+../.libs/libmesquite.so: undefined reference to `iMesh_getIntArrData'
+../.libs/libmesquite.so: undefined reference to `iMesh_setArrData'
+../.libs/libmesquite.so: undefined reference to `iGeom_getEntClosestPt'
+../.libs/libmesquite.so: undefined reference to `iMesh_getVtxArrCoords'
+../.libs/libmesquite.so: undefined reference to `iGeom_getArrNrmlXYZ'
+../.libs/libmesquite.so: undefined reference to `iMesh_setIntData'
+collect2: ld returned 1 exit status
+make[2]: *** [vtkrandom] Error 1
+make[2]: Leaving directory `/home/wayne/mesquite/mesquite-2.1.4/utils'
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory `/home/wayne/mesquite/mesquite-2.1.4'
+make: *** [all] Error 2
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000078.html">[Mesquite] mesquite compilation problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#77">[ date ]</a>
+              <a href="thread.html#77">[ thread ]</a>
+              <a href="subject.html#77">[ subject ]</a>
+              <a href="author.html#77">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

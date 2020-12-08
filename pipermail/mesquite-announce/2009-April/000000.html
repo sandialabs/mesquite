@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite-announce] Mesquite 2.0
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite-announce%40software.sandia.gov?Subject=Re:%20%5BMesquite-announce%5D%20Mesquite%202.0&In-Reply-To=%3C49E8F2B7.50600%40cae.wisc.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite-announce] Mesquite 2.0</H1>
+    <B>Jason Kraftcheck</B> 
+    <A HREF="mailto:mesquite-announce%40software.sandia.gov?Subject=Re:%20%5BMesquite-announce%5D%20Mesquite%202.0&In-Reply-To=%3C49E8F2B7.50600%40cae.wisc.edu%3E"
+       TITLE="[Mesquite-announce] Mesquite 2.0">kraftche at cae.wisc.edu
+       </A><BR>
+    <I>Fri Apr 17 15:20:55 MDT 2009</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#0">[ date ]</a>
+              <a href="thread.html#0">[ thread ]</a>
+              <a href="subject.html#0">[ subject ]</a>
+              <a href="author.html#0">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Announcing Mesquite 2.0.  A substantial re-design of much of the core
+Mesquite code has been done over the last several years.  This is the first
+official  release of the new core Mesquite implementation.  In addition to
+the re-designed core code, this release includes the several new features
+and many minor improvements listed below.
+
+
+New Features and Improvements:
+------------------------------
+
+- Core code redesigned to support planned future improvements and
+  to eliminate incompatibilities between various mesquite components.
+
+- Conversion to GNU automake/libtool build system.
+   - increases the number of supported platforms
+   - option to compile as a shared library
+   - &quot;make install&quot; and other standard make targets work correctly
+
+- New solvers
+   - TrustRegion
+   - QuasiNewton
+
+- Support for the latest ITAPS C APIs
+
+- Most solvers support a new block coordinate descent optimization scheme.
+
+- New ArrayMesh class allows Mesquite to operate directly on array-based
+  application mesh data.  This will hopefully help to minimize the amount
+  of glue code required to interface with FORTRAN code.
+
+- Significant performance improvements for SteepestDescent solver.
+
+- New mechanism to specify fixed vertices by dimension of associated
+  geometric domain.
+
+- Elimination of performance issues when using ITAPS APIs.
+
+- API simplification
+   - Many previous incompatible or nonsensical constructs now
+     result in compile-time errors.
+   - Many cases where the application had to request what should
+     have been an obvious behavior have been removed.  For example:
+      - analytical derivative calculations are now used whenever available
+      - higher-order nodes are automatically adjusted to logical location
+         as dictated by the default linear shape function for the element.
+
+- Many minor improvements, bug fixes, etc.
+
+
+
+Known Issues:
+-------------
+
+- Building using Microsoft Visual C++ is no longer supported.
+
+- Beta &quot;Distance From Target&quot; metrics have been removed.
+
+
+
+Additional Notes:
+-----------------
+
+- This information is included in the ANNOUNCE file within
+  the source distribution.
+
+- Information about updating applications for Mesquite API
+  changes is included in the doc/Updating_From_1.x.txt file
+  in the source distribution.
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#0">[ date ]</a>
+              <a href="thread.html#0">[ thread ]</a>
+              <a href="subject.html#0">[ subject ]</a>
+              <a href="author.html#0">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite-announce">More information about the Mesquite-announce
+mailing list</a><br>
+</body></html>

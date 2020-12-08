@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite-announce] Mesquite=2.2.0
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite-announce%40software.sandia.gov?Subject=Re:%20%5BMesquite-announce%5D%20Mesquite%3D2.2.0&In-Reply-To=%3CCBF37E74.38DB6%25pknupp%40sandia.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite-announce] Mesquite=2.2.0</H1>
+    <B>Knupp, Patrick</B> 
+    <A HREF="mailto:mesquite-announce%40software.sandia.gov?Subject=Re:%20%5BMesquite-announce%5D%20Mesquite%3D2.2.0&In-Reply-To=%3CCBF37E74.38DB6%25pknupp%40sandia.gov%3E"
+       TITLE="[Mesquite-announce] Mesquite=2.2.0">pknupp at sandia.gov
+       </A><BR>
+    <I>Tue Jun  5 09:13:41 MDT 2012</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+
+Mesquite-2.2.0 is now available for download.
+
+
+This release includes changes made by Jason Kraftcheck to remove DFT based
+metrics and adds TMOP based metrics.  These changes were not included in the
+previous 2.1.4 release that is still available from the Mesquite Download
+Page.
+
+
+Changes for 2.2.0:
+
+New Features:
+
+  - Removed Distance From Target (DFT) based metrics and added
+      Target-Matrix Optimazation Paradigm (TMOP) based metrics.
+  - Update for ITAPS 1.3 release candidate APIs
+  - Added XYPlanarDomain type
+  - Updated Histogram to a more intuitive format.
+  - Added Scaled Histograms feature to QualityAssessor Summary code.
+  - Significant updates to Users Guide.
+
+Bug Fixes:
+
+  - Fixed typo in header include guards reported by Jason Kraftcheck.
+  - Fixed QualityMetricTester utility class problem reported by Jason
+  - Fixed compiler errors using gcc/g++ 4.6 on Linux, Bug #5294
+  - Fixed the errors in the MPI_DEBUG version of the check-in script on Linux.
+  - Updated constructors in MsqIMeshP.*pp to match those of parent class
+      MsqIMdesh.
+  - Added parallel error handling to parallel Mesquite/VertexMover.
+  - Fixed std::vector not being resized after the number of elements in
+      it was reduced.
+  - Added Windows code to replace tmp_File() function that does not work in
+      Windows 7.
+  - Fixed non-unique cmake global name issue.
+  - Added code for Windows using srand().  Fix for bug #5351.
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="https://software.sandia.gov/pipermail/mesquite-announce/attachments/20120605/769ec2e9/attachment.html">https://software.sandia.gov/pipermail/mesquite-announce/attachments/20120605/769ec2e9/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite-announce">More information about the Mesquite-announce
+mailing list</a><br>
+</body></html>

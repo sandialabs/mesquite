@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] MeshImpl.cpp Error
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20MeshImpl.cpp%20Error&In-Reply-To=%3C4DD274BB.1020805%40cae.wisc.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000067.html">
+   <LINK REL="Next"  HREF="000069.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] MeshImpl.cpp Error</H1>
+    <B>Jason Kraftcheck</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20MeshImpl.cpp%20Error&In-Reply-To=%3C4DD274BB.1020805%40cae.wisc.edu%3E"
+       TITLE="[Mesquite] MeshImpl.cpp Error">kraftche at cae.wisc.edu
+       </A><BR>
+    <I>Tue May 17 07:14:35 MDT 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000067.html">[Mesquite] Build error
+</A></li>
+        <LI>Next message: <A HREF="000069.html">[Mesquite] Build error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#68">[ date ]</a>
+              <a href="thread.html#68">[ thread ]</a>
+              <a href="subject.html#68">[ subject ]</a>
+              <a href="author.html#68">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 05/15/2011 11:05 PM, rachu bhatt wrote:
+&gt;<i> Hi,
+</I>&gt;<i> I was trying to use mesquite to smooth a mesh in exodus format. I wrote a code for the same which ended up in an error given.
+</I>&gt;<i> I tried building mesquite using different versions of netcdf and exodusii but everytime after successful build when I run the code I found error given.
+</I>&gt;<i> 
+</I>&gt;<i> I presume this is due to the linking problem between MeshImpl.cpp and exodusii library. But could not solve the error.
+</I>&gt;<i> 
+</I>&gt;<i> Is there any mesquite binary available for C++ which can directly be used for coding to avoid such errors?
+</I>&gt;<i> 
+</I>&gt;<i> I used following command for the build:
+</I>&gt;<i> 
+</I>&gt;<i> ./configure --prefix=/home/rb/Desktop/MES214 --with-exodus=/home/rb/Desktop/exodusii/cbind --with-netcdf=/home/rb/Desktop/netcdf
+</I>&gt;<i> 
+</I>&gt;<i> Regards,
+</I>&gt;<i> Rachna
+</I>&gt;<i> 
+</I>
+The static library format (.a files) provides no mechanism for specifying
+other, required libraries.  There is no way to specify in the file
+libmesquite.a that it requires -lexodusIIa and -lnetcdf.  You have three
+options:
+  1) use libtool to link against the libmesquite.la file, which does list
+     dependencies
+  2) compile mesquite as a shared library
+  3) explicitly specify the linker flags necessary to link the exodusII and
+     netcdf libraries with whatever application you are linking mesquite
+
+- jason
+
+
+
+&gt;<i> ERROR-------
+</I>&gt;<i> 
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">rb at ubuntu</A>:~/Desktop/MES214$ g++ -I/home/rb/Desktop/MES214/
+</I>&gt;<i> include -L/home/rb/Desktop/MES214/lib/ first.cpp -lmesquite
+</I>&gt;<i> /home/rb/Desktop/MES214/lib//libmesquite.a(MeshImpl.o): In function
+</I>&gt;<i> `Mesquite2::MeshImpl::write_exodus(char const*, Mesquite2::MsqError&amp;)':
+</I>&gt;<i> MeshImpl.cpp:(.text+0x5638): undefined reference to `ex_create'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x56ee): undefined reference to `ex_put_init'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x59bf): undefined reference to `ex_put_coord'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x59fd): undefined reference to `ex_put_coord_names'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x5b75): undefined reference to `ex_put_elem_block'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x5e80): undefined reference to `ex_put_node_set_param'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x608b): undefined reference to `ex_put_elem_conn'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x6246): undefined reference to `ex_put_node_set'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x6266): undefined reference to `ex_close'
+</I>&gt;<i> /home/rb/Desktop/MES214/lib//libmesquite.a(MeshImpl.o): In function
+</I>&gt;<i> `Mesquite2::MeshImpl::read_exodus(char const*, Mesquite2::MsqError&amp;)':
+</I>&gt;<i> MeshImpl.cpp:(.text+0x63ed): undefined reference to `ex_open'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x64bb): undefined reference to `ex_get_init'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x65e6): undefined reference to `ex_get_coord'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x66b2): undefined reference to `ex_get_elem_blk_ids'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x6763): undefined reference to `ex_get_elem_block'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x68bc): undefined reference to `ex_get_elem_conn'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x6ab0): undefined reference to `ex_get_node_set_param'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x6b14): undefined reference to `ex_get_node_set'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x6c9f): undefined reference to `ex_get_coord'
+</I>&gt;<i> MeshImpl.cpp:(.text+0x6e31): undefined reference to `ex_close'
+</I>&gt;<i> collect2: ld returned 1 exit status
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Mesquite mailing list
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>&gt;<i> 
+</I>
+
+-- 
+&quot;A foolish consistency is the hobgoblin of little minds&quot; - Ralph Waldo Emerson
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000067.html">[Mesquite] Build error
+</A></li>
+	<LI>Next message: <A HREF="000069.html">[Mesquite] Build error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#68">[ date ]</a>
+              <a href="thread.html#68">[ thread ]</a>
+              <a href="subject.html#68">[ subject ]</a>
+              <a href="author.html#68">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

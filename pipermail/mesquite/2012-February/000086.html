@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] [EXTERNAL] Re:  untangling quadratic hex mesh
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20%5BEXTERNAL%5D%20Re%3A%20%20untangling%20quadratic%20hex%20mesh&In-Reply-To=%3CCB4EC895.29C8%25pknupp%40sandia.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000084.html">
+   <LINK REL="Next"  HREF="000087.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] [EXTERNAL] Re:  untangling quadratic hex mesh</H1>
+    <B>Knupp, Patrick</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20%5BEXTERNAL%5D%20Re%3A%20%20untangling%20quadratic%20hex%20mesh&In-Reply-To=%3CCB4EC895.29C8%25pknupp%40sandia.gov%3E"
+       TITLE="[Mesquite] [EXTERNAL] Re:  untangling quadratic hex mesh">pknupp at sandia.gov
+       </A><BR>
+    <I>Wed Feb  1 11:01:03 MST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000084.html">[Mesquite] untangling quadratic hex mesh
+</A></li>
+        <LI>Next message: <A HREF="000087.html">[Mesquite] [EXTERNAL] Re:  untangling quadratic hex mesh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#86">[ date ]</a>
+              <a href="thread.html#86">[ thread ]</a>
+              <a href="subject.html#86">[ subject ]</a>
+              <a href="author.html#86">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+     Sorry Julian, but there currently are no methods either within Mesquite or
+     elsewhere for directly untangling quadratic element meshes.  Sometimes
+      one can untangle a tangled mesh by simply using ShapeImprovementWrapper.
+      We have also used, with some success, as a substitute, Mesquite's TSizeNB1 or AWSizeNB1
+     metrics.    These metrics try to make all local determinants the same value
+     (the value must be input).  If you are fortunate, the mesh will become untangled.
+    You can then improve the shape of the elements using ShapeImprovementWrapper.
+
+
+From: Iulian Grindeanu &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">iulian.grindeanu at gmail.com</A>&lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">iulian.grindeanu at gmail.com</A>&gt;&gt;
+Date: Wed, 1 Feb 2012 10:50:25 -0600
+To: &quot;Miller, Brian J.&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">miller125 at llnl.gov</A>&lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">miller125 at llnl.gov</A>&gt;&gt;
+Cc: &quot;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>&lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>&gt;&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>&lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>&gt;&gt;
+Subject: [EXTERNAL] Re: [Mesquite] untangling quadratic hex mesh
+
+Hello,
+Thanks for the hint,
+I see that the UntangleBetaQualityMetric::evaluate is using only corner positions for hexas
+Would that affect my problem, as I am trying to untangle quadratic meshes?
+If I linearize the hexas, everything is positive jacobian. Only when I consider midnodes some hexas are inverted
+So is there an untangler metric for quadratic hex?
+Thanks,
+Iulian
+
+On Tue, Jan 31, 2012 at 11:54 AM, Miller, Brian J. &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">miller125 at llnl.gov</A>&lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">miller125 at llnl.gov</A>&gt;&gt; wrote:
+Iulian,
+
+Look at the implementation of ShapeImprovementWrapper.cpp.  It first makes a pass with a solver which tries to untangle elements then follows with a shape improving pass.
+
+Ask if you need more details.
+
+Brian
+
+
+
+On 1/31/12 8:05 AM, &quot;Iulian Grindeanu&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">iulian.grindeanu at gmail.com</A>&lt;<A HREF="http://iulian.grindeanu@gmail.com">http://iulian.grindeanu@gmail.com</A>&gt;&gt; wrote:
+
+Hello,
+I need help in untangling a huge mesh; it has about 1 million quadratic hexa elements, of which around 300 are inverted.
+I am not sure where they are.
+I created a fixed tag, (1 on the skin, 0 in the interior).
+
+What is the best way to untangle it?
+I modified the testSuite/imesh/main.cpp example, according to the attached patch
+
+It didn't work well, it ended up after one step with many more inverted elements.
+Can you point me to some documentation about using untangler with quadratic hex elements?
+
+Thanks,
+Iulian
+
+
+
+_______________________________________________ Mesquite mailing list <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>&lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>&gt; <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20120201/76781833/attachment.html">https://software.sandia.gov/pipermail/mesquite/attachments/20120201/76781833/attachment.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000084.html">[Mesquite] untangling quadratic hex mesh
+</A></li>
+	<LI>Next message: <A HREF="000087.html">[Mesquite] [EXTERNAL] Re:  untangling quadratic hex mesh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#86">[ date ]</a>
+              <a href="thread.html#86">[ thread ]</a>
+              <a href="subject.html#86">[ subject ]</a>
+              <a href="author.html#86">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

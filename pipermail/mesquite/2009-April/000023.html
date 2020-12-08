@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Accessing Mesh Data
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Accessing%20Mesh%20Data&In-Reply-To=%3C49D4F59A.2050100%40cae.wisc.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000021.html">
+   <LINK REL="Next"  HREF="000024.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Accessing Mesh Data</H1>
+    <B>Jason Kraftcheck</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Accessing%20Mesh%20Data&In-Reply-To=%3C49D4F59A.2050100%40cae.wisc.edu%3E"
+       TITLE="[Mesquite] Accessing Mesh Data">kraftche at cae.wisc.edu
+       </A><BR>
+    <I>Thu Apr  2 11:27:54 MDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000021.html">[Mesquite] Accessing Mesh Data
+</A></li>
+        <LI>Next message: <A HREF="000024.html">[Mesquite] Accessing Mesh Data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23">[ date ]</a>
+              <a href="thread.html#23">[ thread ]</a>
+              <a href="subject.html#23">[ subject ]</a>
+              <a href="author.html#23">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Alter, Stephen J. (LARC-D305) wrote:
+&gt;<i> Jason,
+</I>&gt;<i> 
+</I>&gt;<i>  
+</I>&gt;<i> 
+</I>&gt;<i>    From the example FORTRAN call that you sent, I get the impression I
+</I>&gt;<i> don&#8217;t need to use the MESQUITE::MeshImpl class, 
+</I>
+Use the MeshImpl class to communicate data through VTK files *or* use the
+ArrayMesh class to pass it in as arrays through a direct function call.
+
+&gt;<i> but format my data in
+</I>&gt;<i> the vertices, vertex flags, and connectivity list that VTK would expect,
+</I>&gt;<i> correct? 
+</I>
+No.  The data is a little simpler than the VTK file format.
+vertex coords:
+  { x1, y1, z1, z2, y2, z2, x3, y3, z3, ... }
+such that the coordinates of the first vertex are (x1, y1, z1), the
+coordinates of the second vertex are (x2, y2, z2), etc.
+
+element connectivity:
+  { a0, b0, c0, d0, e0, f0, g0, h0, a1, b1, c1, d1, e1, f1, g1, h1, ... }
+where the corners of the first hexahedron are:
+  { a0, b0, c0, d0, e0, f0, g0, h0 }
+
+The corners for a single hexahedron are ordered using the canonical ordering
+shared by VTK, Exodus, PATRAN, and others for linear hexahedral elements.
+Consider the vertices in the coordinate list to be numbered from 1 to N,
+such that the coordinates for any vertex i are at positions:
+  3*(i-1)+1, 3*(i-1)+2, 3*(i-1)+3
+The values in the connectivity array reference vertices using this
+enumeration scheme.
+
+&gt;<i> Then send those arrays through the subroutine call?
+</I>
+Correct.
+
+- jason
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000021.html">[Mesquite] Accessing Mesh Data
+</A></li>
+	<LI>Next message: <A HREF="000024.html">[Mesquite] Accessing Mesh Data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23">[ date ]</a>
+              <a href="thread.html#23">[ thread ]</a>
+              <a href="subject.html#23">[ subject ]</a>
+              <a href="author.html#23">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

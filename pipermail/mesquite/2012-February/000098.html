@@ -1,0 +1,148 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Trouble configuring Parallel Mesquite
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Trouble%20configuring%20Parallel%20Mesquite&In-Reply-To=%3Cc2a144f8-d4e8-46c2-9848-e142130a4193%40zms02.zcs%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000099.html">
+   <LINK REL="Next"  HREF="000101.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Trouble configuring Parallel Mesquite</H1>
+    <B>boyd at elemtech.com</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Trouble%20configuring%20Parallel%20Mesquite&In-Reply-To=%3Cc2a144f8-d4e8-46c2-9848-e142130a4193%40zms02.zcs%3E"
+       TITLE="[Mesquite] Trouble configuring Parallel Mesquite">boyd at elemtech.com
+       </A><BR>
+    <I>Fri Feb 17 16:52:13 MST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000099.html">[Mesquite] imesh question
+</A></li>
+        <LI>Next message: <A HREF="000101.html">[Mesquite] Trouble configuring Parallel Mesquite
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#98">[ date ]</a>
+              <a href="thread.html#98">[ thread ]</a>
+              <a href="subject.html#98">[ subject ]</a>
+              <a href="author.html#98">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>  I'm have trouble configuring the iMeshP version of Mesquite.  The Serial version (iMesh) configures and builds just fine for me but the Parallel version, when run with the following command:
+
+
+./configure --with-imesh=/home/bktidwell/fmdbSerial/fmdbSerial/lib/iMesh-Defs.inc --with-imeshp=/home/bktidwell/fmdbParallel/fmdbParallel/lib/iMeshP-Defs.inc --with-mpi=/usr/local/openmpi
+
+
+runs into this problem:
+
+
+checking for main in -lcppunit... yes
+checking for /home/bktidwell/fmdbSerial/fmdbSerial/lib/iMesh-Defs.inc... yes
+checking iBase.h usability... yes
+checking iBase.h presence... yes
+checking for iBase.h... yes
+checking iMesh.h usability... yes
+checking iMesh.h presence... yes
+checking for iMesh.h... yes
+checking for iMesh_dtor in iMesh library... yes
+checking for /home/bktidwell/fmdbParallel/fmdbParallel/lib/iMeshP-Defs.inc... yes
+checking iMeshP.h usability... no
+checking iMeshP.h presence... no
+checking for iMeshP.h... no
+configure: error: Broken iMeshP: iMeshP.h not found with  from /home/bktidwell/fmdbParallel/fmdbParallel/lib/iMeshP-Defs.inc
+
+
+  
+  My iMeshP-Def.inc files looks like:
+
+
+IMESH_CXXFLAGS =
+IMESH_CFLAGS =
+IMESH_LDFLAGS =
+IMESH_FC = /usr/local/openmpi/bin/mpif90
+IMESH_FCFLAGS = -g -O2
+IMESH_FCDEFS = -DHAVE_CONFIG_H
+IMESH_CXX_LDFLAGS =
+IMESH_CXX_LIBS =
+
+IMESH_INCLUDEDIR = /home/bktidwell/fmdbParallel/fmdbParallel/include
+FMDB_LIBDIR = /home/bktidwell/fmdbParallel/fmdbParallel/lib
+
+PARALLEL_INCLUDES = -I/home/bktidwell/fmdbParallel/fmdbParallel/include
+PARALLEL_LIBS = -L/home/bktidwell/fmdbParallel/zoltan/Zoltan_v3.1-install/lib/ -lzoltan -L/home/bktidwell/fmdbParallel/fmdbParallel/lib -lipcomman -L/home/bktidwell/fmdbParallel/parmetis/ParMetis-3.1.1/ -lparmetis -L/home/bktidwell/fmdbParallel/parmetis/ParMetis-3.1.1 -lmetis
+
+IMESH_INCLUDES =  -I$(IMESH_INCLUDEDIR) $(PARALLEL_INCLUDES)
+IMESH_LIBS =  -L$(FMDB_LIBDIR) -lFMDB -L/home/bktidwell/fmdbParallel/fmdbParallel/lib -lSCORECModel -L/home/bktidwell/fmdbParallel/fmdbParallel/lib -lmeshModel -L/home/bktidwell/fmdbParallel/fmdbParallel/lib -lSCORECUtil $(PARALLEL_LIBS)
+
+
+  The config.log file reveals:
+
+
+configure:22192: checking for /home/bktidwell/fmdbParallel/fmdbParallel/lib/iMeshP-Defs.inc
+configure:22209: result: yes
+configure:22451: checking iMeshP.h usability
+configure:22468: c++ -c   -O3 -mtune=generic   -I/home/bktidwell/fmdbSerial/fmdbSerial/include  conftest.cpp &gt;&amp;5
+conftest.cpp:76:20: error: iMeshP.h: No such file or directory
+configure:22475: $? = 1
+configure: failed program was:
+|<i> /* confdefs.h.  */
+</I>
+
+  It seems to be looking for iMeshP.h in the Serial include dir.  That doesn't seem right.
+
+  I've spent a good part of a day working in this one but have come to a dead end.  The configure script is a bit over my head in complexity.  Guess I haven't done enough script writing.  For reference, the section of the script manipulating the include files is:
+
+
+{ $as_echo &quot;$as_me:$LINENO: checking for iMeshP.h&quot; &gt;&amp;5
+$as_echo_n &quot;checking for iMeshP.h... &quot; &gt;&amp;6; }
+if test &quot;${ac_cv_header_iMeshP_h+set}&quot; = set; then
+  $as_echo_n &quot;(cached) &quot; &gt;&amp;6
+else
+  ac_cv_header_iMeshP_h=$ac_header_preproc
+fi
+{ $as_echo &quot;$as_me:$LINENO: result: $ac_cv_header_iMeshP_h&quot; &gt;&amp;5
+$as_echo &quot;$ac_cv_header_iMeshP_h&quot; &gt;&amp;6; }
+
+fi
+if test &quot;x$ac_cv_header_iMeshP_h&quot; = x&quot;&quot;yes; then
+  :
+else
+  { { $as_echo &quot;$as_me:$LINENO: error: Broken iMeshP: iMeshP.h not found with ${IMESHP_INCL} from ${IMESHP_DEFS}&quot; &gt;&amp;5
+$as_echo &quot;$as_me: error: Broken iMeshP: iMeshP.h not found with ${IMESHP_INCL} from ${IMESHP_DEFS}&quot; &gt;&amp;2;}
+   { (exit 1); exit 1; }; }
+
+
+Thanks very much.
+
+  -Boyd Tidwell
+
+
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000099.html">[Mesquite] imesh question
+</A></li>
+	<LI>Next message: <A HREF="000101.html">[Mesquite] Trouble configuring Parallel Mesquite
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#98">[ date ]</a>
+              <a href="thread.html#98">[ thread ]</a>
+              <a href="subject.html#98">[ subject ]</a>
+              <a href="author.html#98">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

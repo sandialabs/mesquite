@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Mesquite error (No domain constraint set)
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Mesquite%20error%20%28No%20domain%20constraint%20set%29&In-Reply-To=%3C4DB97B09.7010404%40cae.wisc.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000058.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Mesquite error (No domain constraint set)</H1>
+    <B>Jason Kraftcheck</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Mesquite%20error%20%28No%20domain%20constraint%20set%29&In-Reply-To=%3C4DB97B09.7010404%40cae.wisc.edu%3E"
+       TITLE="[Mesquite] Mesquite error (No domain constraint set)">kraftche at cae.wisc.edu
+       </A><BR>
+    <I>Thu Apr 28 08:34:49 MDT 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000058.html">[Mesquite] Mesquite error (No domain constraint set)
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#59">[ date ]</a>
+              <a href="thread.html#59">[ thread ]</a>
+              <a href="subject.html#59">[ subject ]</a>
+              <a href="author.html#59">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The triangles on the mesh boundary are the problem.  Mesquite
+will evaluate the quality metric for all input elements.  The
+inverse mean ratio metric cannot be evaluated for triangles (or
+quadrilateral elements) without knowing the normal of the geometric surface
+they mesh (the domain).
+
+- jason
+
+
+
+On 04/28/2011 07:54 AM, Jibum Kim wrote:
+&gt;<i> Hi Mesquite team,
+</I>&gt;<i>  
+</I>&gt;<i> I have a 3D vtk file which includes both triangles and tetrahedra.
+</I>&gt;<i>  
+</I>&gt;<i> All of my triangles are on the boundary.
+</I>&gt;<i>  
+</I>&gt;<i> When I try to run Mesquite and improve my mesh quality using inverse
+</I>&gt;<i> mean ratio metric , Mesquite says &quot;No domain constraint set&quot; error.
+</I>&gt;<i>  
+</I>&gt;<i> I guess that this error is happening because my vtk file has both
+</I>&gt;<i> triangles and tetrahedra simultaneously.
+</I>&gt;<i>  
+</I>&gt;<i> I verified my vtk file using Paraview and had no problem of seeing my mesh.
+</I>&gt;<i>  
+</I>&gt;<i> I'd appreciate if you give me an idea to solve this problem.
+</I>&gt;<i>  
+</I>&gt;<i> Thank you for your help.
+</I>&gt;<i>  
+</I>&gt;<i> - Jibum
+</I>&gt;<i> 
+</I>
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000058.html">[Mesquite] Mesquite error (No domain constraint set)
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#59">[ date ]</a>
+              <a href="thread.html#59">[ thread ]</a>
+              <a href="subject.html#59">[ subject ]</a>
+              <a href="author.html#59">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

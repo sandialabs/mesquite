@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Using ArrayMesh with specific Wrapper functions
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Using%20ArrayMesh%20with%20specific%20Wrapper%20functions&In-Reply-To=%3C503393D4.8060906%40fnb.tu-darmstadt.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000114.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Using ArrayMesh with specific Wrapper functions</H1>
+    <B>Ulrich Falk</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Using%20ArrayMesh%20with%20specific%20Wrapper%20functions&In-Reply-To=%3C503393D4.8060906%40fnb.tu-darmstadt.de%3E"
+       TITLE="[Mesquite] Using ArrayMesh with specific Wrapper functions">falk at fnb.tu-darmstadt.de
+       </A><BR>
+    <I>Tue Aug 21 07:57:40 MDT 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000114.html">[Mesquite] Can Mesquite improve any kind of surface meshes?
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#115">[ date ]</a>
+              <a href="thread.html#115">[ thread ]</a>
+              <a href="subject.html#115">[ subject ]</a>
+              <a href="author.html#115">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello all,
+I'm using the current version of Mesquite 2.2 and I have problems using 
+ArrayMesh in combination with the SizeAdaptShapeWrapper and 
+DeformingDomainWrapper. (ShapeImprovementWrapper in combination with 
+ArrayMesh works fine). Additionally using  LocalSizeQualityMetric, 
+EdgeLengthQualityMetric, EdgeLengthRangeQualityMetric, 
+VertexConditionNumberQualityMetric in combination with ArrayMesh in an 
+QualityAssessor context doesn't seem to work neither.
+
+The following error message is displayed during program execution:
+
+
+Case using Wrapper function SizeAdaptShapeWrapper:
+
+No Mesh associated with PatchData.
+   at void Mesquite2::PatchData::set_mesh_entities(std::vector&lt;void*, 
+std::allocator&lt;void*&gt; &gt;&amp;, std::vector&lt;void*, std::allocator&lt;void*&gt; &gt;&amp;, 
+Mesquite2::MsqError&amp;) at Mesh/PatchData.cpp:1881
+   in double 
+Mesquite2::QualityAssessor::loop_over_mesh_internal(Mesquite2::Mesh*, 
+Mesquite2::MeshDomain*, const Mesquite2::Settings*, 
+Mesquite2::ParallelHelper*, Mesquite2::MsqError&amp;) at 
+QualityAssessor/QualityAssessor.cpp:689
+   in virtual void 
+Mesquite2::InstructionQueue::run_common(Mesquite2::Mesh*, 
+Mesquite2::ParallelMesh*, Mesquite2::MeshDomain*, Mesquite2::Settings*, 
+Mesquite2::MsqError&amp;) at Control/InstructionQueue.cpp:353
+   in virtual void 
+Mesquite2::SizeAdaptShapeWrapper::run_wrapper(Mesquite2::Mesh*, 
+Mesquite2::ParallelMesh*, Mesquite2::MeshDomain*, Mesquite2::Settings*, 
+Mesquite2::QualityAssessor*, Mesquite2::MsqError&amp;) at 
+Wrappers/SizeAdaptShapeWrapper.cpp:97
+   in virtual void Mesquite2::Wrapper::run_common(Mesquite2::Mesh*, 
+Mesquite2::ParallelMesh*, Mesquite2::MeshDomain*, Mesquite2::Settings*, 
+Mesquite2::MsqError&amp;) at Wrappers/Wrapper.cpp:46
+
+
+Case using LocalSizeQualityMetric:
+
+No Mesh associated with PatchData.
+   at void Mesquite2::PatchData::set_mesh_entities(std::vector&lt;void*, 
+std::allocator&lt;void*&gt; &gt;&amp;, std::vector&lt;void*, std::allocator&lt;void*&gt; &gt;&amp;, 
+Mesquite2::MsqError&amp;) at Mesh/PatchData.cpp:1881
+   in double 
+Mesquite2::QualityAssessor::loop_over_mesh_internal(Mesquite2::Mesh*, 
+Mesquite2::MeshDomain*, const Mesquite2::Settings*, 
+Mesquite2::ParallelHelper*, Mesquite2::MsqError&amp;) at 
+QualityAssessor/QualityAssessor.cpp:689
+   in virtual void 
+Mesquite2::InstructionQueue::run_common(Mesquite2::Mesh*, 
+Mesquite2::ParallelMesh*, Mesquite2::MeshDomain*, Mesquite2::Settings*, 
+Mesquite2::MsqError&amp;) at Control/InstructionQueue.cpp:353
+
+
+Now the question is whether this is intentional or a bug?
+
+Thanks
+Ulrich
+
+-- 
+
+Dipl.-Ing. Ulrich Falk
+
+Fachgebiet Numerische Berechnungsverfahren
+Technische Universit&#228;t Darmstadt
+Dolivostrasse 15, Raum 403
+64293 Darmstadt
+
+Tel: 06151-163178
+Fax: 06151-164479
+e-mail: <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">falk at fnb.tu-darmstadt.de</A>
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20120821/25fb810c/attachment.html">https://software.sandia.gov/pipermail/mesquite/attachments/20120821/25fb810c/attachment.html</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000114.html">[Mesquite] Can Mesquite improve any kind of surface meshes?
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#115">[ date ]</a>
+              <a href="thread.html#115">[ thread ]</a>
+              <a href="subject.html#115">[ subject ]</a>
+              <a href="author.html#115">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

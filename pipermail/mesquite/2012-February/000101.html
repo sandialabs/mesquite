@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Trouble configuring Parallel Mesquite
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Trouble%20configuring%20Parallel%20Mesquite&In-Reply-To=%3CCB6D2B87.63C1%25miller125%40llnl.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000098.html">
+   <LINK REL="Next"  HREF="000100.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Trouble configuring Parallel Mesquite</H1>
+    <B>Miller, Brian J.</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Trouble%20configuring%20Parallel%20Mesquite&In-Reply-To=%3CCB6D2B87.63C1%25miller125%40llnl.gov%3E"
+       TITLE="[Mesquite] Trouble configuring Parallel Mesquite">miller125 at llnl.gov
+       </A><BR>
+    <I>Fri Feb 24 12:56:55 MST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000098.html">[Mesquite] Trouble configuring Parallel Mesquite
+</A></li>
+        <LI>Next message: <A HREF="000100.html">[Mesquite] Mesh Domain Question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#101">[ date ]</a>
+              <a href="thread.html#101">[ thread ]</a>
+              <a href="subject.html#101">[ subject ]</a>
+              <a href="author.html#101">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Boyd,
+
+There are several problems that make this a challenge.  I think these should
+be considered bugs and fixed.
+
+After building only the fmdb parallel version by suggestion of RPI folks I
+found that 
+
+SCOREC_Software/FMDB-1.3.7/imesh/IMESH_FCDefs.h
+
+doesn't get installed in
+fmdbParallel/include
+
+So I copied that over by hand.  This has been reported back to RPI.
+
+
+Second, the configure test for a functioning iMeshP library fails since all
+the configure tests attempt to call a function that is not defined in the
+iMeshP interface.  I have a fixed m4/itaps.m4 that corrects this problem.
+
+Next, one constructor for MsqIMeshP initializes it's iMesh object with an
+incorrect set of arguments.  I'm not sure of the correct solution here.  We
+should talk about this bug.
+
+Finally, the testSuite/imesh test fails at runtime but I have yet to debug
+why this occurs.
+
+Sorry for the depressing news on a Friday, but I think we'll get this
+resolved soon.
+
+Brian
+
+
+On 2/17/12 6:52 PM, &quot;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">boyd at elemtech.com</A>&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">boyd at elemtech.com</A>&gt; wrote:
+
+&gt;<i>   I'm have trouble configuring the iMeshP version of Mesquite.  The Serial
+</I>&gt;<i> version (iMesh) configures and builds just fine for me but the Parallel
+</I>&gt;<i> version, when run with the following command:
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> ./configure 
+</I>&gt;<i> --with-imesh=/home/bktidwell/fmdbSerial/fmdbSerial/lib/iMesh-Defs.inc
+</I>&gt;<i> --with-imeshp=/home/bktidwell/fmdbParallel/fmdbParallel/lib/iMeshP-Defs.inc
+</I>&gt;<i> --with-mpi=/usr/local/openmpi
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> runs into this problem:
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> checking for main in -lcppunit... yes
+</I>&gt;<i> checking for /home/bktidwell/fmdbSerial/fmdbSerial/lib/iMesh-Defs.inc... yes
+</I>&gt;<i> checking iBase.h usability... yes
+</I>&gt;<i> checking iBase.h presence... yes
+</I>&gt;<i> checking for iBase.h... yes
+</I>&gt;<i> checking iMesh.h usability... yes
+</I>&gt;<i> checking iMesh.h presence... yes
+</I>&gt;<i> checking for iMesh.h... yes
+</I>&gt;<i> checking for iMesh_dtor in iMesh library... yes
+</I>&gt;<i> checking for /home/bktidwell/fmdbParallel/fmdbParallel/lib/iMeshP-Defs.inc...
+</I>&gt;<i> yes
+</I>&gt;<i> checking iMeshP.h usability... no
+</I>&gt;<i> checking iMeshP.h presence... no
+</I>&gt;<i> checking for iMeshP.h... no
+</I>&gt;<i> configure: error: Broken iMeshP: iMeshP.h not found with  from
+</I>&gt;<i> /home/bktidwell/fmdbParallel/fmdbParallel/lib/iMeshP-Defs.inc
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i>   
+</I>&gt;<i>   My iMeshP-Def.inc files looks like:
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> IMESH_CXXFLAGS =
+</I>&gt;<i> IMESH_CFLAGS =
+</I>&gt;<i> IMESH_LDFLAGS =
+</I>&gt;<i> IMESH_FC = /usr/local/openmpi/bin/mpif90
+</I>&gt;<i> IMESH_FCFLAGS = -g -O2
+</I>&gt;<i> IMESH_FCDEFS = -DHAVE_CONFIG_H
+</I>&gt;<i> IMESH_CXX_LDFLAGS =
+</I>&gt;<i> IMESH_CXX_LIBS =
+</I>&gt;<i> 
+</I>&gt;<i> IMESH_INCLUDEDIR = /home/bktidwell/fmdbParallel/fmdbParallel/include
+</I>&gt;<i> FMDB_LIBDIR = /home/bktidwell/fmdbParallel/fmdbParallel/lib
+</I>&gt;<i> 
+</I>&gt;<i> PARALLEL_INCLUDES = -I/home/bktidwell/fmdbParallel/fmdbParallel/include
+</I>&gt;<i> PARALLEL_LIBS = -L/home/bktidwell/fmdbParallel/zoltan/Zoltan_v3.1-install/lib/
+</I>&gt;<i> -lzoltan -L/home/bktidwell/fmdbParallel/fmdbParallel/lib -lipcomman
+</I>&gt;<i> -L/home/bktidwell/fmdbParallel/parmetis/ParMetis-3.1.1/ -lparmetis
+</I>&gt;<i> -L/home/bktidwell/fmdbParallel/parmetis/ParMetis-3.1.1 -lmetis
+</I>&gt;<i> 
+</I>&gt;<i> IMESH_INCLUDES =  -I$(IMESH_INCLUDEDIR) $(PARALLEL_INCLUDES)
+</I>&gt;<i> IMESH_LIBS =  -L$(FMDB_LIBDIR) -lFMDB
+</I>&gt;<i> -L/home/bktidwell/fmdbParallel/fmdbParallel/lib -lSCORECModel
+</I>&gt;<i> -L/home/bktidwell/fmdbParallel/fmdbParallel/lib -lmeshModel
+</I>&gt;<i> -L/home/bktidwell/fmdbParallel/fmdbParallel/lib -lSCORECUtil $(PARALLEL_LIBS)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i>   The config.log file reveals:
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> configure:22192: checking for
+</I>&gt;<i> /home/bktidwell/fmdbParallel/fmdbParallel/lib/iMeshP-Defs.inc
+</I>&gt;<i> configure:22209: result: yes
+</I>&gt;<i> configure:22451: checking iMeshP.h usability
+</I>&gt;<i> configure:22468: c++ -c   -O3 -mtune=generic
+</I>&gt;<i> -I/home/bktidwell/fmdbSerial/fmdbSerial/include  conftest.cpp &gt;&amp;5
+</I>&gt;<i> conftest.cpp:76:20: error: iMeshP.h: No such file or directory
+</I>&gt;<i> configure:22475: $? = 1
+</I>&gt;<i> configure: failed program was:
+</I>&gt;<i> | /* confdefs.h.  */
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i>   It seems to be looking for iMeshP.h in the Serial include dir.  That doesn't
+</I>&gt;<i> seem right.
+</I>&gt;<i> 
+</I>&gt;<i>   I've spent a good part of a day working in this one but have come to a dead
+</I>&gt;<i> end.  The configure script is a bit over my head in complexity.  Guess I
+</I>&gt;<i> haven't done enough script writing.  For reference, the section of the script
+</I>&gt;<i> manipulating the include files is:
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> { $as_echo &quot;$as_me:$LINENO: checking for iMeshP.h&quot; &gt;&amp;5
+</I>&gt;<i> $as_echo_n &quot;checking for iMeshP.h... &quot; &gt;&amp;6; }
+</I>&gt;<i> if test &quot;${ac_cv_header_iMeshP_h+set}&quot; = set; then
+</I>&gt;<i>   $as_echo_n &quot;(cached) &quot; &gt;&amp;6
+</I>&gt;<i> else
+</I>&gt;<i>   ac_cv_header_iMeshP_h=$ac_header_preproc
+</I>&gt;<i> fi
+</I>&gt;<i> { $as_echo &quot;$as_me:$LINENO: result: $ac_cv_header_iMeshP_h&quot; &gt;&amp;5
+</I>&gt;<i> $as_echo &quot;$ac_cv_header_iMeshP_h&quot; &gt;&amp;6; }
+</I>&gt;<i> 
+</I>&gt;<i> fi
+</I>&gt;<i> if test &quot;x$ac_cv_header_iMeshP_h&quot; = x&quot;&quot;yes; then
+</I>&gt;<i>   :
+</I>&gt;<i> else
+</I>&gt;<i>   { { $as_echo &quot;$as_me:$LINENO: error: Broken iMeshP: iMeshP.h not found with
+</I>&gt;<i> ${IMESHP_INCL} from ${IMESHP_DEFS}&quot; &gt;&amp;5
+</I>&gt;<i> $as_echo &quot;$as_me: error: Broken iMeshP: iMeshP.h not found with ${IMESHP_INCL}
+</I>&gt;<i> from ${IMESHP_DEFS}&quot; &gt;&amp;2;}
+</I>&gt;<i>    { (exit 1); exit 1; }; }
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> Thanks very much.
+</I>&gt;<i> 
+</I>&gt;<i>   -Boyd Tidwell
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Mesquite mailing list
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>&gt;<i> 
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000098.html">[Mesquite] Trouble configuring Parallel Mesquite
+</A></li>
+	<LI>Next message: <A HREF="000100.html">[Mesquite] Mesh Domain Question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#101">[ date ]</a>
+              <a href="thread.html#101">[ thread ]</a>
+              <a href="subject.html#101">[ subject ]</a>
+              <a href="author.html#101">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

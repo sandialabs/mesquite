@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Functions and Inputs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Functions%20and%20Inputs&In-Reply-To=%3C49D4DA10.3090803%40cae.wisc.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000017.html">
+   <LINK REL="Next"  HREF="000020.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Functions and Inputs</H1>
+    <B>Jason Kraftcheck</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Functions%20and%20Inputs&In-Reply-To=%3C49D4DA10.3090803%40cae.wisc.edu%3E"
+       TITLE="[Mesquite] Functions and Inputs">kraftche at cae.wisc.edu
+       </A><BR>
+    <I>Thu Apr  2 09:30:24 MDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000017.html">[Mesquite] Functions and Inputs
+</A></li>
+        <LI>Next message: <A HREF="000020.html">[Mesquite] Functions and Inputs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Alter, Stephen J. (LARC-D305) wrote:
+&gt;<i> Jason,
+</I>&gt;<i> 
+</I>&gt;<i> The data I am attempting to smooth or optimize is the topology of a
+</I>&gt;<i> structured grid. In a structured grid, removing the grid from inside a
+</I>&gt;<i> block, you are left with a general hexahedral mesh of blocks. As shown in
+</I>&gt;<i> the attached figure, which has taken me quite some time to generate, is a
+</I>&gt;<i> hexahedral mesh of such a set of blocks that describes the topology of a
+</I>&gt;<i> space shuttle orbiter I have. The black lines are what I would expect to
+</I>&gt;<i> feed to MESQUITE, and the blue lines are what I would hope to retrieve.
+</I>&gt;<i> The blue lines are different in that they are more orthogonal to the
+</I>&gt;<i> surface of the orbiter, shaded in the image.
+</I>&gt;<i> 
+</I>
+There are no metrics in Mesquite that would optimize the orthogonality of
+mesh edges with respect to some domain directly.  However, I think any of
+the shape optimization algorithms should achieve the same indirectly.  One
+of the &quot;shape&quot; characteristics measured is the orthogonality of adjacent
+mesh edges.  As the mesh edges on the surface are roughly tangent to the
+surface, making the adjacent edges orthogonal to those should make them
+roughly orthogonal to the surface.
+
+&gt;<i> The issue is that the grid I am using is in PLOT3D form, where each block
+</I>&gt;<i> is comprised of a 2x2x2 set of points representing the topological cube
+</I>&gt;<i> of a structured grid block. I have no idea what vtk is nor its format.
+</I>&gt;<i> But I am willing to write a FORTRAN code to read a PLOT3D file that
+</I>&gt;<i> formats the topological blocks into a set of hexahedral cells that I can
+</I>&gt;<i> send to MESQUITE. I just need to know the form of the data.
+</I>&gt;<i> 
+</I>
+My previous message included a link to the file format specification.
+
+Alternately, you could call Mesquite directly from your FORTRAN code.  For
+example:
+
+#include &quot;ArrayMesh.hpp&quot;
+#include &quot;ShapeImprovementWrapper.hpp&quot;
+#include &quot;MsqError.hpp&quot;
+#include &lt;iostream&gt;
+using namespace Mesquite;
+
+// put trailing underscore on function name to match gfortran name mangling
+// (call as SHAPE_IMPROVE in Fortran).
+void shape_improve_( int* num_vertices,
+                     double* interleaved_vertex_coords,
+                     int* vertex_fixed_flags,
+                     int* num_hexes,
+                     int* element_connectivity,
+                     int* error_code )
+{
+  // convert int connectivity to long if necessary
+  std::vector&lt;unsigned long&gt; conn_tmp;
+  unsigned long* conn = 0;
+  if (sizeof(long) == sizeof(int))
+    conn = reinterpret_cast&lt;unsigned long*&gt;(element_connectivity);
+  else {
+    conn_tmp.insert( element_connectivity,
+                     element_connectivity + 8 * *num_hexes );
+    comm = &amp;conn_tmp[0];
+  }
+
+  // use ArrayMesh as a wrapper to pass array-formatted data into Mesquite
+  ArrayMesh mesh( 3, *num_vertices, interleaved_vertex_coords,
+                  vertex_fixed_flags,
+                  *num_hexes, HEXAHEDRON, conn, true );
+
+  // Smooth  mesh
+  MsqPrintError err(std::cerr);
+  ShapeImprovementWrapper algorithm;
+  algorithm.run_instructions( &amp;mesh, err );
+
+  // Pass back error code (zero for success)
+  *error_code = err.error_code();
+}
+
+
+
+&gt;<i> The domain, or surface of the vehicle, is currently available as both a
+</I>&gt;<i> structured grid which can also be divided into an unstructured set of
+</I>&gt;<i> triangles, or IGES data consisting of NURBS. Again, I'm not sure I
+</I>&gt;<i> understand how to get this into MESQUITE.
+</I>&gt;<i> 
+</I>
+Mesquite does not have the ability to import geometric data at this time.
+The only method available to use such data in an optimization is to write
+the necessary call-backs such that Mesquite can query some external code for
+geometric information.
+
+- jason
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000017.html">[Mesquite] Functions and Inputs
+</A></li>
+	<LI>Next message: <A HREF="000020.html">[Mesquite] Functions and Inputs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#19">[ date ]</a>
+              <a href="thread.html#19">[ thread ]</a>
+              <a href="subject.html#19">[ subject ]</a>
+              <a href="author.html#19">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

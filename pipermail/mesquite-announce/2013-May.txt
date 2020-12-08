@@ -1,0 +1,39 @@
+From pknupp at sandia.gov  Thu May 16 16:43:45 2013
+From: pknupp at sandia.gov (Knupp, Patrick)
+Date: Thu, 16 May 2013 22:43:45 +0000
+Subject: [Mesquite-announce] Mesquite Version 2.3.0 Release
+Message-ID: <CDBABD3F.642E7%pknupp@sandia.gov>
+
+
+Mesquite-2.3.0 is now available for download from the Mesquite Download Page.
+
+
+Changes for 2.3.0:
+
+  - Added polygon support to allow reading and writing of vtk files containing
+    polygons and smoothing of meshes containing polygons using the Laplacian smoother.
+  - Rewrote ShapeImprover wrapper determine if mesh to be optimized is
+    tangled or not. If tangled, wrapper now uses a non-barrier metric and
+    if not tangled, a barrier metric is used.
+  - Created a new directory structure underneath meshFiles/3D/vtk and
+    meshFiles/2D/vtk that arranges the mesh files into sub-directories
+    based on element type and whether they are tangled or untangled.
+  - Created new class MeshDomainAssoc to formally associate a Mesh instance
+    with a Domain instance to verify that the mesh and domain are compatible.
+  - Productionized the NonGradient solver.
+  - Added new classes TMetricBarrier and TMetricNonBarrier to TMetric class to
+    provide a clear division between the barrier and non-barrier target metric classes.
+  - Added new classes AWMetricBarrier and AWMetricNonBarrier to AWMetric class
+    for same reason as the TMetric classes.
+  - Added a new error code "BARRIER_VIOLATED" to the MsgError class that is
+    issued when a barrier violation is encountered when using a barrier target
+    metric class.
+  - Added warning when MaxTemplate is used with any solver other than NonGradient.
+  - Made a number of changes to the Quality Summary output to improve
+    readability and provide additional information.
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: https://software.sandia.gov/pipermail/mesquite-announce/attachments/20130516/92df8f99/attachment.html 
+

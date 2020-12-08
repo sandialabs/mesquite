@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Calling mesquite from fortran
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Calling%20mesquite%20from%20fortran&In-Reply-To=%3CCC22DB53.35F2%25miller125%40llnl.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000109.html">
+   <LINK REL="Next"  HREF="000110.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Calling mesquite from fortran</H1>
+    <B>Miller, Brian J.</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Calling%20mesquite%20from%20fortran&In-Reply-To=%3CCC22DB53.35F2%25miller125%40llnl.gov%3E"
+       TITLE="[Mesquite] Calling mesquite from fortran">miller125 at llnl.gov
+       </A><BR>
+    <I>Wed Jul 11 08:52:37 MDT 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000109.html">[Mesquite] Calling mesquite from fortran
+</A></li>
+        <LI>Next message: <A HREF="000110.html">[Mesquite]  Compeiling mesquite problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#112">[ date ]</a>
+              <a href="thread.html#112">[ thread ]</a>
+              <a href="subject.html#112">[ subject ]</a>
+              <a href="author.html#112">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Colin,
+
+Sorry I missed this email, I was on vacation until yesterday.  It is
+certainly possible to use mesquite in concert with with a F77 ale solver.
+However, we have no pre-built wrappers to expose the C++ layer to the
+fortran code.  
+
+For an example of a bare minimum mesh optimizer look at:
+testSuite/wrapper_tests/shape_improver.cpp
+
+The ArrayMesh implementation of the Mesh interface is designed to handle
+fortran data structures so that would likely be the easiest way to inform
+Mesquite about your mesh specifics.  You would need to replace the
+MeshImpl in that example with an ArrayMesh and pass in pointers to the
+fortran data.
+
+
+In terms of curved boundaries, if there is an analytic representation of
+the boundary then the solution is pretty easy and already exists in
+Mesquite.  For curved boundaries only defined by the original nodal
+positions, I have some local code that may be useful to you for
+constraining nodes.  Let me know if you're interested.
+
+Brian
+
+
+On 7/5/12 3:05 PM, &quot;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Cjm2176 at columbia.edu</A>&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Cjm2176 at columbia.edu</A>&gt; wrote:
+
+&gt;<i>Hello all, I would like to use mesquite for ale rezoning in a fortran
+</I>&gt;<i>77 solver. Is it possible to call mesquite from fortran?
+</I>&gt;<i>
+</I>&gt;<i>Also, since I am curious, how does mesquite rezone nodes that lie on
+</I>&gt;<i>curved boundaries?
+</I>&gt;<i>
+</I>&gt;<i>Thanks!
+</I>&gt;<i>Colin
+</I>&gt;<i>
+</I>&gt;<i>_______________________________________________
+</I>&gt;<i>Mesquite mailing list
+</I>&gt;<i><A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;<i><A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>&gt;<i>
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000109.html">[Mesquite] Calling mesquite from fortran
+</A></li>
+	<LI>Next message: <A HREF="000110.html">[Mesquite]  Compeiling mesquite problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#112">[ date ]</a>
+              <a href="thread.html#112">[ thread ]</a>
+              <a href="subject.html#112">[ subject ]</a>
+              <a href="author.html#112">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

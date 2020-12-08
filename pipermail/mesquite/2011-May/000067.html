@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Build error
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Build%20error&In-Reply-To=%3C4DD270EB.3090506%40cae.wisc.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000066.html">
+   <LINK REL="Next"  HREF="000068.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Build error</H1>
+    <B>Jason Kraftcheck</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Build%20error&In-Reply-To=%3C4DD270EB.3090506%40cae.wisc.edu%3E"
+       TITLE="[Mesquite] Build error">kraftche at cae.wisc.edu
+       </A><BR>
+    <I>Tue May 17 06:58:19 MDT 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000066.html">[Mesquite] MeshImpl.cpp Error
+</A></li>
+        <LI>Next message: <A HREF="000068.html">[Mesquite] MeshImpl.cpp Error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#67">[ date ]</a>
+              <a href="thread.html#67">[ thread ]</a>
+              <a href="subject.html#67">[ subject ]</a>
+              <a href="author.html#67">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The iMeshP.h header packaged with mesquite is out of date with respect to
+the other ITAPS headers.  This will be fixed in the next release.  To work
+around this issue either a) build mesquite without support for the iMeshP
+API or b) replace the file itaps/iMeshP.h in the mesquite source with the
+updated iMeshP.h from whatever implementation of that API you intend to link
+with Mesquite.
+
+- jason
+
+
+
+On 05/14/2011 10:10 AM, Anirban Jana wrote:
+&gt;<i> Hi,
+</I>&gt;<i>   On trying to build Mesquite-2.1.4, I am getting the foll error:
+</I>&gt;<i> ./itaps/iMeshP.h(1004): error: identifier &quot;iMesh_EntityIterator&quot; is 
+</I>&gt;<i> undefined
+</I>&gt;<i>                iMesh_EntityIterator* entity_iterator,
+</I>&gt;<i>                ^
+</I>&gt;<i> 
+</I>&gt;<i> ./itaps/iMeshP.h(1045): error: identifier &quot;iMesh_EntityArrIterator&quot; is 
+</I>&gt;<i> undefined
+</I>&gt;<i>                iMesh_EntityArrIterator* entity_iterator,
+</I>&gt;<i>                ^
+</I>&gt;<i> 
+</I>&gt;<i> ./itaps/iMeshP.h(1257): error: identifier &quot;iMesh_EntityIterator&quot; is 
+</I>&gt;<i> undefined
+</I>&gt;<i>                iMesh_EntityIterator* entity_iterator,
+</I>&gt;<i>                ^
+</I>&gt;<i> 
+</I>&gt;<i> ./itaps/iMeshP.h(1297): error: identifier &quot;iMesh_EntityArrIterator&quot; is 
+</I>&gt;<i> undefined
+</I>&gt;<i>                iMesh_EntityArrIterator* entArr_iterator,
+</I>&gt;<i> 
+</I>&gt;<i> My platform is SGI-UV, x86-64, Linux. My configure command is
+</I>&gt;<i> ./configure --enable-irel --enable-imesh --enable-igeom --enable-imeshp \
+</I>&gt;<i> --with-mpi=/opt/sgi/mpt/mpt-2.03  
+</I>&gt;<i> --with-netcdf=/usr/local/packages/netcdf-3.6.2/icc \
+</I>&gt;<i> CC=icc CFLAGS=&quot;-O3 -ftz&quot; CXX=icpc CXXFLAGS=&quot;-O3 -ftz&quot; FC=ifort 
+</I>&gt;<i> FCFLAGS=&quot;-O3 -ftz&quot;
+</I>&gt;<i> 
+</I>&gt;<i> Please advise
+</I>&gt;<i> Anirban
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Mesquite mailing list
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>&gt;<i> 
+</I>
+
+-- 
+&quot;A foolish consistency is the hobgoblin of little minds&quot; - Ralph Waldo Emerson
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000066.html">[Mesquite] MeshImpl.cpp Error
+</A></li>
+	<LI>Next message: <A HREF="000068.html">[Mesquite] MeshImpl.cpp Error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#67">[ date ]</a>
+              <a href="thread.html#67">[ thread ]</a>
+              <a href="subject.html#67">[ subject ]</a>
+              <a href="author.html#67">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

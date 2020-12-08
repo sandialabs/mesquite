@@ -1,0 +1,203 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Functions and Inputs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Functions%20and%20Inputs&In-Reply-To=%3CFDD724529494FF4595F7C6BD415BB763111443%40NDMSSCC07.ndc.nasa.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000019.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Functions and Inputs</H1>
+    <B>Alter, Stephen J. (LARC-D305)</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Functions%20and%20Inputs&In-Reply-To=%3CFDD724529494FF4595F7C6BD415BB763111443%40NDMSSCC07.ndc.nasa.gov%3E"
+       TITLE="[Mesquite] Functions and Inputs">stephen.j.alter at nasa.gov
+       </A><BR>
+    <I>Wed Apr  1 09:14:01 MDT 2009</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000019.html">[Mesquite] Functions and Inputs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17">[ date ]</a>
+              <a href="thread.html#17">[ thread ]</a>
+              <a href="subject.html#17">[ subject ]</a>
+              <a href="author.html#17">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jason,
+
+   The data I am attempting to smooth or optimize is the topology of a structured grid. In a structured grid, removing the grid from inside a block, you are left with a general hexahedral mesh of blocks. As shown in the attached figure, which has taken me quite some time to generate, is a hexahedral mesh of such a set of blocks that describes the topology of a space shuttle orbiter I have. The black lines are what I would expect to feed to MESQUITE, and the blue lines are what I would hope to retrieve. The blue lines are different in that they are more orthogonal to the surface of the orbiter, shaded in the image.
+
+   The issue is that the grid I am using is in PLOT3D form, where each block is comprised of a 2x2x2 set of points representing the topological cube of a structured grid block. I have no idea what vtk is nor its format. But I am willing to write a FORTRAN code to read a PLOT3D file that formats the topological blocks into a set of hexahedral cells that I can send to MESQUITE. I just need to know the form of the data.
+
+   The domain, or surface of the vehicle, is currently available as both a structured grid which can also be divided into an unstructured set of triangles, or IGES data consisting of NURBS. Again, I'm not sure I understand how to get this into MESQUITE.
+
+   Thank you for the information thus far. I'm willing to do what is necessary to test MESUQITE in this process of smoothing a topology. So any help you can provide would be greatly appreciated.
+
+&gt;<i> -----Original Message-----
+</I>&gt;<i> From: Jason Kraftcheck [mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">kraftche at cae.wisc.edu</A>]
+</I>&gt;<i> Sent: Monday, March 30, 2009 1:33 PM
+</I>&gt;<i> To: Alter, Stephen J. (LARC-D305)
+</I>&gt;<i> Cc: Mesquite
+</I>&gt;<i> Subject: Re: [Mesquite] Functions and Inputs
+</I>&gt;<i> 
+</I>&gt;<i> Alter, Stephen J. (LARC-D305) wrote:
+</I>&gt;<i> &gt; As a FORTRAN programmer, I have no idea what you mean by classes or
+</I>&gt;<i> &gt; object-oriented programming. So I am clueless when you say &quot;assemble
+</I>&gt;<i> &gt; classes&quot;. I think in terms of physical items. An object to me is a
+</I>&gt;<i> bolt, a
+</I>&gt;<i> &gt; nut, a rivet, a wing, an aircraft. So if you know of a way to break
+</I>&gt;<i> down
+</I>&gt;<i> &gt; this tremendous language barrier, aside from attempting to develop a
+</I>&gt;<i> FORTRAN
+</I>&gt;<i> &gt; API, then I would really like to know. Otherwise, I'm left with no
+</I>&gt;<i> other
+</I>&gt;<i> &gt; choice than to build on what I know and understand to something new.
+</I>&gt;<i> I need
+</I>&gt;<i> &gt; a foundation, and FORTRAN is it when it comes to writing computer
+</I>&gt;<i> codes.
+</I>&gt;<i> &gt; Actually, I began my coding career by writing macro assembler code
+</I>&gt;<i> for an
+</I>&gt;<i> &gt; old Z-80 and on the TI-59 where I was using memory registers to hold
+</I>&gt;<i> other
+</I>&gt;<i> &gt; memory locations to do array processing.
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> Mesquite uses objects to represent components of an optimizer.  Things
+</I>&gt;<i> such as:
+</I>&gt;<i>   quality metric - evaluate the quality of the mesh at some local
+</I>&gt;<i> feature
+</I>&gt;<i>                    (e.g. quality of an element)
+</I>&gt;<i>   objective function - define some global scalar value to optimize for
+</I>&gt;<i> the
+</I>&gt;<i>                        mesh (e.g. average of quality for each element)
+</I>&gt;<i>   quality improver - improve mesh quality
+</I>&gt;<i>   termination criterion - conditions upon which to terminate
+</I>&gt;<i> optimization
+</I>&gt;<i>   solver - subset of quality improvers that work by minimizing an
+</I>&gt;<i> objective
+</I>&gt;<i>            function
+</I>&gt;<i>   quality assessor - print summary of one or more quality metrics
+</I>&gt;<i> evaluated
+</I>&gt;<i>                      over the mesh
+</I>&gt;<i>   instruction queue - group top-level operations (solver, quality
+</I>&gt;<i> assessor,
+</I>&gt;<i>                       etc.) and provide API to initiate optimization
+</I>&gt;<i>                       process.
+</I>&gt;<i> 
+</I>&gt;<i> There are many different implementations of each of these types or
+</I>&gt;<i> classes
+</I>&gt;<i> of objects.  Instances of implementations are assembled to construct an
+</I>&gt;<i> optimizer.  There's an example of this in section 3.1.4 of the manual.
+</I>&gt;<i> 
+</I>&gt;<i> Mesquite also provides two &quot;wrapper&quot; classes that take care of
+</I>&gt;<i> assembling an
+</I>&gt;<i> optimizer for the two most common use cases.  These are
+</I>&gt;<i> ShapeImprovementWrapper and LaplacianIQ.  This is discussed briefly in
+</I>&gt;<i> section 3.1.3 of the manual.
+</I>&gt;<i> 
+</I>&gt;<i> Creating an optimizer or using one of the wrappers is fairly
+</I>&gt;<i> straightforward
+</I>&gt;<i> given an minimal understanding of C++.  As you are not very familiar
+</I>&gt;<i> with
+</I>&gt;<i> C++, I could probably put together a simple FORTRAN wrapper function
+</I>&gt;<i> for you
+</I>&gt;<i> if you were to describe exactly what you want for an optimizer.
+</I>&gt;<i> 
+</I>&gt;<i> The more complex question is how to get your mesh data into Mesquite.
+</I>&gt;<i> This
+</I>&gt;<i> can be subdivided into two subsets: the mesh and the domain.  The mesh
+</I>&gt;<i> is
+</I>&gt;<i> the node locations, element connectivity, and the set of vertices that
+</I>&gt;<i> are
+</I>&gt;<i> fixed.  This is sufficient to set up an optimization when all the
+</I>&gt;<i> boundary
+</I>&gt;<i> vertices are fixed.  The domain is the geometry that some subset of the
+</I>&gt;<i> nodes are constrained to lie on, and the association of specific nodes
+</I>&gt;<i> with
+</I>&gt;<i> specific subsets of the domain (e.g. with individual surfaces or curves
+</I>&gt;<i> of
+</I>&gt;<i> intersection of those surfaces.)
+</I>&gt;<i> 
+</I>&gt;<i> The interface for accessing mesh in Mesquite is the Mesquite::Mesh
+</I>&gt;<i> class,
+</I>&gt;<i> which groups a set of call-back functions for querying characteristics
+</I>&gt;<i> of
+</I>&gt;<i> the mesh and modifying vertex coordinates (and a few other details.)
+</I>&gt;<i> In the
+</I>&gt;<i> most general case one would provide implementations of all the
+</I>&gt;<i> callbacks
+</I>&gt;<i> that directly access some application data in a solver or mesh
+</I>&gt;<i> generation
+</I>&gt;<i> package.  For simpler cases Mesquite 1.1 provides the MeshImpl class,
+</I>&gt;<i> which
+</I>&gt;<i> is an implementation of the callbacks that access data stored in a VTK
+</I>&gt;<i> 3.0
+</I>&gt;<i> file[1] (simple ASCII format for mesh.)  Mesquite 2.0 (will be released
+</I>&gt;<i> today or tomorrow) will include the ArrayMesh class.  This class
+</I>&gt;<i> implements
+</I>&gt;<i> callbacks that access data in arrays provided by the application (e.g.
+</I>&gt;<i> array
+</I>&gt;<i> of vertex coordinates, array of vertex indices defining elements, etc.)
+</I>&gt;<i> This class was added with the hope of simplifying this process for many
+</I>&gt;<i> FORTRAN applications.  A third method of accessing mesh data is also
+</I>&gt;<i> provided in Mesquite 2.0:  MsqIMesh.  This class acts as an adapter to
+</I>&gt;<i> access mesh data through the iMesh[2] API.  These are discussed in
+</I>&gt;<i> chapter 4
+</I>&gt;<i> of the manual.
+</I>&gt;<i> 
+</I>&gt;<i> The Mesquite::MeshDomain class defines the set of callbacks for
+</I>&gt;<i> accessing
+</I>&gt;<i> the geometric domain for the mesh.  While Mesquite does provide a few
+</I>&gt;<i> trivial implementations, these certainly will not be sufficient to
+</I>&gt;<i> represent
+</I>&gt;<i> something like a portion of an aircraft.  So it will be necessary to
+</I>&gt;<i> implement the callbacks for this, either by directly implementing those
+</I>&gt;<i> defined in the MeshDomain class or by implementing the necessary subset
+</I>&gt;<i> of
+</I>&gt;<i> the iGeom and iRel ITAPS interfaces[2] and using the MsqIGeom adapter.
+</I>&gt;<i> 
+</I>&gt;<i> - jason
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> [1] <A HREF="http://www.vtk.org/VTK/img/file-formats.pdf">http://www.vtk.org/VTK/img/file-formats.pdf</A>
+</I>&gt;<i> [2] <A HREF="http://www.tstt-scidac.org/software/download_interfaces.html">http://www.tstt-scidac.org/software/download_interfaces.html</A>
+</I>&gt;<i> 
+</I>
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: topo.png
+Type: image/png
+Size: 179139 bytes
+Desc: topo.png
+Url : <A HREF="http://software.sandia.gov/pipermail/mesquite/attachments/20090401/82bf8b71/attachment-0001.png">http://software.sandia.gov/pipermail/mesquite/attachments/20090401/82bf8b71/attachment-0001.png</A> 
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000019.html">[Mesquite] Functions and Inputs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#17">[ date ]</a>
+              <a href="thread.html#17">[ thread ]</a>
+              <a href="subject.html#17">[ subject ]</a>
+              <a href="author.html#17">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

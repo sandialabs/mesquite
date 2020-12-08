@@ -1,0 +1,36 @@
+Title: MESQUITE -- The Mesh Quality Improvement Toolkit
+
+Type: Open Source Software.
+
+-- Copyright:
+
+			SCR#:642- Mesh Quality Improvement Toolkit (MESQUITE) Ver. 0.5
+
+			The software is deemed to be Publicly Available.
+
+      Copyright 2010 Sandia National Laboratories.  Developed at the
+      University of Wisconsin--Madison under SNL contract number
+      624796.  Under the terms of contracts with Sandia Corporation, 
+      the U.S. Government retains certain rights to this software.  
+      The University of Wisconsin retains certain rights to this 
+      software.
+   
+			This material is based upon work supported by the U.S. 
+			Department of Energy, Office of Science, Office of Advanced 
+			Scientific Computing Research (ASCR), Applied Mathematics Program. 
+
+-- License:
+
+      This library is free software; you can redistribute it and/or
+      modify it under the terms of the GNU Lesser General Public
+      License as published by the Free Software Foundation; either
+      version 2.1 of the License, or (at your option) any later version.
+   
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+      Lesser General Public License for more details.
+   
+      You should have received a copy of the GNU Lesser General Public License 
+      (lgpl.txt) along with this library; if not, write to the Free Software
+      Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA

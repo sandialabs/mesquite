@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Functions and Inputs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Functions%20and%20Inputs&In-Reply-To=%3CFDD724529494FF4595F7C6BD415BB76312A3929F%40NDMSSCC07.ndc.nasa.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000027.html">
+   <LINK REL="Next"  HREF="000028.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Functions and Inputs</H1>
+    <B>Alter, Stephen J. (LARC-D305)</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Functions%20and%20Inputs&In-Reply-To=%3CFDD724529494FF4595F7C6BD415BB76312A3929F%40NDMSSCC07.ndc.nasa.gov%3E"
+       TITLE="[Mesquite] Functions and Inputs">stephen.j.alter at nasa.gov
+       </A><BR>
+    <I>Thu Apr  2 11:28:33 MDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000027.html">[Mesquite] Accessing Mesh Data
+</A></li>
+        <LI>Next message: <A HREF="000028.html">[Mesquite] Accessing Mesh Data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22">[ date ]</a>
+              <a href="thread.html#22">[ thread ]</a>
+              <a href="subject.html#22">[ subject ]</a>
+              <a href="author.html#22">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Jason,
+
+   Ok. I looked at a VTK file and find that there is a listing of nodes (vertices), the element connectivity (not sure how to do this for a brick), and the flags. How is the node array arranged? It requires 3 physical coordinates. So is it a 3 dimensional array, or one dimensional that has the ordering of points as:
+
+x1, y1, z1, x2, y2, z2, ... xn, yn, zn?
+
+or is it,
+
+x1, x2, ... xn, y1, y2, ... yn, z1, z2, ..., zn?
+
+&gt;<i> -----Original Message-----
+</I>&gt;<i> From: Jason Kraftcheck [mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">kraftche at cae.wisc.edu</A>]
+</I>&gt;<i> Sent: Thursday, April 02, 2009 1:18 PM
+</I>&gt;<i> To: Alter, Stephen J. (LARC-D305)
+</I>&gt;<i> Subject: Re: [Mesquite] Functions and Inputs
+</I>&gt;<i> 
+</I>&gt;<i> Alter, Stephen J. (LARC-D305) wrote:
+</I>&gt;<i> &gt; Jason,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; So let me be clear here with this e-mail. The code you sent is a C++
+</I>&gt;<i> code
+</I>&gt;<i> &gt; that would be compiled alongside a FORTRAN code that would do the
+</I>&gt;<i> following:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; 1) Read in a PLOT3D grid.
+</I>&gt;<i> &gt; 2) Fill the arrays of mesh points and connectivity
+</I>&gt;<i> &gt;    list for the block edges.
+</I>&gt;<i> &gt; 3) Call SHAPE_IMPROVE(...)
+</I>&gt;<i> &gt; 4)  Write out a smoothed PLOT3D grid.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Is this correct?
+</I>&gt;<i> 
+</I>&gt;<i> Yes.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; If so, are the &quot;vertex fixed flags&quot; a number for each
+</I>&gt;<i> &gt; vertex telling MESQUITE if a node is attached to a wall or surface?
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> 1 -&gt; mesquite will never move the vertex
+</I>&gt;<i> 0 -&gt; vertex coordinates free variables in optimization
+</I>&gt;<i> 
+</I>&gt;<i> You can run an optimization without any geometric data by fixing all
+</I>&gt;<i> boundary vertices.  If you are providing Mesquite with callbacks for
+</I>&gt;<i> accessing the geometric data, then you'll probably want this to be zero
+</I>&gt;<i> for
+</I>&gt;<i> every vertex.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; You mention that there was an e-mail stating the format for the
+</I>&gt;<i> vertices
+</I>&gt;<i> &gt; and connectivity list. I'm looking at the VTK and ITAPS stuff. I get
+</I>&gt;<i> the
+</I>&gt;<i> &gt; feeling that I should be able to start looking at using MESQUITE
+</I>&gt;<i> soon.
+</I>&gt;<i> 
+</I>&gt;<i> I provided a link to the specification for the VTK file format, but
+</I>&gt;<i> that
+</I>&gt;<i> isn't relevant here.
+</I>&gt;<i> 
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I am a bit curious though. You suggest iGeom and iRel interfaces. It
+</I>&gt;<i> &gt; appears these would offer the ability to specify a surface domain.
+</I>&gt;<i> Correct?
+</I>&gt;<i> 
+</I>&gt;<i> Yes.  It is necessary to provide mesquite the callbacks (functions) to
+</I>&gt;<i> access geometric data.  One way to do that is to use the provided
+</I>&gt;<i> adapter to
+</I>&gt;<i> query into the appropriate ITAPS interfaces.
+</I>&gt;<i> 
+</I>&gt;<i> - jason
+</I>
+
+</PRE>
+
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000027.html">[Mesquite] Accessing Mesh Data
+</A></li>
+	<LI>Next message: <A HREF="000028.html">[Mesquite] Accessing Mesh Data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#22">[ date ]</a>
+              <a href="thread.html#22">[ thread ]</a>
+              <a href="subject.html#22">[ subject ]</a>
+              <a href="author.html#22">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

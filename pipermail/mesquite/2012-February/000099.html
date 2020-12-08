@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] imesh question
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20imesh%20question&In-Reply-To=%3CCANnpLWeXYEyFSCKoQMcO-WC5VH%2B0yrS%3Dbts7T0hpxWvWsJ3rug%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000097.html">
+   <LINK REL="Next"  HREF="000098.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] imesh question</H1>
+    <B>Iulian Grindeanu</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20imesh%20question&In-Reply-To=%3CCANnpLWeXYEyFSCKoQMcO-WC5VH%2B0yrS%3Dbts7T0hpxWvWsJ3rug%40mail.gmail.com%3E"
+       TITLE="[Mesquite] imesh question">iulian.grindeanu at gmail.com
+       </A><BR>
+    <I>Mon Feb 20 14:06:17 MST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000097.html">[Mesquite] imesh question
+</A></li>
+        <LI>Next message: <A HREF="000098.html">[Mesquite] Trouble configuring Parallel Mesquite
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#99">[ date ]</a>
+              <a href="thread.html#99">[ thread ]</a>
+              <a href="subject.html#99">[ subject ]</a>
+              <a href="author.html#99">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Feb 17, 2012 at 4:46 PM, Iulian Grindeanu &lt;
+<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">iulian.grindeanu at gmail.com</A>&gt; wrote:
+
+&gt;<i> Hello,
+</I>&gt;<i> In the implementation of Mesquite::Mesh related to iMesh interface,
+</I>&gt;<i> MsqIMesh, the methods like
+</I>&gt;<i> void MsqIMesh::vertices_get_attached_elements(
+</I>&gt;<i>                                      const VertexHandle* vertices,
+</I>&gt;<i>                                      size_t num_vertex,
+</I>&gt;<i>                                      std::vector&lt;ElementHandle&gt;&amp; elements,
+</I>&gt;<i>                                      std::vector&lt;size_t&gt;&amp; offsets,
+</I>&gt;<i>                                      MsqError&amp; err )
+</I>&gt;<i>
+</I>&gt;<i> do not filter the results based on the elements in the input set.
+</I>&gt;<i>
+</I>&gt;<i> So nodes on the boundary of a set will return other elements too, that are
+</I>&gt;<i> not in the set.
+</I>&gt;<i> Is this intentional?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> Iulian
+</I>&gt;<i>
+</I>
+Hello,
+I am going back to this question. The elements are filtered, but the
+information is not used correctly, I think.
+
+It is a problem in the calling code in Mesquite, I think, but it is easier
+for me to fix it in the iMesh mesquite interface.
+Please see the attached patch, maybe you could consider adding it in the
+next release, or fix the calling routine that is ignoring the offset
+information returned.
+
+To be more explicit, the method MsqIMesh::vertices_get_attached_elements
+gets called by VertexPatches::get_patch method, and it is filtering the
+elements that are not in the input set; the offsets variable is populated
+with the right offsets, but the size of the vector of element handles is
+never changed in MsqIMesh.cpp
+
+The offsets are ignored by VertexPatches::get_patch, and this causes
+problems for missing tags.
+
+this is an excerpt from src/Mesh/VertexPatches.cpp, mesquite version 2.99
+
+  88   if (!numLayers)  // if no layers of elements, then done.
+  89     return;
+  90
+  91     // get elements adjacent to free vertex
+  92   get_mesh()-&gt;vertices_get_attached_elements( &amp;patch_handle,
+  93                                               1,
+  94                                               elem_handles_out,
+  95                                               junk, err );
+  96   if (MSQ_CHKERR(err))
+  97     return;
+
+The offsets are &quot;junk&quot; and are ignored :(. elem_handles_out contains
+elements outside the &quot;offset&quot;
+
+Best Regards,
+Iulian
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20120220/68716c68/attachment.html">https://software.sandia.gov/pipermail/mesquite/attachments/20120220/68716c68/attachment.html</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: patch.imeshMSQ
+Type: application/octet-stream
+Size: 340 bytes
+Desc: not available
+Url : <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20120220/68716c68/attachment.obj">https://software.sandia.gov/pipermail/mesquite/attachments/20120220/68716c68/attachment.obj</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000097.html">[Mesquite] imesh question
+</A></li>
+	<LI>Next message: <A HREF="000098.html">[Mesquite] Trouble configuring Parallel Mesquite
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#99">[ date ]</a>
+              <a href="thread.html#99">[ thread ]</a>
+              <a href="subject.html#99">[ subject ]</a>
+              <a href="author.html#99">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

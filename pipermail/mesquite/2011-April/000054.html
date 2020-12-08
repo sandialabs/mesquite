@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Mesquite
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Mesquite&In-Reply-To=%3CBANLkTimVPST_6-5fNkCk_5hrBOC9YbOqoA%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000053.html">
+   <LINK REL="Next"  HREF="000055.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Mesquite</H1>
+    <B>Dhaval</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Mesquite&In-Reply-To=%3CBANLkTimVPST_6-5fNkCk_5hrBOC9YbOqoA%40mail.gmail.com%3E"
+       TITLE="[Mesquite] Mesquite">dhaval.jani at gmail.com
+       </A><BR>
+    <I>Sun Apr 10 03:29:17 MDT 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000053.html">[Mesquite] VolumeRatioQualityMetric
+</A></li>
+        <LI>Next message: <A HREF="000055.html">[Mesquite] Mesquite
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#54">[ date ]</a>
+              <a href="thread.html#54">[ thread ]</a>
+              <a href="subject.html#54">[ subject ]</a>
+              <a href="author.html#54">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi All,
+
+I am quite new to Mesquite. I have a Ls-dyna mesh file (*.k format) on which
+I want to try Smoothing. I understood from the Mesquite manual that it can
+read only VTK and ExodusII files. So I converted my file to VTK format. But,
+when I try to read it, I encountered following errors. Can you please help
+me to understand what is happening and what is the solution.
+
+Also, If any can anybody provide me set of commands I should use to read
+file in VTK or Exodus format?
+
+Thanks
+Dhaval
+
+MESQUITE ERROR 8 : File truncated.
+
+  at const char* Mesquite2::FileTokenizer::get_string(Mesquite2::MsqError&amp;)
+at src/Misc/FileTokenizer.cpp:68
+  in int Mesquite2::FileTokenizer::match_token(const char* const*,
+Mesquite2::MsqError&amp;) at src/Misc/FileTokenizer.cpp:409
+  in void*
+Mesquite2::MeshImpl::vtk_read_attrib_data(Mesquite2::FileTokenizer&amp;, long
+int, Mesquite2::TagDescription&amp;, Mesquite2::MsqError&amp;) at
+src/Mesh/MeshImpl.cpp:2122
+  in void Mesquite2::MeshImpl::vtk_read_dataset(Mesquite2::FileTokenizer&amp;,
+Mesquite2::MsqError&amp;) at src/Mesh/MeshImpl.cpp:1658
+  in void Mesquite2::MeshImpl::read_vtk(const char*, Mesquite2::MsqError&amp;)
+at src/Mesh/MeshImpl.cpp:1453
+
+<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">raman2805 at raman2805-MM061</A>:~/Desktop/Anoop$ ./a.out
+VTK_and_Exd_Files/knee_vtk_bin.vtk
+MESQUITE ERROR 12 : Cannot read BINARY VTK files -- use ASCII.
+  at void Mesquite2::MeshImpl::read_vtk(const char*, Mesquite2::MsqError&amp;)
+at src/Mesh/MeshImpl.cpp:1424
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20110410/79c9a190/attachment.html">https://software.sandia.gov/pipermail/mesquite/attachments/20110410/79c9a190/attachment.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000053.html">[Mesquite] VolumeRatioQualityMetric
+</A></li>
+	<LI>Next message: <A HREF="000055.html">[Mesquite] Mesquite
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#54">[ date ]</a>
+              <a href="thread.html#54">[ thread ]</a>
+              <a href="subject.html#54">[ subject ]</a>
+              <a href="author.html#54">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

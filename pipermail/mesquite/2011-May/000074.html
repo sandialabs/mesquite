@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] node dependencies
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20node%20dependencies&In-Reply-To=%3CCA016D17.39B0%25miller125%40llnl.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000073.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] node dependencies</H1>
+    <B>Miller, Brian J.</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20node%20dependencies&In-Reply-To=%3CCA016D17.39B0%25miller125%40llnl.gov%3E"
+       TITLE="[Mesquite] node dependencies">miller125 at llnl.gov
+       </A><BR>
+    <I>Tue May 24 15:11:35 MDT 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000073.html">[Mesquite] node dependencies
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#74">[ date ]</a>
+              <a href="thread.html#74">[ thread ]</a>
+              <a href="subject.html#74">[ subject ]</a>
+              <a href="author.html#74">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Martin,
+
+On 5/23/11 1:25 PM, &quot;Becker, Martin&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">M.Becker at stellba.de</A>&gt; wrote:
+
+&gt;<i> Hi,
+</I>&gt;<i> 
+</I>&gt;<i> thanks a lot for your answers!
+</I>&gt;<i> 
+</I>&gt;<i> I don't know if I have the correct understanding:
+</I>&gt;<i> A MeshDomain is the geometric shape of the area on which the mesh is defined.
+</I>&gt;<i> I currently use a PlanarDomain, which is an infinite plain.
+</I>&gt;<i> 
+</I>&gt;<i> Then I could possibly use the already existing CylinderDomain without any
+</I>&gt;<i> changes, as this domain has a &quot;native&quot; periodic behaviour! The perdiodic nodes
+</I>&gt;<i> would exist only once on such a cylindrical domain. Am I right?
+</I>&gt;<i> I could simply transform my coordinates and merge the periodic nodes before
+</I>&gt;<i> handing over the job to Mesquite.
+</I>&gt;<i> After mesh smoothing, I transform back and re-introduce the partner nodes.
+</I>&gt;<i> Please tell me when I'm off the track.
+</I>
+I think this idea is more work than necessary.  You could create something
+like PeriodicPlanarDomain that derives from PlanarDomain whose constructor
+takes arguments listing true boundary vertices and corresponding periodic
+boundary vertices -- maybe one std::vector&lt;VertexHandle&gt; for each of these.
+
+In the snap_to function you would project the boundary nodes to their
+defining ray, constrain periodic vertices to match, and all vertices would
+be then projected to the plane to maintain that constraint.
+
+I have an example of a similar MeshDomain you could look at if it might
+prove useful.
+
+
+&gt;<i> 
+</I>&gt;<i> Further questions:
+</I>&gt;<i> 1. is there a usage example of a CylinderDomain? Implementation is so much
+</I>&gt;<i> easier with examples ...
+</I>&gt;<i> 2. is it possible to use the ShapeImprovementWrapper with a CylinderDomain or
+</I>&gt;<i> do I have to step down to the lower lever API?
+</I>Yes.  ShapeImprovementWrapper takes a MeshDomain* in its constructor.
+
+&gt;<i> 3. how can I limit node movement in only one coordinate direction? That could
+</I>&gt;<i> be very useful for me.
+</I>&gt;<i> 
+</I>&gt;<i> Thanks a lot for your help!
+</I>&gt;<i> 
+</I>&gt;<i> Martin
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -----Urspr&#252;ngliche Nachricht-----
+</I>&gt;<i> Von: <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite-bounces at software.sandia.gov</A> im Auftrag von Miller, Brian J.
+</I>&gt;<i> Gesendet: Mo 23.05.2011 18:36
+</I>&gt;<i> An: Becker, Martin; <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>
+</I>&gt;<i> Betreff: Re: [Mesquite] node dependencies
+</I>&gt;<i>  
+</I>&gt;<i> Hi Martin,
+</I>&gt;<i> 
+</I>&gt;<i> I think this constraint could be implemented as a MeshDomain.  There are
+</I>&gt;<i> already several of these implemented that you could follow as examples.
+</I>&gt;<i> Look at ConicDomain, CircleDomain, etc for some ideas.  Basically, you'll
+</I>&gt;<i> need to implement a snap_to function that does what you want for the
+</I>&gt;<i> boundary nodes and has some default behavior at other nodes (like projecting
+</I>&gt;<i> onto a plane.)
+</I>&gt;<i> 
+</I>&gt;<i> Brian
+</I>&gt;<i> 
+</I>&gt;<i> On 5/21/11 1:02 PM, &quot;Becker, Martin&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">M.Becker at stellba.de</A>&gt; wrote:
+</I>&gt;<i> 
+</I>&gt;&gt;<i> Hello,
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> I'm using Mesquite for smoothing meshes coming from my own simple mesh
+</I>&gt;&gt;<i> generator for hydraulic turbines.
+</I>&gt;&gt;<i> The 3D-mesh consists of several 2D slices on which I do the smoothing with
+</I>&gt;&gt;<i> the
+</I>&gt;&gt;<i> ShapeImprovement wrapper.
+</I>&gt;&gt;<i> Currently, I fix all the boundary nodes. This is working fine.
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Turbomachine simulations often take advantage of rotational periodicity by
+</I>&gt;&gt;<i> meshing only one blade passage with periodic boundary conditions. The
+</I>&gt;&gt;<i> periodic
+</I>&gt;&gt;<i> boundaries are meshed with matching nodes on left and right side.
+</I>&gt;&gt;<i> I could now further improve my mesh quality by introducing dependencies
+</I>&gt;&gt;<i> between those matching node pairs and so give Mesquite the chance to move
+</I>&gt;&gt;<i> those nodes in at least one axis direction, specifying that the polar angle
+</I>&gt;&gt;<i> between these nodes should be fixed to 360&#176;/number_of_blades. Is something
+</I>&gt;&gt;<i> like that possible?
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> It would be great if someone could point me to some example or to the
+</I>&gt;&gt;<i> relevant
+</I>&gt;&gt;<i> lines of code ...
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Thanks a lot for your help!
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> Martin
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> 
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Mesquite mailing list
+</I>&gt;&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>&gt;&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Mesquite mailing list
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -+- Virus checked (incoming scanned by mailgate.cosus.de)
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000073.html">[Mesquite] node dependencies
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#74">[ date ]</a>
+              <a href="thread.html#74">[ thread ]</a>
+              <a href="subject.html#74">[ subject ]</a>
+              <a href="author.html#74">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

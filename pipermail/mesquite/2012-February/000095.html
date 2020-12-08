@@ -1,0 +1,291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] turn on debugging ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20turn%20on%20debugging%20%3F&In-Reply-To=%3CCANnpLWe%2BPxKJ13pOysdvMGza9wsgQZwJ79Sz_T_DQfqC%2B%3Dmh1g%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000094.html">
+   <LINK REL="Next"  HREF="000096.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] turn on debugging ?</H1>
+    <B>Iulian Grindeanu</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20turn%20on%20debugging%20%3F&In-Reply-To=%3CCANnpLWe%2BPxKJ13pOysdvMGza9wsgQZwJ79Sz_T_DQfqC%2B%3Dmh1g%40mail.gmail.com%3E"
+       TITLE="[Mesquite] turn on debugging ?">iulian.grindeanu at gmail.com
+       </A><BR>
+    <I>Fri Feb 17 06:20:40 MST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000094.html">[Mesquite] turn on debugging ?
+</A></li>
+        <LI>Next message: <A HREF="000096.html">[Mesquite] imesh question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#95">[ date ]</a>
+              <a href="thread.html#95">[ thread ]</a>
+              <a href="subject.html#95">[ subject ]</a>
+              <a href="author.html#95">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On Fri, Feb 17, 2012 at 4:54 AM, Miller, Brian J. &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">miller125 at llnl.gov</A>&gt;wrote:
+
+&gt;<i>  Iulian,
+</I>&gt;<i>
+</I>&gt;<i> You must compile your library with &#8212;enable-debug (or at least
+</I>&gt;<i> &#8212;enable-debug-output)
+</I>&gt;<i> For the MsqDebug::enable() function to do anything useful.  From configure
+</I>&gt;<i> &#8212;help:
+</I>&gt;<i>
+</I>&gt;<i> --enable-debug-output(=n,m,...)
+</I>&gt;<i>                           Enable debug output. Optionally specify
+</I>&gt;<i>                           comma-separated list of flags to enable.
+</I>&gt;<i>                           --enable-debug implies --enable-debug-output=1,2
+</I>&gt;<i>
+</I>&gt;<i> This is preferable to editing the header file to enable the debugging
+</I>&gt;<i> output.
+</I>&gt;<i>
+</I>&gt;<i> How do you specify which vertices are in your patch?  It will not work to
+</I>&gt;<i> use a fixed tag to bound the set of vertices your want included in your
+</I>&gt;<i> optimization.
+</I>&gt;<i>
+</I>&gt;<i> Also, which version of mesquite are  you using?
+</I>&gt;<i>
+</I>&gt;<i> Brian
+</I>&gt;<i>
+</I>
+Thanks,
+I did configure with --enable-debug
+But I did not configure with --enable-debug-output=1,2.  Is this implied or
+not by --enable-debug?
+
+So when I have my set of quads, I also know the boundary nodes in the
+patch, and the interior (to the set). I set the tag on all the nodes
+contained in the set of quads, as fixed, then reset tag 0 on the interior.
+I am using iMesh interface, I can extract the relevant code if you need.
+
+So I should set the tag on all the nodes in the mesh? I tried that before
+and it didn't work (I mean, I still got the missing tag error; maybe I
+should retry that)
+
+I am using version 2.99, and I configured such that the namespace is
+Mesquite3, to avoid conflicts with cubit (in some configuration we are
+still linking with cubit 12.2)
+<A HREF="http://software.sandia.gov/~jakraft/mesquite.html">http://software.sandia.gov/~jakraft/mesquite.html</A>
+
+The relevant portion of my code is this (mk_core-&gt;imesh_instance() is just
+a wrapper for iMesh and so on)
+
+....
+ iBase_TagHandle fixed_tag=0;
+    iMesh::Error m_err =
+mk_core-&gt;imesh_instance()-&gt;getTagHandle(VERTEX_FIXED_TAG_NAME, fixed_tag);
+    if (m_err)
+    {
+        m_err = mk_core-&gt;imesh_instance()-&gt;createTag(VERTEX_FIXED_TAG_NAME,
+1, iBase_INTEGER, fixed_tag);
+        IBERRCHK(m_err, &quot;Trouble create the tag handle.&quot;);
+     }
+
+    MsqIMesh mesh_adapter(mk_core-&gt;imesh_instance()-&gt;instance(), surfMesh,
+entity_type, mError, &amp;fixed_tag);
+    cout &lt;&lt; &quot;error =&quot; &lt;&lt; mError &lt;&lt; endl;
+    if (mError) throw mError;
+
+
+
+    //get all the vertices in surface mesh: entity_handles_out---quads
+adj_entity_handles_out---vertices
+    std::vector&lt;iBase_EntityHandle&gt; entity_handles_out,
+adj_entity_handles_out;
+    std::vector&lt;int&gt; offsets_out, adj_entity_indices_out;
+
+    m_err = mk_core-&gt;imesh_instance()-&gt;getAdjEntIndices(surfMesh,
+entity_type, iMesh_ALL_TOPOLOGIES, iBase_VERTEX, entity_handles_out,
+adj_entity_handles_out, adj_entity_indices_out, offsets_out);
+    IBERRCHK(m_err, &quot;Trouble get the adjacent entity indices.&quot;);
+
+
+    cout &lt;&lt; &quot;number of faces is &quot; &lt;&lt; entity_handles_out.size() &lt;&lt; endl;
+    cout &lt;&lt; &quot;number of vertices is &quot; &lt;&lt; adj_entity_handles_out.size() &lt;&lt;
+endl;
+
+    //set fixed flag on all vertices in the surface set
+    std::vector&lt;int&gt; tag_data(adj_entity_handles_out.size(), 1);
+    m_err =
+mk_core-&gt;imesh_instance()-&gt;setIntArrData(&amp;adj_entity_handles_out[0],
+adj_entity_handles_out.size(), fixed_tag, &amp;tag_data[0]);
+    IBERRCHK(m_err, &quot;Trouble set an array of int data for a list of
+vertices.&quot;);
+
+    //clear fixed flag for vertices contained directly in set
+    int count = -1;
+    m_err = mk_core-&gt;imesh_instance()-&gt;getNumOfType(surfMesh, iBase_VERTEX,
+count);
+    IBERRCHK(m_err, &quot;Trouble get the number of vertices in the set.&quot;);
+
+    adj_entity_handles_out.clear();
+
+    cout &lt;&lt; &quot;Num of Vertices on the target surface is &quot; &lt;&lt; count &lt;&lt; endl;
+
+    m_err = mk_core-&gt;imesh_instance()-&gt;getEntities(surfMesh, iBase_VERTEX,
+iMesh_ALL_TOPOLOGIES, adj_entity_handles_out);
+    IBERRCHK(m_err, &quot;Trouble get the nodes from the mesh entity set.&quot;);
+
+
+    tag_data.clear();
+    tag_data.resize( adj_entity_handles_out.size(), 0 );
+
+    m_err =
+mk_core-&gt;imesh_instance()-&gt;setIntArrData(&amp;adj_entity_handles_out[0],
+adj_entity_handles_out.size(), fixed_tag, &amp;tag_data[0]);
+    IBERRCHK(m_err, &quot;Trouble set an array of int data for mesh nodes.&quot;);
+   ....
+
+    SizeAdaptShapeWrapper Smooth_SizeAdapt(1.0e-2);
+        if (surface){
+            MsqIGeom geom_adapter(mk_core-&gt;igeom_instance()-&gt;instance(),
+surface);
+            Smooth_SizeAdapt.run_instructions(&amp;mesh_adapter, &amp;geom_adapter,
+mError);
+            cout &lt;&lt; &quot;Mesquite error in the ShapeImprover surface mesh
+smoothing=&quot; &lt;&lt; mError &lt;&lt; endl;
+        }
+...a
+
+
+
+
+
+&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 2/17/12 1:07 AM, &quot;Iulian Grindeanu&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">iulian.grindeanu at gmail.com</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> Hello,
+</I>&gt;<i> Thanks for your help.
+</I>&gt;<i>
+</I>&gt;<i> I put these in the calling code, but I do not see any tracing info.
+</I>&gt;<i> If I recompile Mesquite with
+</I>&gt;<i> #define  MSQ_ENABLE_DEBUG 1,2,3 in MsqDebug, then I do see traces output.
+</I>&gt;<i>
+</I>&gt;<i> Anyway, I am still not able to find my bug.
+</I>&gt;<i> I have one more general question:
+</I>&gt;<i>
+</I>&gt;<i> I have a set of quads on which I am calling this SizeAdaptShapeWrapper
+</I>&gt;<i> The fixed tag (value 1) is defined on the boundary of the set, and the
+</I>&gt;<i> interior is with tag 0.
+</I>&gt;<i> Will mesquite ever request a patch that contains nodes outside this set? I
+</I>&gt;<i> mean, do I have to define the fixed tag for the whole mesh or just for the
+</I>&gt;<i> set I am interested in?
+</I>&gt;<i>
+</I>&gt;<i> It seems that one node outside the set is requested by mesquite (for the
+</I>&gt;<i> tag), but I am not sure if it is because a bug / trash in my code, or
+</I>&gt;<i> mesquite can really ask for more nodes in the mesh.
+</I>&gt;<i> When I tried to define the tag for all the nodes, it did not seem to have
+</I>&gt;<i> helped :(, it still errors out.
+</I>&gt;<i>
+</I>&gt;<i> Thank you,
+</I>&gt;<i> Iulian
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On Thu, Feb 16, 2012 at 1:59 PM, Miller, Brian J. &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">miller125 at llnl.gov</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i> Iulian,
+</I>&gt;<i>
+</I>&gt;<i> You can also place into your application code :
+</I>&gt;<i> MsqDebug::enable(1);
+</I>&gt;<i> MsqDebug::enable(2);
+</I>&gt;<i> MsqDebug::enable(3);
+</I>&gt;<i>
+</I>&gt;<i> Also make sure you configure your mesquite library with &#8212;enable-debug to
+</I>&gt;<i> get the debugging macros enabled.
+</I>&gt;<i>
+</I>&gt;<i> Brian
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 2/16/12 12:39 AM, &quot;Iulian Grindeanu&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">iulian.grindeanu at gmail.com</A> &lt;
+</I>&gt;<i> <A HREF="http://iulian.grindeanu@gmail.com">http://iulian.grindeanu@gmail.com</A>&gt; &gt; wrote:
+</I>&gt;<i>
+</I>&gt;<i> Hello,
+</I>&gt;<i> I have a program that uses mesquite through the itaps interfaces, and I
+</I>&gt;<i> can't figure out where my error is.
+</I>&gt;<i> I have compiled my code and mesquite with debugging turned on (-g).
+</I>&gt;<i> I see that there is a MSQ_DBGOUT macro that (I am hoping) can help in
+</I>&gt;<i> tracing. How do I enable it? And how do I use it?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> Iulian
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> My program shows an error like this
+</I>&gt;<i>
+</I>&gt;<i> ITAPS ERROR: Tag Not Found
+</I>&gt;<i> Mesquite error in the ShapeImprover surface mesh smoothing=MESQUITE ERROR
+</I>&gt;<i> 13 : ITAPS ERROR: Tag Not Found
+</I>&gt;<i>   at virtual void Mesquite3::MsqIMesh::vertices_get_byte(void* const*,
+</I>&gt;<i> unsigned char*, size_t, Mesquite3::MsqError&amp;) at MsqIMesh.cpp:506
+</I>&gt;<i>   in void Mesquite3::PatchData::set_mesh_entities(std::vector&lt;void*,
+</I>&gt;<i> std::allocator&lt;void*&gt; &gt;&amp;, std::vector&lt;void*, std::allocator&lt;void*&gt; &gt;&amp;,
+</I>&gt;<i> Mesquite3::MsqError&amp;) at Mesh/PatchData.cpp:1917
+</I>&gt;<i>   in double
+</I>&gt;<i> Mesquite3::QualityAssessor::loop_over_mesh_internal(Mesquite3::Mesh*,
+</I>&gt;<i> Mesquite3::MeshDomain*, const Mesquite3::Settings*,
+</I>&gt;<i> Mesquite3::ParallelHelper*, Mesquite3::MsqError&amp;) at
+</I>&gt;<i> QualityAssessor/QualityAssessor.cpp:658
+</I>&gt;<i>   in virtual void
+</I>&gt;<i> Mesquite3::InstructionQueue::run_common(Mesquite3::Mesh*,
+</I>&gt;<i> Mesquite3::ParallelMesh*, Mesquite3::MeshDomain*, Mesquite3::Settings*,
+</I>&gt;<i> Mesquite3::MsqError&amp;) at Control/InstructionQueue.cpp:353
+</I>&gt;<i>   in virtual void
+</I>&gt;<i> Mesquite3::SizeAdaptShapeWrapper::run_wrapper(Mesquite3::Mesh*,
+</I>&gt;<i> Mesquite3::ParallelMesh*, Mesquite3::MeshDomain*, Mesquite3::Settings*,
+</I>&gt;<i> Mesquite3::QualityAssessor*, Mesquite3::MsqError&amp;) at
+</I>&gt;<i> Wrappers/SizeAdaptShapeWrapper.cpp:97
+</I>&gt;<i>   in virtual void Mesquite3::Wrapper::run_common(Mesquite3::Mesh*,
+</I>&gt;<i> Mesquite3::ParallelMesh*, Mesquite3::MeshDomain*, Mesquite3::Settings*,
+</I>&gt;<i> Mesquite3::MsqError&amp;) at Wrappers/Wrapper.cpp:46
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I was able to stop with the debugger in my code, and indeed, for some
+</I>&gt;<i> node, the fixed tag that I defined before, was not defined anymore.
+</I>&gt;<i> So I am assuming that somewhere in my code, I am trashing memory.
+</I>&gt;<i> I tried valgrind, and it didn't give me any clue
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20120217/484e3c57/attachment-0001.html">https://software.sandia.gov/pipermail/mesquite/attachments/20120217/484e3c57/attachment-0001.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000094.html">[Mesquite] turn on debugging ?
+</A></li>
+	<LI>Next message: <A HREF="000096.html">[Mesquite] imesh question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#95">[ date ]</a>
+              <a href="thread.html#95">[ thread ]</a>
+              <a href="subject.html#95">[ subject ]</a>
+              <a href="author.html#95">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,194 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] [EXTERNAL] Can boundary vertices move when Mesquite smooth 3D mesh?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20%5BEXTERNAL%5D%20Can%20boundary%20vertices%20move%20when%20Mesquite%0A%20smooth%203D%20mesh%3F&In-Reply-To=%3C3891A3FC5F6396448F5432D7D58D80B43BBB36BC%40EXMB02.srn.sandia.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000120.html">
+   <LINK REL="Next"  HREF="000122.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] [EXTERNAL] Can boundary vertices move when Mesquite smooth 3D mesh?</H1>
+    <B>Knupp, Patrick</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20%5BEXTERNAL%5D%20Can%20boundary%20vertices%20move%20when%20Mesquite%0A%20smooth%203D%20mesh%3F&In-Reply-To=%3C3891A3FC5F6396448F5432D7D58D80B43BBB36BC%40EXMB02.srn.sandia.gov%3E"
+       TITLE="[Mesquite] [EXTERNAL] Can boundary vertices move when Mesquite smooth 3D mesh?">pknupp at sandia.gov
+       </A><BR>
+    <I>Wed Oct 17 16:28:04 MDT 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000120.html">[Mesquite] [EXTERNAL] Can boundary vertices move when Mesquite smooth 3D mesh?
+</A></li>
+        <LI>Next message: <A HREF="000122.html">[Mesquite] [EXTERNAL] Can boundary vertices move when Mesquite smooth 3D mesh?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#121">[ date ]</a>
+              <a href="thread.html#121">[ thread ]</a>
+              <a href="subject.html#121">[ subject ]</a>
+              <a href="author.html#121">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+    Hi, sorry to chime in late.
+
+    As most of you know, Mesquite has call-back functions which tell the
+code
+    to snap vertices back onto the geometry, provided that geometry (the
+surface normal
+    in particular) has been defined.   This capability allows one to let
+vertices that
+    are on the boundary, but FREE, to move in a reasonable manner.  This
+algorithm is 
+    an approximation to
+    doing the problem 'correctly' via Lagrange multipliers or parametrized
+surfaces.
+    The approximation is usually pretty good unless the geometry curves
+strongly.
+
+    That said, Brian has been working for some time on an alternative
+approach which, 
+    I believe, derives the geometry from the initial mesh.  I'm not sure
+if that is
+    a capability which has been checked into Mesquite, whether or not
+checking it
+    in even makes any sense, and whether or not Brian is willing to do so.
+
+    We did also speak with Allen Kelly about incorporating his method for
+moving nodes
+    on the boundary.   It would be good if these two approaches could be
+compared to 
+    see if they are similar enough that only one need be checked in or if
+there is a
+    benefit to having both.   Please keep me appraised if such a
+comparison is made.
+
+    Thanks,
+      Pat
+
+
+On 10/16/12 8:47 AM, &quot;Miller, Brian J.&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">miller125 at llnl.gov</A>&gt; wrote:
+
+&gt;<i>This is a good discussion to have now.  I also have (local, uncommitted)
+</I>&gt;<i>code that constrains 2D mesh nodes to 1-D interfaces and 3D mesh nodes to
+</I>&gt;<i>2D interfaces.  We've been investigating imposing additional constraints
+</I>&gt;<i>on the boundary constrained motion such as local volume conservation but
+</I>&gt;<i>if basic functionality is needed now, we could commit ours and Allen's
+</I>&gt;<i>changes and go from there.
+</I>&gt;<i>
+</I>&gt;<i>Does Allen have a paper describing his method?
+</I>&gt;<i>
+</I>&gt;<i>Brian
+</I>&gt;<i>
+</I>&gt;<i>-- 
+</I>&gt;<i>Brian J. Miller
+</I>&gt;<i>
+</I>&gt;<i>Center for Applied Scientific Computing
+</I>&gt;<i>Lawrence Livermore National Lab
+</I>&gt;<i><A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">miller125 at llnl.gov</A>     Phone: 925-424-4773
+</I>&gt;<i>--------------------------------------------------------------------------
+</I>&gt;<i>-
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>On 10/16/12 7:32 AM, &quot;Tim Tautges&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">tautges at mcs.anl.gov</A>&gt; wrote:
+</I>&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>On 10/16/2012 09:20 AM, Day, David wrote:
+</I>&gt;&gt;&gt;<i> Shang Feifei,
+</I>&gt;&gt;&gt;<i> In my experience, Mesquite moves the nodes that are free.  In
+</I>&gt;&gt;&gt;<i>particular a boundary node that is free (compare vtk
+</I>&gt;&gt;&gt;<i> format spec for example) moves.  --David
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>But the node doesn't necessarily stay on the boundary.  Allen Kelly
+</I>&gt;&gt;<i>presented a paper at this year's IMR where he
+</I>&gt;&gt;<i>described modifications to Mesquite to account for moving nodes on
+</I>&gt;&gt;<i>boundary geometry (and keeping them on the geometry),
+</I>&gt;&gt;<i>1d and 2d geometric entities both.  We talked to Pat Knupp about getting
+</I>&gt;&gt;<i>these into Mesquite code base so others could
+</I>&gt;&gt;<i>use them, and Pat said they'd take a look at the changes (and Allen
+</I>&gt;&gt;<i>committed to sending them to Pat, after he made sure
+</I>&gt;&gt;<i>they were clean and ready for prime time).  So, this is my way of
+</I>&gt;&gt;<i>(hopefully gently...) prodding the Mesquite team to
+</I>&gt;&gt;<i>make sure this happens ('cuz I could really use it too :) ).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>- tim
+</I>&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> From: Shang Feifei &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">shangfeids at gmail.com</A> &lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">shangfeids at gmail.com</A>&gt;&gt;
+</I>&gt;&gt;&gt;<i> Date: Tuesday, October 16, 2012 8:13 AM
+</I>&gt;&gt;&gt;<i> To: mesquite &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>
+</I>&gt;&gt;&gt;<i>&lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>&gt;&gt;
+</I>&gt;&gt;&gt;<i> Subject: [EXTERNAL] [Mesquite] Can boundary vertices move when Mesquite
+</I>&gt;&gt;&gt;<i>smooth 3D mesh?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Hi all, I would like to smooth a mesh in 3D by Mesquite. At the same
+</I>&gt;&gt;&gt;<i>time I want its boundary unfixed. That is, the
+</I>&gt;&gt;&gt;<i> vertices on its boundary can move in the boundary surface which is like
+</I>&gt;&gt;&gt;<i>Geometric Domain in 2D surface smoothing. The
+</I>&gt;&gt;&gt;<i> boundary vertices of 3D examples in Mesquite are all fixed. So I wan to
+</I>&gt;&gt;&gt;<i>know to know is that possible?
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Thanks.
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> Shang Feifei
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;&gt;<i> Mesquite mailing list
+</I>&gt;&gt;&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;&gt;&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>&gt;&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>-- 
+</I>&gt;&gt;<i>================================================================
+</I>&gt;&gt;<i>&quot;You will keep in perfect peace him whose mind is
+</I>&gt;&gt;<i>   steadfast, because he trusts in you.&quot;               Isaiah 26:3
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>              Tim Tautges            Argonne National Laboratory
+</I>&gt;&gt;<i>          (<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">tautges at mcs.anl.gov</A>)      (telecommuting from UW-Madison)
+</I>&gt;&gt;<i>  phone (gvoice): (608) 354-1459      1500 Engineering Dr.
+</I>&gt;&gt;<i>             fax: (608) 263-4499      Madison, WI 53706
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>_______________________________________________
+</I>&gt;&gt;<i>Mesquite mailing list
+</I>&gt;&gt;<i><A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;&gt;<i><A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>&gt;&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>_______________________________________________
+</I>&gt;<i>Mesquite mailing list
+</I>&gt;<i><A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;<i><A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000120.html">[Mesquite] [EXTERNAL] Can boundary vertices move when Mesquite smooth 3D mesh?
+</A></li>
+	<LI>Next message: <A HREF="000122.html">[Mesquite] [EXTERNAL] Can boundary vertices move when Mesquite smooth 3D mesh?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#121">[ date ]</a>
+              <a href="thread.html#121">[ thread ]</a>
+              <a href="subject.html#121">[ subject ]</a>
+              <a href="author.html#121">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

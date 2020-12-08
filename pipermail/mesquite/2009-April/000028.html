@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Accessing Mesh Data
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Accessing%20Mesh%20Data&In-Reply-To=%3C49D521E5.2020401%40mcs.anl.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000022.html">
+   <LINK REL="Next"  HREF="000029.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Accessing Mesh Data</H1>
+    <B>Tim Tautges</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Accessing%20Mesh%20Data&In-Reply-To=%3C49D521E5.2020401%40mcs.anl.gov%3E"
+       TITLE="[Mesquite] Accessing Mesh Data">tautges at mcs.anl.gov
+       </A><BR>
+    <I>Thu Apr  2 14:36:53 MDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000022.html">[Mesquite] Functions and Inputs
+</A></li>
+        <LI>Next message: <A HREF="000029.html">[Mesquite] Accessing Mesh Data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#28">[ date ]</a>
+              <a href="thread.html#28">[ thread ]</a>
+              <a href="subject.html#28">[ subject ]</a>
+              <a href="author.html#28">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Time for me to chime in with an outside-mesquite answer for this.
+
+Steve, you can do what you want in several ways:
+1) Feed the point locations and element connectivity into mesquite 
+directly, set the surface points as being fixed, then smooth the 
+interior (all this with a wrapper function you'd have to construct which 
+would be callable from Fortran)
+
+2) implement your own version of mesquite's mesh access functions which 
+will pull the data directly out of your implementation.  If you're not 
+conversant in C++, that might be difficult.
+
+3) Read your mesh into MOAB, and hand it to mesquite that way.  This 
+method is more complicated to begin with, but is a good longer-term 
+solution, esp. if you're wanting to get the mesh interacting with the 
+geometry.  However, the picture you sent for the shuttle mesh looked 
+like your points are already on the surface.  If that's true and you're 
+ok with their location, this option is probably overkill.
+
+Where is your geometry coming from?  Iges, Step, CAD, facets?  I'm 
+interested in seeing if any of the tools I work on would help with this 
+process.
+
+- tim
+
+Alter, Stephen J. (LARC-D305) wrote:
+&gt;<i> Jason,
+</I>&gt;<i> 
+</I>&gt;<i>    According to the manual for Tecplot, the attached figure is the orientation I was considering. If this is correct, I'll begin coding and see where I get. 
+</I>&gt;<i> 
+</I>&gt;<i>    As for the callbacks for the domain geometry, do you have any recommendations for or suggestions of FORTRAN calls that I can register with the MESQUITE library on linking of compiled objects that would address the geometric information being requested by MESQUITE?
+</I>&gt;<i> 
+</I>&gt;&gt;<i> -----Original Message-----
+</I>&gt;&gt;<i> From: Jason Kraftcheck [mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">kraftche at cae.wisc.edu</A>]
+</I>&gt;&gt;<i> Sent: Thursday, April 02, 2009 1:34 PM
+</I>&gt;&gt;<i> To: Alter, Stephen J. (LARC-D305)
+</I>&gt;&gt;<i> Cc: <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>; Ferlemann, Paul G. (LARC-D306)[ATK
+</I>&gt;&gt;<i> SPACE SYSTEMS, INC.]
+</I>&gt;&gt;<i> Subject: Re: Accessing Mesh Data
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Alter, Stephen J. (LARC-D305) wrote:
+</I>&gt;&gt;&gt;<i> This may be redundant, but does Tecplot use the same &quot;canonical
+</I>&gt;&gt;<i> ordering&quot;?
+</I>&gt;&gt;<i> I'm not familiar with that package, but from a brief glance at the
+</I>&gt;&gt;<i> online
+</I>&gt;&gt;<i> &quot;Data Format Guide&quot; it appears to for hexahedral (brick) elements.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> - jason
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------------------------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> ------------------------------------------------------------------------
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Mesquite mailing list
+</I>&gt;&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>
+-- 
+================================================================
+&quot;You will keep in perfect peace him whose mind is
+   steadfast, because he trusts in you.&quot;               Isaiah 26:3
+
+              Tim Tautges            Argonne National Laboratory
+          (<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">tautges at mcs.anl.gov</A>)      (telecommuting from UW-Madison)
+          phone: (608) 263-8485      1500 Engineering Dr.
+            fax: (608) 263-4499      Madison, WI 53706
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000022.html">[Mesquite] Functions and Inputs
+</A></li>
+	<LI>Next message: <A HREF="000029.html">[Mesquite] Accessing Mesh Data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#28">[ date ]</a>
+              <a href="thread.html#28">[ thread ]</a>
+              <a href="subject.html#28">[ subject ]</a>
+              <a href="author.html#28">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Accessing Mesh Data
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Accessing%20Mesh%20Data&In-Reply-To=%3CFDD724529494FF4595F7C6BD415BB76312A3955C%40NDMSSCC07.ndc.nasa.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000040.html">
+   <LINK REL="Next"  HREF="000033.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Accessing Mesh Data</H1>
+    <B>Alter, Stephen J. (LARC-D305)</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Accessing%20Mesh%20Data&In-Reply-To=%3CFDD724529494FF4595F7C6BD415BB76312A3955C%40NDMSSCC07.ndc.nasa.gov%3E"
+       TITLE="[Mesquite] Accessing Mesh Data">stephen.j.alter at nasa.gov
+       </A><BR>
+    <I>Fri Apr  3 10:44:11 MDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000040.html">[Mesquite] Accessing Mesh Data
+</A></li>
+        <LI>Next message: <A HREF="000033.html">[Mesquite] Babel Installation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#41">[ date ]</a>
+              <a href="thread.html#41">[ thread ]</a>
+              <a href="subject.html#41">[ subject ]</a>
+              <a href="author.html#41">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Tim,
+
+   This is where the plot thickens. I'm actually using Technosoft's AML software for the CAD instead of CaPRI or the Unigraphics kernel that I already have. The AML software offers parametric construction of geometries that will generate the surfaces I need for MDAO studies, and it's a package I've been asked to use in the construction of tools for topology smoothing and grid generation. 
+
+   So does MESQUITE still fit into the scheme of the codes you are suggesting?
+
+&gt;<i> -----Original Message-----
+</I>&gt;<i> From: Tim Tautges [mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">tautges at mcs.anl.gov</A>]
+</I>&gt;<i> Sent: Friday, April 03, 2009 12:06 PM
+</I>&gt;<i> To: Alter, Stephen J. (LARC-D305)
+</I>&gt;<i> Cc: Jason Kraftcheck; <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>; Ferlemann, Paul G.
+</I>&gt;<i> (LARC-D306)[ATK SPACE SYSTEMS, INC.]
+</I>&gt;<i> Subject: Re: [Mesquite] Accessing Mesh Data
+</I>&gt;<i> 
+</I>&gt;<i> For geometry, depending on what you're starting from, my recommendation
+</I>&gt;<i> would be to use iGeom (interface to geometry built on CGM but much
+</I>&gt;<i> simpler) and underneath that  a) use Cubit and ACIS, if you have
+</I>&gt;<i> licenses, or b) use OpenCascade, which is open source.  Both options
+</I>&gt;<i> can
+</I>&gt;<i> read iges/step; Cubit will be more convenient for looking at the
+</I>&gt;<i> results
+</I>&gt;<i> graphically, and an ACIS-based solution will be more robust.
+</I>&gt;<i> 
+</I>&gt;<i> - tim
+</I>&gt;<i> 
+</I>&gt;<i> Alter, Stephen J. (LARC-D305) wrote:
+</I>&gt;<i> &gt; Tim,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I've heard of CaPRI and worked some with Bob Haimes and John
+</I>&gt;<i> &gt; Dannenhoffer to try to make use of CaPRI within Tecplot by building a
+</I>&gt;<i> &gt; GUI for using some of their software. It never amounted to much; I
+</I>&gt;<i> &gt; was pulled off of it to do something else before I finished getting
+</I>&gt;<i> &gt; the requirements for the software.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; I've checked out Babel's description from the wiki you provided. It
+</I>&gt;<i> &gt; would appear from the reading that I wouldn't need to learn C or C++.
+</I>&gt;<i> &gt; I could program in my native language. But how does all of this fit
+</I>&gt;<i> &gt; together? The deeper I dig the more unanswered questions I have. For
+</I>&gt;<i> &gt; instance:
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; 1) If Babel is expecting SIDL XML descriptions, do I need to program
+</I>&gt;<i> &gt; in SIDL XML? 2) It appears that Babel generates the FORTRAN glue
+</I>&gt;<i> &gt; functions I am seeking for MESQUTIE, but within MESQUITE, there are
+</I>&gt;<i> &gt; required geometry callbacks that need to be generated to enable a
+</I>&gt;<i> &gt; general surface definition from facets or NURBS. Would I be
+</I>&gt;<i> &gt; generating those callbacks in FORTRAN?
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;&gt; -----Original Message----- From: Tim Tautges
+</I>&gt;<i> &gt;&gt; [mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">tautges at mcs.anl.gov</A>] Sent: Thursday, April 02, 2009 5:47 PM
+</I>&gt;<i> &gt;&gt;  To: Alter, Stephen J. (LARC-D305) Cc: Jason Kraftcheck;
+</I>&gt;<i> &gt;&gt; <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>; Ferlemann, Paul G. (LARC-D306)[ATK
+</I>&gt;<i> &gt;&gt; SPACE SYSTEMS, INC.] Subject: Re: [Mesquite] Accessing Mesh Data
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Alter, Stephen J. (LARC-D305) wrote:
+</I>&gt;<i> &gt;&gt;&gt; Tim,
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; Did we meet at the IMR in Dearborn?
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt; I think so, but I had less grey hair then...
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Time for me to chime in with an outside-mesquite answer for
+</I>&gt;<i> &gt;&gt;&gt;&gt; this.
+</I>&gt;<i> &gt;&gt;&gt; Thank you for a different perspective.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Steve, you can do what you want in several ways: 1) Feed the
+</I>&gt;<i> &gt;&gt;&gt;&gt; point locations and element connectivity into mesquite
+</I>&gt;<i> &gt;&gt;&gt;&gt; directly, set the surface points as being fixed, then smooth
+</I>&gt;<i> &gt;&gt;&gt;&gt; the interior (all this with a wrapper function you'd have to
+</I>&gt;<i> &gt;&gt;&gt;&gt; construct which would be callable from Fortran)
+</I>&gt;<i> &gt;&gt;&gt; Jason has been kind enough to send me this in C++. I'm now
+</I>&gt;<i> &gt;&gt;&gt; developing a method of loading the input grid data and setting
+</I>&gt;<i> &gt;&gt;&gt; the initial grid for MESQUITE to smooth.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; 2) implement your own version of mesquite's mesh access
+</I>&gt;<i> &gt;&gt;&gt;&gt; functions which will pull the data directly out of your
+</I>&gt;<i> &gt;&gt;&gt;&gt; implementation.  If you're not conversant in C++, that might be
+</I>&gt;<i> &gt;&gt;&gt;&gt; difficult.
+</I>&gt;<i> &gt;&gt;&gt; Very difficult. Though today I spoke to a couple of other
+</I>&gt;<i> &gt;&gt;&gt; researchers in my group that said I may be able to learn C and
+</I>&gt;<i> &gt;&gt;&gt; then C++ in 40 to 50 days (2-3 months). So I haven't given up
+</I>&gt;<i> &gt;&gt;&gt; hope with this.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt; I'm not sure it would even take you that long, but maybe...
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; 3) Read your mesh into MOAB, and hand it to mesquite that way.
+</I>&gt;<i> &gt;&gt;&gt;&gt; This method is more complicated to begin with, but is a good
+</I>&gt;<i> &gt;&gt;&gt;&gt; longer-term solution, esp. if you're wanting to get the mesh
+</I>&gt;<i> &gt;&gt;&gt;&gt; interacting with the geometry.  However, the picture you sent
+</I>&gt;<i> &gt;&gt;&gt;&gt; for the shuttle mesh looked like your points are already on the
+</I>&gt;<i> &gt;&gt;&gt;&gt;  surface.  If that's true and you're ok with their location,
+</I>&gt;<i> &gt;&gt;&gt;&gt; this option is probably overkill.
+</I>&gt;<i> &gt;&gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt;&gt; Where is your geometry coming from?  Iges, Step, CAD, facets?
+</I>&gt;<i> &gt;&gt;&gt;&gt; I'm interested in seeing if any of the tools I work on would
+</I>&gt;<i> &gt;&gt;&gt;&gt; help with this process.
+</I>&gt;<i> &gt;&gt;&gt; Ok, this is where the root of some ideas are. I have two types of
+</I>&gt;<i> &gt;&gt;&gt;  applications in mind. The first is one where I have a surface
+</I>&gt;<i> &gt;&gt;&gt; geometry specified by NURBS, probably IGES and possibly a CAD
+</I>&gt;<i> &gt;&gt;&gt; program such as AML, and a topology for a grid. In this mode, I
+</I>&gt;<i> &gt;&gt;&gt; would want MESQUITE to attach the topology to the geometry of the
+</I>&gt;<i> &gt;&gt;&gt; vehicle, where I would specify which nodes attach to which set of
+</I>&gt;<i> &gt;&gt;&gt; surfaces. For example, nodes that attach to the wall of the
+</I>&gt;<i> &gt;&gt;&gt; configuration and those that attach to an outer flow domain
+</I>&gt;<i> &gt;&gt;&gt; surface.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; The second application is one where I have spent the time
+</I>&gt;<i> &gt;&gt;&gt; generating the wall grid of a vehicle, thereby defining the
+</I>&gt;<i> &gt;&gt;&gt; topology. I'd simply then extend the block corners to an outer
+</I>&gt;<i> &gt;&gt;&gt; boundary defined by facets (STL or triangular mesh). Then, let
+</I>&gt;<i> &gt;&gt;&gt; MESQUTIE move the nodes attached to the outer boundary as needed
+</I>&gt;<i> &gt;&gt;&gt; to get an &quot;optimum&quot; mesh.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt; I'd be interested in talking to you about this.  The smoothing that
+</I>&gt;<i> &gt;&gt;  mesquite provides is one piece of this, but there are others too
+</I>&gt;<i> &gt;&gt; (geometry, mesh, attaching &amp; relating the two).  The tools we've
+</I>&gt;<i> &gt;&gt; been developing as part of ITAPS (a DOE SciDAC project) would be
+</I>&gt;<i> &gt;&gt; pretty useful in this context.  Many are also directly callable
+</I>&gt;<i> &gt;&gt; from Fortran.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; To get an idea of what I'm talking about, start from
+</I>&gt;<i> &gt;&gt; <A HREF="http://trac.mcs.anl.gov/projects/ITAPS/wiki.">http://trac.mcs.anl.gov/projects/ITAPS/wiki.</A>  You might've heard of
+</I>&gt;<i> &gt;&gt; CGM before, it's analogous to CAPRI.  MOAB is analogous, but for
+</I>&gt;<i> &gt;&gt; mesh data instead of geometry.
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; - tim
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; I'm just severely hampered by the C++ issue.
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt;&gt; What's MOAB?
+</I>&gt;<i> &gt;&gt;&gt;
+</I>&gt;<i> &gt;&gt; -- ================================================================
+</I>&gt;<i> &gt;&gt;  &quot;You will keep in perfect peace him whose mind is steadfast,
+</I>&gt;<i> &gt;&gt; because he trusts in you.&quot;               Isaiah 26:3
+</I>&gt;<i> &gt;&gt;
+</I>&gt;<i> &gt;&gt; Tim Tautges            Argonne National Laboratory
+</I>&gt;<i> &gt;&gt; (<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">tautges at mcs.anl.gov</A>)      (telecommuting from UW-Madison) phone:
+</I>&gt;<i> &gt;&gt; (608) 263-8485      1500 Engineering Dr. fax: (608) 263-4499
+</I>&gt;<i> &gt;&gt; Madison, WI 53706
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> 
+</I>&gt;<i> --
+</I>&gt;<i> ================================================================
+</I>&gt;<i> &quot;You will keep in perfect peace him whose mind is
+</I>&gt;<i>    steadfast, because he trusts in you.&quot;               Isaiah 26:3
+</I>&gt;<i> 
+</I>&gt;<i>               Tim Tautges            Argonne National Laboratory
+</I>&gt;<i>           (<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">tautges at mcs.anl.gov</A>)      (telecommuting from UW-Madison)
+</I>&gt;<i>           phone: (608) 263-8485      1500 Engineering Dr.
+</I>&gt;<i>             fax: (608) 263-4499      Madison, WI 53706
+</I>
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000040.html">[Mesquite] Accessing Mesh Data
+</A></li>
+	<LI>Next message: <A HREF="000033.html">[Mesquite] Babel Installation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#41">[ date ]</a>
+              <a href="thread.html#41">[ thread ]</a>
+              <a href="subject.html#41">[ subject ]</a>
+              <a href="author.html#41">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

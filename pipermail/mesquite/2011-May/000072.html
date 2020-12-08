@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] node dependencies
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20node%20dependencies&In-Reply-To=%3C4DDA9D47.5070405%40cae.wisc.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000071.html">
+   <LINK REL="Next"  HREF="000073.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] node dependencies</H1>
+    <B>Jason Kraftcheck</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20node%20dependencies&In-Reply-To=%3C4DDA9D47.5070405%40cae.wisc.edu%3E"
+       TITLE="[Mesquite] node dependencies">kraftche at cae.wisc.edu
+       </A><BR>
+    <I>Mon May 23 11:45:43 MDT 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000071.html">[Mesquite] node dependencies
+</A></li>
+        <LI>Next message: <A HREF="000073.html">[Mesquite] node dependencies
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#72">[ date ]</a>
+              <a href="thread.html#72">[ thread ]</a>
+              <a href="subject.html#72">[ subject ]</a>
+              <a href="author.html#72">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Mesquite does not currently have the ability to do anything like this.
+Brian's suggestion to use a MeshDomain to enforce consistent positions
+between the dependent vertices is probably the easiest work around.
+
+An alternate solution would be to do a Nash game optimization (single free
+vertex patches) where each dependent vertex B is never the free vertex in a
+patch.  You might be able to do this type of solution without making
+extensive changes to Mesquite.  You will need to:
+  1) Define a custom optimization algorithm assembled from Mesquite
+components (e.g. copy shape improvement wrapper, and make some minor changes
+such that it does a Nash game optimization.)  This should actually be quite
+easy (change a few lines of code.)
+  2) Define a custom subclass of Mesquite::Mesh that a) tells mesquite that
+dependent vertices are fixed and b) changes the location of dependent
+vertices when asked to set the coordinates of the vertices that they depend
+on.  If you are not already using a custom Mesquite::Mesh implementation to
+access your application data directly, just create a subclass of whichever
+Mesquite::Mesh implementation you are using (e.g. MeshImpl) and overload the
+vertices_set_coordinates and vertices_get_fixed_flag methods.
+
+To do this the &quot;right&quot; way for the global optimization that
+ShapeImprovementWrapper uses would require some new infrastructure in
+Mesquite.  It would involve some kind of post-processing of the calculated
+gradient and Hessian values, redistributing terms after applying the
+appropriate transform.  If vertex A is defined to be some function of the
+position of vertex B, then three things need to happen:  First, any gradient
+and Hessian terms for vertex B need to be transferred to vertex A utilizing
+the derivatives of the function mapping the position of A to B.  Second, the
+coordinates of vertex B need to be removed from the list of free variables.
+ And finally, after each optimization step the mapping function must be
+evaluated to set the coordinates of B appropriately from those of A.
+
+- jason
+
+
+
+On 05/21/2011 03:02 PM, Becker, Martin wrote:
+&gt;<i> Hello,
+</I>&gt;<i> 
+</I>&gt;<i> I'm using Mesquite for smoothing meshes coming from my own simple mesh
+</I>&gt;<i> generator for hydraulic turbines. The 3D-mesh consists of several 2D
+</I>&gt;<i> slices on which I do the smoothing with the ShapeImprovement wrapper. 
+</I>&gt;<i> Currently, I fix all the boundary nodes. This is working fine.
+</I>&gt;<i> 
+</I>&gt;<i> Turbomachine simulations often take advantage of rotational periodicity
+</I>&gt;<i> by meshing only one blade passage with periodic boundary conditions. The
+</I>&gt;<i> periodic boundaries are meshed with matching nodes on left and right
+</I>&gt;<i> side. I could now further improve my mesh quality by introducing
+</I>&gt;<i> dependencies between those matching node pairs and so give Mesquite the
+</I>&gt;<i> chance to move those nodes in at least one axis direction, specifying
+</I>&gt;<i> that the polar angle between these nodes should be fixed to
+</I>&gt;<i> 360&#176;/number_of_blades. Is something like that possible?
+</I>&gt;<i> 
+</I>&gt;<i> It would be great if someone could point me to some example or to the
+</I>&gt;<i> relevant lines of code ...
+</I>&gt;<i> 
+</I>&gt;<i> Thanks a lot for your help!
+</I>&gt;<i> 
+</I>&gt;<i> Martin
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000071.html">[Mesquite] node dependencies
+</A></li>
+	<LI>Next message: <A HREF="000073.html">[Mesquite] node dependencies
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#72">[ date ]</a>
+              <a href="thread.html#72">[ thread ]</a>
+              <a href="subject.html#72">[ subject ]</a>
+              <a href="author.html#72">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

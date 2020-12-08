@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Tutorial in FORTAN
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Tutorial%20in%20FORTAN&In-Reply-To=%3C49CBDB49.6010306%40cae.wisc.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000002.html">
+   <LINK REL="Next"  HREF="000005.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Tutorial in FORTAN</H1>
+    <B>Jason Kraftcheck</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Tutorial%20in%20FORTAN&In-Reply-To=%3C49CBDB49.6010306%40cae.wisc.edu%3E"
+       TITLE="[Mesquite] Tutorial in FORTAN">kraftche at cae.wisc.edu
+       </A><BR>
+    <I>Thu Mar 26 13:45:13 MDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000002.html">[Mesquite] Tutorial in FORTAN
+</A></li>
+        <LI>Next message: <A HREF="000005.html">[Mesquite] MESQUITE Capabilities
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3">[ date ]</a>
+              <a href="thread.html#3">[ thread ]</a>
+              <a href="subject.html#3">[ subject ]</a>
+              <a href="author.html#3">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Alter, Stephen J. (LARC-D305) wrote:
+&gt;<i> Is there a MESQUTIE tutorial in FORTRAN? Can MESQUITE be run with
+</I>&gt;<i> FORTRAN calls or does it require C?
+</I>&gt;<i> 
+</I>
+There is no tutorial for using mesquite with FORTRAN.  It is possible to use
+Mesquite from Fortran, but there is no direct FORTRAN API.  What is
+typically done is to write a custom Fortran API in C++ (typically a single
+function).  For example, the following C++ code:
+
+  /* define a Fortran subroutine to call the solver */
+  extern &quot;C&quot; {
+    void call_mesquite_( int* num_vertices,
+                         double* vertex_coordinates,
+                         int* num_elements,
+                         int* element_type,
+                         int* element_connectivity );
+  }
+
+  void call_mesquite_( int* num_vertices,
+                       double* vertex_coordinates,
+                       int* num_elements,
+                       int* element_type,
+                       int* element_connectivity,
+                       int* error_code )
+  {
+	// set up input (custom subclass of Mesquite::Mesh for
+        // Mesquite 1.1, use ArrayMesh class in later versions.
+        ...
+
+        // set up optimizer (or just call ShapeImprovementWrapper)
+        ...
+
+        // If necessary (not necessary for ArrayMesh), copy resulting
+        // vertex coordinates back into passed array
+        ...
+  }
+
+
+- jason
+
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000002.html">[Mesquite] Tutorial in FORTAN
+</A></li>
+	<LI>Next message: <A HREF="000005.html">[Mesquite] MESQUITE Capabilities
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3">[ date ]</a>
+              <a href="thread.html#3">[ thread ]</a>
+              <a href="subject.html#3">[ subject ]</a>
+              <a href="author.html#3">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] imesh question
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20imesh%20question&In-Reply-To=%3CCANnpLWfZRDMbA7bjPJ4zv9KTPCa5yrUMFJmAr2CkDNM%3DLH74Mg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000095.html">
+   <LINK REL="Next"  HREF="000097.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] imesh question</H1>
+    <B>Iulian Grindeanu</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20imesh%20question&In-Reply-To=%3CCANnpLWfZRDMbA7bjPJ4zv9KTPCa5yrUMFJmAr2CkDNM%3DLH74Mg%40mail.gmail.com%3E"
+       TITLE="[Mesquite] imesh question">iulian.grindeanu at gmail.com
+       </A><BR>
+    <I>Fri Feb 17 15:46:37 MST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000095.html">[Mesquite] turn on debugging ?
+</A></li>
+        <LI>Next message: <A HREF="000097.html">[Mesquite] imesh question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#96">[ date ]</a>
+              <a href="thread.html#96">[ thread ]</a>
+              <a href="subject.html#96">[ subject ]</a>
+              <a href="author.html#96">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+In the implementation of Mesquite::Mesh related to iMesh interface,
+MsqIMesh, the methods like
+void MsqIMesh::vertices_get_attached_elements(
+                                     const VertexHandle* vertices,
+                                     size_t num_vertex,
+                                     std::vector&lt;ElementHandle&gt;&amp; elements,
+                                     std::vector&lt;size_t&gt;&amp; offsets,
+                                     MsqError&amp; err )
+
+do not filter the results based on the elements in the input set.
+
+So nodes on the boundary of a set will return other elements too, that are
+not in the set.
+Is this intentional?
+
+Thanks,
+Iulian
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20120217/1f33e02f/attachment.html">https://software.sandia.gov/pipermail/mesquite/attachments/20120217/1f33e02f/attachment.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000095.html">[Mesquite] turn on debugging ?
+</A></li>
+	<LI>Next message: <A HREF="000097.html">[Mesquite] imesh question
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#96">[ date ]</a>
+              <a href="thread.html#96">[ thread ]</a>
+              <a href="subject.html#96">[ subject ]</a>
+              <a href="author.html#96">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Mesquite
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Mesquite&In-Reply-To=%3C4DA1F950.6050301%40cae.wisc.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000054.html">
+   <LINK REL="Next"  HREF="000056.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Mesquite</H1>
+    <B>Jason Kraftcheck</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Mesquite&In-Reply-To=%3C4DA1F950.6050301%40cae.wisc.edu%3E"
+       TITLE="[Mesquite] Mesquite">kraftche at cae.wisc.edu
+       </A><BR>
+    <I>Sun Apr 10 12:39:12 MDT 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000054.html">[Mesquite] Mesquite
+</A></li>
+        <LI>Next message: <A HREF="000056.html">[Mesquite] Smooth scheme for free meshes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#55">[ date ]</a>
+              <a href="thread.html#55">[ thread ]</a>
+              <a href="subject.html#55">[ subject ]</a>
+              <a href="author.html#55">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>The VTK parser in Mesquite reached the end of the file when it expected 
+more data.  Please verify that your VTK file is a) correct and b) 
+version 3.0 or earlier (not the later XML-based file formats.)
+
+- jason
+
+
+
+On 04/10/2011 04:29 AM, Dhaval wrote:
+&gt;<i> Hi All,
+</I>&gt;<i> I am quite new to Mesquite. I have a Ls-dyna mesh file (*.k format) on
+</I>&gt;<i> which I want to try Smoothing. I understood from the Mesquite manual
+</I>&gt;<i> that it can read only VTK and ExodusII files. So I converted my file to
+</I>&gt;<i> VTK format. But, when I try to read it, I encountered following errors.
+</I>&gt;<i> Can you please help me to understand what is happening and what is the
+</I>&gt;<i> solution.
+</I>&gt;<i> Also, If any can anybody provide me set of commands I should use to read
+</I>&gt;<i> file in VTK or Exodus format?
+</I>&gt;<i> Thanks
+</I>&gt;<i> Dhaval
+</I>&gt;<i> MESQUITE ERROR 8 : File truncated.
+</I>&gt;<i>
+</I>&gt;<i>    at const char*
+</I>&gt;<i> Mesquite2::FileTokenizer::get_string(Mesquite2::MsqError&amp;) at
+</I>&gt;<i> src/Misc/FileTokenizer.cpp:68
+</I>&gt;<i>    in int Mesquite2::FileTokenizer::match_token(const char* const*,
+</I>&gt;<i> Mesquite2::MsqError&amp;) at src/Misc/FileTokenizer.cpp:409
+</I>&gt;<i>    in void*
+</I>&gt;<i> Mesquite2::MeshImpl::vtk_read_attrib_data(Mesquite2::FileTokenizer&amp;,
+</I>&gt;<i> long int, Mesquite2::TagDescription&amp;, Mesquite2::MsqError&amp;) at
+</I>&gt;<i> src/Mesh/MeshImpl.cpp:2122
+</I>&gt;<i>    in void
+</I>&gt;<i> Mesquite2::MeshImpl::vtk_read_dataset(Mesquite2::FileTokenizer&amp;,
+</I>&gt;<i> Mesquite2::MsqError&amp;) at src/Mesh/MeshImpl.cpp:1658
+</I>&gt;<i>    in void Mesquite2::MeshImpl::read_vtk(const char*,
+</I>&gt;<i> Mesquite2::MsqError&amp;) at src/Mesh/MeshImpl.cpp:1453
+</I>&gt;<i>
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">raman2805 at raman2805-MM061</A>:~/Desktop/Anoop$ ./a.out
+</I>&gt;<i> VTK_and_Exd_Files/knee_vtk_bin.vtk
+</I>&gt;<i> MESQUITE ERROR 12 : Cannot read BINARY VTK files -- use ASCII.
+</I>&gt;<i>    at void Mesquite2::MeshImpl::read_vtk(const char*,
+</I>&gt;<i> Mesquite2::MsqError&amp;) at src/Mesh/MeshImpl.cpp:1424
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Mesquite mailing list
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000054.html">[Mesquite] Mesquite
+</A></li>
+	<LI>Next message: <A HREF="000056.html">[Mesquite] Smooth scheme for free meshes
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#55">[ date ]</a>
+              <a href="thread.html#55">[ thread ]</a>
+              <a href="subject.html#55">[ subject ]</a>
+              <a href="author.html#55">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

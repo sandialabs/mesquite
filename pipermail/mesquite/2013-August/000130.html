@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Problem update PatchData in Feasiable Newton
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Problem%20update%20PatchData%20in%20Feasiable%20Newton&In-Reply-To=%3C5211DAF6.1010605%40fnb.tu-darmstadt.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Problem update PatchData in Feasiable Newton</H1>
+    <B>Ulrich Falk</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Problem%20update%20PatchData%20in%20Feasiable%20Newton&In-Reply-To=%3C5211DAF6.1010605%40fnb.tu-darmstadt.de%3E"
+       TITLE="[Mesquite] Problem update PatchData in Feasiable Newton">falk at fnb.tu-darmstadt.de
+       </A><BR>
+    <I>Mon Aug 19 02:44:38 MDT 2013</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#130">[ date ]</a>
+              <a href="thread.html#130">[ thread ]</a>
+              <a href="subject.html#130">[ subject ]</a>
+              <a href="author.html#130">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>  Hi all,
+
+i would like to modify the coordinates within the Feasible Newton 
+Optimization Procedure.
+Therefore the following example code I was trying to use:
+
+     Mesh* mr= pd.get_mesh();
+      pd.update_mesh(err);
+      std::vector&lt;Mesh::VertexHandle&gt; vertices;
+      mr-&gt;get_all_vertices(vertices, err );
+      MsqVertex coords;
+
+     for(unsigned int k = 0; k &lt; (vertices.size()) ; k++){
+     Mesh::VertexHandle vertex = vertices[k];
+     mr-&gt;vertices_get_coordinates( &amp;vertex, &amp;coords, 1, err );
+     coords[0]=coords[0]+1;
+     coords[1]=coords[1];
+     coords[2]=coords[2];
+     mr-&gt;vertex_set_coordinates(vertex,coords,err);
+      }
+       pd.set_mesh(mr);
+
+The funny thing is that only the first vertex coordinate gets updated 
+(k=0) in Patch Data. For all other vertices (k=1,vertices.size()) noting 
+is happening.
+-&gt; in Mesh &quot;mr&quot; everything gets updated (checked via vtk-Writer).  I 
+have no idea why? Any hints would be appreciated.
+I'm using Mesquite Version 2.2.
+
+Thanks
+
+Ulrich Falk
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#130">[ date ]</a>
+              <a href="thread.html#130">[ thread ]</a>
+              <a href="subject.html#130">[ subject ]</a>
+              <a href="author.html#130">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

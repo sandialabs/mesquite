@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Mesquite Digest, Vol 30, Issue 1
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20Re%3A%20%5BMesquite%5D%20Mesquite%20Digest%2C%20Vol%2030%2C%20Issue%201&In-Reply-To=%3C53E38295.1010304%40gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000135.html">
+   <LINK REL="Next"  HREF="000139.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Mesquite Digest, Vol 30, Issue 1</H1>
+    <B>Huayi Wei</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20Re%3A%20%5BMesquite%5D%20Mesquite%20Digest%2C%20Vol%2030%2C%20Issue%201&In-Reply-To=%3C53E38295.1010304%40gmail.com%3E"
+       TITLE="[Mesquite] Mesquite Digest, Vol 30, Issue 1">huayiwei1984 at gmail.com
+       </A><BR>
+    <I>Thu Aug  7 07:43:49 MDT 2014</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000135.html">[Mesquite] structured grids
+</A></li>
+        <LI>Next message: <A HREF="000139.html">[Mesquite] Mesquite Digest, Vol 30, Issue 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#136">[ date ]</a>
+              <a href="thread.html#136">[ thread ]</a>
+              <a href="subject.html#136">[ subject ]</a>
+              <a href="author.html#136">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Martin,
+
+Mesquite can be used to improve structured grid. You can convert 
+structured grid into unstructured format in vtk file, like following 
+(two quad):
+
+3-------4-------5
+|<i>        |         |
+</I>|<i>        |         |
+</I>0-------1-------2
+```
+# vtk DataFile Version 3.0
+CGAL mesh
+ASCII
+DATASET UNSTRUCTURED_GRID
+POINTS 6 double
+0.0 0.0
+1.0 0.0
+2.0 0.0
+0.0 1.0
+1.0 1.0
+2.0 1.0
+CELLS 2 10
+4 0 1 4 3
+4 1 2 5 4
+POINT_DATA 6
+SCALARS fixed float
+LOOKUP_TABLE default
+1
+1
+1
+0
+0
+0
+```
+
+Best
+
+Huayi
+
+On 2014&#24180;08&#26376;07&#26085; 02:00, <A HREF="https://software.sandia.gov/mailman/listinfo/mesquite">mesquite-request at software.sandia.gov</A> wrote:
+&gt;<i> Send Mesquite mailing list submissions to
+</I>&gt;<i> 	<A HREF="https://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>
+</I>&gt;<i>
+</I>&gt;<i> To subscribe or unsubscribe via the World Wide Web, visit
+</I>&gt;<i> 	<A HREF="https://software.sandia.gov/mailman/listinfo/mesquite">https://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>&gt;<i> or, via email, send a message with subject or body 'help' to
+</I>&gt;<i> 	<A HREF="https://software.sandia.gov/mailman/listinfo/mesquite">mesquite-request at software.sandia.gov</A>
+</I>&gt;<i>
+</I>&gt;<i> You can reach the person managing the list at
+</I>&gt;<i> 	<A HREF="https://software.sandia.gov/mailman/listinfo/mesquite">mesquite-owner at software.sandia.gov</A>
+</I>&gt;<i>
+</I>&gt;<i> When replying, please edit your Subject line so it is more specific
+</I>&gt;<i> than &quot;Re: Contents of Mesquite digest...&quot;
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> Today's Topics:
+</I>&gt;<i>
+</I>&gt;<i>     1. structured grids (<A HREF="https://software.sandia.gov/mailman/listinfo/mesquite">Martin.Blume at ruhr-uni-bochum.de</A>)
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> ----------------------------------------------------------------------
+</I>&gt;<i>
+</I>&gt;<i> Message: 1
+</I>&gt;<i> Date: Wed, 6 Aug 2014 14:54:29 +0000
+</I>&gt;<i> From: &lt;<A HREF="https://software.sandia.gov/mailman/listinfo/mesquite">Martin.Blume at ruhr-uni-bochum.de</A>&gt;
+</I>&gt;<i> To: &lt;<A HREF="https://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>&gt;
+</I>&gt;<i> Subject: [Mesquite] structured grids
+</I>&gt;<i> Message-ID:
+</I>&gt;<i> 	&lt;<A HREF="https://software.sandia.gov/mailman/listinfo/mesquite">34A5398D1CEF7C408701D9864F891F6653A81A at exmbx1.exchange.ruhr-uni-bochum.de</A>&gt;
+</I>&gt;<i> 	
+</I>&gt;<i> Content-Type: text/plain; charset=&quot;us-ascii&quot;
+</I>&gt;<i>
+</I>&gt;<i> Hi,
+</I>&gt;<i>
+</I>&gt;<i> the user guide states:
+</I>&gt;<i> &quot;VTK Files:
+</I>&gt;<i> can only write 'UNSTRUCTURED_GRID'&quot;
+</I>&gt;<i>
+</I>&gt;<i> Does this mean, it is not possible to improve a structured grid and write the improved point positions back into the structured grid?
+</I>&gt;<i> Or is it possible via the other interface (ITAPS iMesh).
+</I>&gt;<i> I need a structured grid for my simulations.
+</I>&gt;<i>
+</I>&gt;<i> Thank you in advance.
+</I>&gt;<i> Regards,
+</I>&gt;<i> Martin
+</I>&gt;<i> -------------- next part --------------
+</I>&gt;<i> An HTML attachment was scrubbed...
+</I>&gt;<i> URL: &lt;<A HREF="http://software.sandia.gov/pipermail/mesquite/attachments/20140806/f9f58b9d/attachment-0001.html">http://software.sandia.gov/pipermail/mesquite/attachments/20140806/f9f58b9d/attachment-0001.html</A>&gt;
+</I>&gt;<i>
+</I>&gt;<i> ------------------------------
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Mesquite mailing list
+</I>&gt;<i> <A HREF="https://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;<i> <A HREF="https://software.sandia.gov/mailman/listinfo/mesquite">https://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> End of Mesquite Digest, Vol 30, Issue 1
+</I>&gt;<i> ***************************************
+</I>
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000135.html">[Mesquite] structured grids
+</A></li>
+	<LI>Next message: <A HREF="000139.html">[Mesquite] Mesquite Digest, Vol 30, Issue 1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#136">[ date ]</a>
+              <a href="thread.html#136">[ thread ]</a>
+              <a href="subject.html#136">[ subject ]</a>
+              <a href="author.html#136">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

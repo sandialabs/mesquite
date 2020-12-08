@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Accessing Mesh Data
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Accessing%20Mesh%20Data&In-Reply-To=%3CFDD724529494FF4595F7C6BD415BB76312A39389%40NDMSSCC07.ndc.nasa.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000028.html">
+   <LINK REL="Next"  HREF="000030.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Accessing Mesh Data</H1>
+    <B>Alter, Stephen J. (LARC-D305)</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Accessing%20Mesh%20Data&In-Reply-To=%3CFDD724529494FF4595F7C6BD415BB76312A39389%40NDMSSCC07.ndc.nasa.gov%3E"
+       TITLE="[Mesquite] Accessing Mesh Data">stephen.j.alter at nasa.gov
+       </A><BR>
+    <I>Thu Apr  2 14:56:20 MDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000028.html">[Mesquite] Accessing Mesh Data
+</A></li>
+        <LI>Next message: <A HREF="000030.html">[Mesquite] Accessing Mesh Data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#29">[ date ]</a>
+              <a href="thread.html#29">[ thread ]</a>
+              <a href="subject.html#29">[ subject ]</a>
+              <a href="author.html#29">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Tim,
+
+   Did we meet at the IMR in Dearborn?
+
+   
+&gt;<i> Time for me to chime in with an outside-mesquite answer for this.
+</I>
+Thank you for a different perspective.
+ 
+&gt;<i> Steve, you can do what you want in several ways:
+</I>&gt;<i> 1) Feed the point locations and element connectivity into mesquite
+</I>&gt;<i> directly, set the surface points as being fixed, then smooth the
+</I>&gt;<i> interior (all this with a wrapper function you'd have to construct
+</I>&gt;<i> which would be callable from Fortran)
+</I>
+Jason has been kind enough to send me this in C++. I'm now developing a method of loading the input grid data and setting the initial grid for MESQUITE to smooth.
+ 
+&gt;<i> 2) implement your own version of mesquite's mesh access functions which
+</I>&gt;<i> will pull the data directly out of your implementation.  If you're not
+</I>&gt;<i> conversant in C++, that might be difficult.
+</I>
+Very difficult. Though today I spoke to a couple of other researchers in my group that said I may be able to learn C and then C++ in 40 to 50 days (2-3 months). So I haven't given up hope with this.
+
+&gt;<i> 3) Read your mesh into MOAB, and hand it to mesquite that way.  This
+</I>&gt;<i> method is more complicated to begin with, but is a good longer-term
+</I>&gt;<i> solution, esp. if you're wanting to get the mesh interacting with the
+</I>&gt;<i> geometry.  However, the picture you sent for the shuttle mesh looked
+</I>&gt;<i> like your points are already on the surface.  If that's true and you're
+</I>&gt;<i> ok with their location, this option is probably overkill.
+</I>&gt;<i> 
+</I>&gt;<i> Where is your geometry coming from?  Iges, Step, CAD, facets?  I'm
+</I>&gt;<i> interested in seeing if any of the tools I work on would help with this
+</I>&gt;<i> process.
+</I>
+Ok, this is where the root of some ideas are. I have two types of applications in mind. The first is one where I have a surface geometry specified by NURBS, probably IGES and possibly a CAD program such as AML, and a topology for a grid. In this mode, I would want MESQUITE to attach the topology to the geometry of the vehicle, where I would specify which nodes attach to which set of surfaces. For example, nodes that attach to the wall of the configuration and those that attach to an outer flow domain surface.
+
+The second application is one where I have spent the time generating the wall grid of a vehicle, thereby defining the topology. I'd simply then extend the block corners to an outer boundary defined by facets (STL or triangular mesh). Then, let MESQUTIE move the nodes attached to the outer boundary as needed to get an &quot;optimum&quot; mesh.
+
+I'm just severely hampered by the C++ issue.
+
+What's MOAB?
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000028.html">[Mesquite] Accessing Mesh Data
+</A></li>
+	<LI>Next message: <A HREF="000030.html">[Mesquite] Accessing Mesh Data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#29">[ date ]</a>
+              <a href="thread.html#29">[ thread ]</a>
+              <a href="subject.html#29">[ subject ]</a>
+              <a href="author.html#29">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Mesquite question
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Mesquite%20question&In-Reply-To=%3C4D596DDD.1060000%40cae.wisc.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Mesquite question</H1>
+    <B>Jason Kraftcheck</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Mesquite%20question&In-Reply-To=%3C4D596DDD.1060000%40cae.wisc.edu%3E"
+       TITLE="[Mesquite] Mesquite question">kraftche at cae.wisc.edu
+       </A><BR>
+    <I>Mon Feb 14 11:01:01 MST 2011</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#52">[ date ]</a>
+              <a href="thread.html#52">[ thread ]</a>
+              <a href="subject.html#52">[ subject ]</a>
+              <a href="author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 02/06/2011 08:27 PM, Jibum Kim wrote:
+&gt;<i> Hi,
+</I>&gt;<i>  
+</I>&gt;<i> I'd like to modify W matrix of Inverse Mean Ratio (IMR) quailty metric
+</I>&gt;<i> in Mesquite.
+</I>&gt;<i>  
+</I>&gt;<i> I think that the default value of W matrix is [ 1 0.5;0 sqrt(3)/2] which
+</I>&gt;<i> is for equilateral triangles.
+</I>&gt;<i>  
+</I>
+For src/QualityMetric/Shape/IdealWeightInverseMeanRatio.cpp that is the
+default for triangle elements.  Obviously other defaults are used for other
+element topologies.
+
+&gt;<i> I noticed two invese mean ratio quality metrics implemented in Mesquite.
+</I>&gt;<i>  
+</I>&gt;<i> One is /src/QualityMetric/Shape/IdealWeightInverseMeanRatio.cpp and
+</I>&gt;<i> another is /src/QualityMetric/TMP/2D/InverseMeanRatio2D.cpp
+</I>&gt;<i>  
+</I>&gt;<i> What is the best way to modify W matrix of IMR metric nad put new values
+</I>&gt;<i> into W matrix?
+</I>&gt;<i>  
+</I>
+src/QualityMetric/TMP/2D/InverseMeanRatio2D.cpp does not have a default W.
+The W matrix is obtained from the TargetCalculator instance.  If you create
+a custom subclass of TargetCalculator you can have it generate whatever
+values you want for W.
+
+- jason
+
+P.S.  In the future please send such questions to the Mesquite mailing list
+(CC'd on this message) rather than to me personally.  Thanks.
+
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#52">[ date ]</a>
+              <a href="thread.html#52">[ thread ]</a>
+              <a href="subject.html#52">[ subject ]</a>
+              <a href="author.html#52">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

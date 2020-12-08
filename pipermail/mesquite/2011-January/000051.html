@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] VolumeRatioQualityMetric
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20VolumeRatioQualityMetric&In-Reply-To=%3C4D3496E5.5030402%40web.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] VolumeRatioQualityMetric</H1>
+    <B>Oliver Borm</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20VolumeRatioQualityMetric&In-Reply-To=%3C4D3496E5.5030402%40web.de%3E"
+       TITLE="[Mesquite] VolumeRatioQualityMetric">oli.borm at web.de
+       </A><BR>
+    <I>Mon Jan 17 12:22:13 MST 2011</I>
+    <P><UL>
+        
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#51">[ date ]</a>
+              <a href="thread.html#51">[ thread ]</a>
+              <a href="subject.html#51">[ subject ]</a>
+              <a href="author.html#51">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I've implemented an additional quality metric in mesquite. This one
+computes the volume expansion ratio between two adjacent cells. The
+source code is attached, if someone is interested in it. It seems to
+optimise the mesh, but the QualityAssessor isn't computed correctly.
+This seems to be because the patchData in the quality metrics, while
+computing the QualityAssessor, is only a single cell and therefore no
+cell_to_cell connectivity can be computed. I don't know how to fix this.
+Does someone maybe has an idea?
+
+Furthermore the cell_to_cell connectivity (with
+get_adjacent_entities_via_n_dim()) gets calculated in advance and stored
+in the PatchData class (similar to the vertex to cell connectivity).
+This should be more efficient, instead of calculating the connectivity
+each time the quality metric is called.
+
+Best regards,
+Oliver
+
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: msq_src_Add.tar.gz
+Type: application/x-gzip
+Size: 28435 bytes
+Desc: not available
+Url : <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20110117/dc265203/attachment-0001.gz">https://software.sandia.gov/pipermail/mesquite/attachments/20110117/dc265203/attachment-0001.gz</A> 
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#51">[ date ]</a>
+              <a href="thread.html#51">[ thread ]</a>
+              <a href="subject.html#51">[ subject ]</a>
+              <a href="author.html#51">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] turn on debugging ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20turn%20on%20debugging%20%3F&In-Reply-To=%3CCB62CA3B.6233%25miller125%40llnl.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000092.html">
+   <LINK REL="Next"  HREF="000094.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] turn on debugging ?</H1>
+    <B>Miller, Brian J.</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20turn%20on%20debugging%20%3F&In-Reply-To=%3CCB62CA3B.6233%25miller125%40llnl.gov%3E"
+       TITLE="[Mesquite] turn on debugging ?">miller125 at llnl.gov
+       </A><BR>
+    <I>Thu Feb 16 12:59:07 MST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000092.html">[Mesquite] turn on debugging ?
+</A></li>
+        <LI>Next message: <A HREF="000094.html">[Mesquite] turn on debugging ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#93">[ date ]</a>
+              <a href="thread.html#93">[ thread ]</a>
+              <a href="subject.html#93">[ subject ]</a>
+              <a href="author.html#93">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Iulian,
+
+You can also place into your application code :
+MsqDebug::enable(1);
+MsqDebug::enable(2);
+MsqDebug::enable(3);
+
+Also make sure you configure your mesquite library with &#8212;enable-debug to get the debugging macros enabled.
+
+Brian
+
+
+On 2/16/12 12:39 AM, &quot;Iulian Grindeanu&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">iulian.grindeanu at gmail.com</A>&gt; wrote:
+
+Hello,
+I have a program that uses mesquite through the itaps interfaces, and I can't figure out where my error is.
+I have compiled my code and mesquite with debugging turned on (-g).
+I see that there is a MSQ_DBGOUT macro that (I am hoping) can help in tracing. How do I enable it? And how do I use it?
+
+Thanks,
+Iulian
+
+
+My program shows an error like this
+
+ITAPS ERROR: Tag Not Found
+Mesquite error in the ShapeImprover surface mesh smoothing=MESQUITE ERROR 13 : ITAPS ERROR: Tag Not Found
+  at virtual void Mesquite3::MsqIMesh::vertices_get_byte(void* const*, unsigned char*, size_t, Mesquite3::MsqError&amp;) at MsqIMesh.cpp:506
+  in void Mesquite3::PatchData::set_mesh_entities(std::vector&lt;void*, std::allocator&lt;void*&gt; &gt;&amp;, std::vector&lt;void*, std::allocator&lt;void*&gt; &gt;&amp;, Mesquite3::MsqError&amp;) at Mesh/PatchData.cpp:1917
+  in double Mesquite3::QualityAssessor::loop_over_mesh_internal(Mesquite3::Mesh*, Mesquite3::MeshDomain*, const Mesquite3::Settings*, Mesquite3::ParallelHelper*, Mesquite3::MsqError&amp;) at QualityAssessor/QualityAssessor.cpp:658
+  in virtual void Mesquite3::InstructionQueue::run_common(Mesquite3::Mesh*, Mesquite3::ParallelMesh*, Mesquite3::MeshDomain*, Mesquite3::Settings*, Mesquite3::MsqError&amp;) at Control/InstructionQueue.cpp:353
+  in virtual void Mesquite3::SizeAdaptShapeWrapper::run_wrapper(Mesquite3::Mesh*, Mesquite3::ParallelMesh*, Mesquite3::MeshDomain*, Mesquite3::Settings*, Mesquite3::QualityAssessor*, Mesquite3::MsqError&amp;) at Wrappers/SizeAdaptShapeWrapper.cpp:97
+  in virtual void Mesquite3::Wrapper::run_common(Mesquite3::Mesh*, Mesquite3::ParallelMesh*, Mesquite3::MeshDomain*, Mesquite3::Settings*, Mesquite3::MsqError&amp;) at Wrappers/Wrapper.cpp:46
+
+
+I was able to stop with the debugger in my code, and indeed, for some node, the fixed tag that I defined before, was not defined anymore.
+So I am assuming that somewhere in my code, I am trashing memory.
+I tried valgrind, and it didn't give me any clue
+
+
+
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20120216/00bda3c3/attachment.html">https://software.sandia.gov/pipermail/mesquite/attachments/20120216/00bda3c3/attachment.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000092.html">[Mesquite] turn on debugging ?
+</A></li>
+	<LI>Next message: <A HREF="000094.html">[Mesquite] turn on debugging ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#93">[ date ]</a>
+              <a href="thread.html#93">[ thread ]</a>
+              <a href="subject.html#93">[ subject ]</a>
+              <a href="author.html#93">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

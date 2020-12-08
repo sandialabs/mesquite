@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] VolumeRatioQualityMetric
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20VolumeRatioQualityMetric&In-Reply-To=%3C4D9DC77C.3010708%40cae.wisc.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000054.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] VolumeRatioQualityMetric</H1>
+    <B>Jason Kraftcheck</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20VolumeRatioQualityMetric&In-Reply-To=%3C4D9DC77C.3010708%40cae.wisc.edu%3E"
+       TITLE="[Mesquite] VolumeRatioQualityMetric">kraftche at cae.wisc.edu
+       </A><BR>
+    <I>Thu Apr  7 08:17:32 MDT 2011</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000054.html">[Mesquite] Mesquite
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#53">[ date ]</a>
+              <a href="thread.html#53">[ thread ]</a>
+              <a href="subject.html#53">[ subject ]</a>
+              <a href="author.html#53">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>On 01/17/2011 01:22 PM, Oliver Borm wrote:
+&gt;<i> Hello,
+</I>&gt;<i> 
+</I>&gt;<i> I've implemented an additional quality metric in mesquite. This one
+</I>&gt;<i> computes the volume expansion ratio between two adjacent cells. The
+</I>&gt;<i> source code is attached, if someone is interested in it. It seems to
+</I>&gt;<i> optimise the mesh, but the QualityAssessor isn't computed correctly.
+</I>&gt;<i> This seems to be because the patchData in the quality metrics, while
+</I>&gt;<i> computing the QualityAssessor, is only a single cell and therefore no
+</I>&gt;<i> cell_to_cell connectivity can be computed. I don't know how to fix this.
+</I>&gt;<i> Does someone maybe has an idea?
+</I>&gt;<i> 
+</I>&gt;<i> Furthermore the cell_to_cell connectivity (with
+</I>&gt;<i> get_adjacent_entities_via_n_dim()) gets calculated in advance and stored
+</I>&gt;<i> in the PatchData class (similar to the vertex to cell connectivity).
+</I>&gt;<i> This should be more efficient, instead of calculating the connectivity
+</I>&gt;<i> each time the quality metric is called.
+</I>&gt;<i> 
+</I>
+Apologies for the tardy response.
+
+As you observed, this metric will not work with QualityAssessor.  It will
+also not work with block coordinate descent optimizations.  This is because
+Mesquite mixes two distinct ideas in its concept of an element-based metric.
+ The first is that the metric is evaluated once for each element, which is
+okay.  The second, where things break, is that the metric value depends only
+on the element.
+
+There are several ways this could be addressed in Mesquite.  The most
+obvious solution and the most work would be to eliminate that second
+assumption.  This would involve giving all metrics a virtual function that
+returned the number of layers of adjacent entities required to evaluate the
+metric and updating QualityAssessor, BCD initialization, and possibly a few
+other places such that they honor that value.
+
+An alternate solution is to re-define the metric as a side-based metric (a
+metric that is evaluated once per shared element side rather than once per
+element).  But this would change the metric.  If the objective function
+where the algebraic mean, then instead of:
+  f = 1/n sum( max( R(e_i,e_j) )
+with i being the element and j being each adjacent element, you'd instead have:
+  f = 1/n sum( R(e_i-,e_i+) )
+where i is the logical element side and e_i- and e_i+ are the two elements
+that share that side.
+
+The downside to the latter approach is that Mesquite doesn't have a concept
+of a side-based metric (or more specifically for this metric an
+interior/shared-side based metric.)  However, you could add such an metric
+type without needing to modify other code in Mesquite.  Simply define the
+type base class (e.g. InteriorSideQM).  You can model such an implementation
+on the existing EdgeQM.  It should be simpler in some ways because you are
+not interested in boundary sides (sides not shared by multiple elements.)
+
+- jason
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000054.html">[Mesquite] Mesquite
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#53">[ date ]</a>
+              <a href="thread.html#53">[ thread ]</a>
+              <a href="subject.html#53">[ subject ]</a>
+              <a href="author.html#53">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

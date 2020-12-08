@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Announcing Mesquite API Changes
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Announcing%20Mesquite%20API%20Changes&In-Reply-To=%3C1443978502.22760647.1359570458787.JavaMail.root%40elemtech.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000126.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Announcing Mesquite API Changes</H1>
+    <B>boyd at elemtech.com</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Announcing%20Mesquite%20API%20Changes&In-Reply-To=%3C1443978502.22760647.1359570458787.JavaMail.root%40elemtech.com%3E"
+       TITLE="[Mesquite] Announcing Mesquite API Changes">boyd at elemtech.com
+       </A><BR>
+    <I>Wed Jan 30 11:27:38 MST 2013</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000126.html">[Mesquite] Note about Mesquite API change announement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#125">[ date ]</a>
+              <a href="thread.html#125">[ thread ]</a>
+              <a href="subject.html#125">[ subject ]</a>
+              <a href="author.html#125">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>A change has been made to the Mesquite API effective with tomorrows current version of the day.  The MeshDomainAssoc class has been added and is explained below.  This change affects all methods that take a mesh and a domain as input such as 'loop_over_mesh()', 'initialize_queue()', 'run_wrapper()', 'run_common()' as well as others. The new class is declared in MeshInterface.hpp.The MeshDomainAssoc class is used to associate a Mesh class instance with a MeshDomain class instance.   When the constructor for the MeshDomainAssoc class is called, a check is performed to determine if the characteristics of the mesh are compatible with the associated domain.    The constructor for the MeshDomainAssoc class:   MeshDomainAssoc(Mesquite::Mesh* mesh,                     Mesquite::MeshDomain* domain,                     bool full_compatibility_check=false,                    bool proceed=false,                    bool skip_compatibility_check=false)where:   - 'mesh' is the mesh instance being associated.   - 'domain' is the domain being associated.   - 'full_compatibility_check' controls how many vertices will be      checked for compatibility with the associated domain.  When false      (the default), only the first vertex of the mesh is checked for     compatibility.  When true, all vertices of the mesh are checked.   - 'proceed' controls what Mesquite will do if the compatibility     check fails.  When false (the default), mesquite terminates     execution.  When true, execution continues.   - 'skip_compatibility_check' when true, does not perform the      compatibility check.  When false (the default), the check is       performed.Only the first two parameters are required when calling the constructor.  All other parameters only need to be specified when something other than the default behavior is desired.In a given program, many different instances of the MeshDomainAssoc class can be created; one for each combination of a specific mesh, domain, and different values for the optional parameters.An example of how MeshDomainAssoc is used can be found in the paraboloid_domain_test located in the testSuite directory. 
+
+
+ 
+
+ 
+  Normal
+  0
+  
+ 
+
+A change has been made to the Mesquite API effective with tomorrows current version of the day.  The MeshDomainAssoc class has been added and is explained below.  This change affects all methods that take a mesh and a domain as input such as 'loop_over_mesh()', 'initialize_queue()', 'run_wrapper()', 'run_common()' as well as others. The new class is declared in MeshInterface.hpp.
+ 
+The MeshDomainAssoc class is used to associate a Mesh class instance with a MeshDomain class instance.   When the constructor for the MeshDomainAssoc class is called, a check is performed to determine if the characteristics of the mesh are compatible with the associated domain.  
+ 
+  The constructor for the MeshDomainAssoc class:
+ 
+   MeshDomainAssoc(Mesquite::Mesh* mesh, 
+                    Mesquite::MeshDomain* domain, 
+                    bool full_compatibility_check=false,
+                    bool proceed=false,
+                    bool skip_compatibility_check=false)
+ 
+where:
+ 
+   - 'mesh' is the mesh instance being associated.
+   - 'domain' is the domain being associated.
+   - 'full_compatibility_check' controls how many vertices will be 
+     checked for compatibility with the associated domain.  When false 
+     (the default), only the first vertex of the mesh is checked for
+     compatibility.  When true, all vertices of the mesh are checked.
+   - 'proceed' controls what Mesquite will do if the compatibility
+     check fails.  When false (the default), mesquite terminates
+     execution.  When true, execution continues.
+   - 'skip_compatibility_check' when true, does not perform the
+      compatibility check.  When false (the default), the check is 
+      performed.
+ 
+  Only the first two parameters are required when calling the constructor.  All other parameters only need to be specified when something other than the default behavior is desired.
+ 
+In a given program, many different instances of the MeshDomainAssoc class can be created; one for each combination of a specific mesh, domain, and different values for the optional parameters.
+ 
+  An example of how MeshDomainAssoc is used can be found in the paraboloid_domain_test located in the testSuite directory.
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20130130/451c0a37/attachment.html">https://software.sandia.gov/pipermail/mesquite/attachments/20130130/451c0a37/attachment.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000126.html">[Mesquite] Note about Mesquite API change announement
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#125">[ date ]</a>
+              <a href="thread.html#125">[ thread ]</a>
+              <a href="subject.html#125">[ subject ]</a>
+              <a href="author.html#125">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

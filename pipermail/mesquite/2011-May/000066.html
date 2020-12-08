@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] MeshImpl.cpp Error
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20MeshImpl.cpp%20Error&In-Reply-To=%3C550172.70457.qm%40web125419.mail.ne1.yahoo.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000065.html">
+   <LINK REL="Next"  HREF="000067.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] MeshImpl.cpp Error</H1>
+    <B>rachu bhatt</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20MeshImpl.cpp%20Error&In-Reply-To=%3C550172.70457.qm%40web125419.mail.ne1.yahoo.com%3E"
+       TITLE="[Mesquite] MeshImpl.cpp Error">rachna316 at yahoo.com
+       </A><BR>
+    <I>Sun May 15 22:05:48 MDT 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000065.html">[Mesquite] Build error
+</A></li>
+        <LI>Next message: <A HREF="000067.html">[Mesquite] Build error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#66">[ date ]</a>
+              <a href="thread.html#66">[ thread ]</a>
+              <a href="subject.html#66">[ subject ]</a>
+              <a href="author.html#66">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi,
+I was trying to use mesquite to smooth a mesh in exodus format. I wrote a code for the same which ended up in an error given.
+I tried building mesquite using different versions of netcdf and exodusii but everytime after successful build when I run the code I found error given.
+
+I presume this is due to the linking problem between MeshImpl.cpp and exodusii library. But could not solve the error.
+
+Is there any mesquite binary available for C++ which can directly be used for coding to avoid such errors?
+
+I used following command for the build:
+
+./configure --prefix=/home/rb/Desktop/MES214 --with-exodus=/home/rb/Desktop/exodusii/cbind --with-netcdf=/home/rb/Desktop/netcdf
+
+Regards,
+Rachna
+
+ERROR-------
+
+<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">rb at ubuntu</A>:~/Desktop/MES214$ g++ -I/home/rb/Desktop/MES214/
+include -L/home/rb/Desktop/MES214/lib/ first.cpp -lmesquite
+/home/rb/Desktop/MES214/lib//libmesquite.a(MeshImpl.o): In function
+`Mesquite2::MeshImpl::write_exodus(char const*, Mesquite2::MsqError&amp;)':
+MeshImpl.cpp:(.text+0x5638): undefined reference to `ex_create'
+MeshImpl.cpp:(.text+0x56ee): undefined reference to `ex_put_init'
+MeshImpl.cpp:(.text+0x59bf): undefined reference to `ex_put_coord'
+MeshImpl.cpp:(.text+0x59fd): undefined reference to `ex_put_coord_names'
+MeshImpl.cpp:(.text+0x5b75): undefined reference to `ex_put_elem_block'
+MeshImpl.cpp:(.text+0x5e80): undefined reference to `ex_put_node_set_param'
+MeshImpl.cpp:(.text+0x608b): undefined reference to `ex_put_elem_conn'
+MeshImpl.cpp:(.text+0x6246): undefined reference to `ex_put_node_set'
+MeshImpl.cpp:(.text+0x6266): undefined reference to `ex_close'
+/home/rb/Desktop/MES214/lib//libmesquite.a(MeshImpl.o): In function
+`Mesquite2::MeshImpl::read_exodus(char const*, Mesquite2::MsqError&amp;)':
+MeshImpl.cpp:(.text+0x63ed): undefined reference to `ex_open'
+MeshImpl.cpp:(.text+0x64bb): undefined reference to `ex_get_init'
+MeshImpl.cpp:(.text+0x65e6): undefined reference to `ex_get_coord'
+MeshImpl.cpp:(.text+0x66b2): undefined reference to `ex_get_elem_blk_ids'
+MeshImpl.cpp:(.text+0x6763): undefined reference to `ex_get_elem_block'
+MeshImpl.cpp:(.text+0x68bc): undefined reference to `ex_get_elem_conn'
+MeshImpl.cpp:(.text+0x6ab0): undefined reference to `ex_get_node_set_param'
+MeshImpl.cpp:(.text+0x6b14): undefined reference to `ex_get_node_set'
+MeshImpl.cpp:(.text+0x6c9f): undefined reference to `ex_get_coord'
+MeshImpl.cpp:(.text+0x6e31): undefined reference to `ex_close'
+collect2: ld returned 1 exit status
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000065.html">[Mesquite] Build error
+</A></li>
+	<LI>Next message: <A HREF="000067.html">[Mesquite] Build error
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#66">[ date ]</a>
+              <a href="thread.html#66">[ thread ]</a>
+              <a href="subject.html#66">[ subject ]</a>
+              <a href="author.html#66">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

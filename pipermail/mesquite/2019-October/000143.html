@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] [EXTERNAL] 3D smoothing with sliding boundary
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20Re%3A%20%5BMesquite%5D%20%5BEXTERNAL%5D%203D%20smoothing%20with%20sliding%20boundary&In-Reply-To=%3C1602967401.4077142.1570364228577.JavaMail.zimbra%40ifsttar.fr%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000144.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] [EXTERNAL] 3D smoothing with sliding boundary</H1>
+    <B>tomas janak</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20Re%3A%20%5BMesquite%5D%20%5BEXTERNAL%5D%203D%20smoothing%20with%20sliding%20boundary&In-Reply-To=%3C1602967401.4077142.1570364228577.JavaMail.zimbra%40ifsttar.fr%3E"
+       TITLE="[Mesquite] [EXTERNAL] 3D smoothing with sliding boundary">tomas.janak at ifsttar.fr
+       </A><BR>
+    <I>Sun Oct  6 06:17:08 MDT 2019</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000144.html">[Mesquite] [EXTERNAL] Help with ViscousCFDTetShapeWrapper
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#143">[ date ]</a>
+              <a href="thread.html#143">[ thread ]</a>
+              <a href="subject.html#143">[ subject ]</a>
+              <a href="author.html#143">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello, 
+my name is Tomas Janak, I am a developer of an open source software for positioning and personalization of finite element human body models called PIPER ( [ <A HREF="http://piper-project.org/">http://piper-project.org/</A> | <A HREF="http://piper-project.org/">http://piper-project.org/</A>  ] ). We have integrated the Mesquite library from Trilinos into PIPER, but currently we are utilizing only a small subset of its features. We would like to add some new smoothing functionality, so we have been wondering if we can get what we want from Mesquite. But so far I have not found a way to do what I want. 
+
+Here is the idea: our models consist of many topologically disconnected components (representing individual anatomical entities of the body like organs, muscles etc.), but there are generally very small gaps between them. Currently, when we do smoothing of &quot;3D&quot; elements (tetrahedrons, hexahedrons etc.), we fix the vertices on the boundary of each component in order to avoid the components penetrating each other after the smoothing. However, in some cases it is those surface vertices that &quot;are wrong&quot; and so we would like to allow them to move, while still respecting the overall shape of the boundary, so that penetrations do not appear (i.e. we want them to &quot;slide&quot; over the boundary). Does Mesquite provide some tools to achieve that? I was looking at the Settings::set_fixed_vertex_mode(FixedVertexMode) method for ShapeImprover, I see one possible option is FIXED_SURFACE, but simply switching to that does not seem to achieve what we want... 
+Note that I do realize that since we are working with discrete meshes, moving the vertices on the boundary will change the shape of it to a certain extent even if their position is on the original boundary (i.e. on some face). But we would still like to try this, hoping we can minimize the changes enough to avoid penetrations. 
+
+Best Regards, 
+Tomas Janak 
+
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: &lt;<A HREF="http://software.sandia.gov/pipermail/mesquite/attachments/20191006/264be724/attachment.html">http://software.sandia.gov/pipermail/mesquite/attachments/20191006/264be724/attachment.html</A>&gt;
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000144.html">[Mesquite] [EXTERNAL] Help with ViscousCFDTetShapeWrapper
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#143">[ date ]</a>
+              <a href="thread.html#143">[ thread ]</a>
+              <a href="subject.html#143">[ subject ]</a>
+              <a href="author.html#143">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

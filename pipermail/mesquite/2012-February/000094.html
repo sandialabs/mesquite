@@ -1,0 +1,155 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] turn on debugging ?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20turn%20on%20debugging%20%3F&In-Reply-To=%3CCANnpLWcLez3AXQ_xvEUejjA%2BzxfokEkUyR1HFX7jOu814dhuEg%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000093.html">
+   <LINK REL="Next"  HREF="000095.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] turn on debugging ?</H1>
+    <B>Iulian Grindeanu</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20turn%20on%20debugging%20%3F&In-Reply-To=%3CCANnpLWcLez3AXQ_xvEUejjA%2BzxfokEkUyR1HFX7jOu814dhuEg%40mail.gmail.com%3E"
+       TITLE="[Mesquite] turn on debugging ?">iulian.grindeanu at gmail.com
+       </A><BR>
+    <I>Thu Feb 16 23:07:34 MST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000093.html">[Mesquite] turn on debugging ?
+</A></li>
+        <LI>Next message: <A HREF="000095.html">[Mesquite] turn on debugging ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#94">[ date ]</a>
+              <a href="thread.html#94">[ thread ]</a>
+              <a href="subject.html#94">[ subject ]</a>
+              <a href="author.html#94">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+Thanks for your help.
+
+I put these in the calling code, but I do not see any tracing info.
+If I recompile Mesquite with
+#define  MSQ_ENABLE_DEBUG 1,2,3 in MsqDebug, then I do see traces output.
+
+Anyway, I am still not able to find my bug.
+I have one more general question:
+
+I have a set of quads on which I am calling this SizeAdaptShapeWrapper
+The fixed tag (value 1) is defined on the boundary of the set, and the
+interior is with tag 0.
+Will mesquite ever request a patch that contains nodes outside this set? I
+mean, do I have to define the fixed tag for the whole mesh or just for the
+set I am interested in?
+
+It seems that one node outside the set is requested by mesquite (for the
+tag), but I am not sure if it is because a bug / trash in my code, or
+mesquite can really ask for more nodes in the mesh.
+When I tried to define the tag for all the nodes, it did not seem to have
+helped :(, it still errors out.
+
+Thank you,
+Iulian
+
+
+
+On Thu, Feb 16, 2012 at 1:59 PM, Miller, Brian J. &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">miller125 at llnl.gov</A>&gt;wrote:
+
+&gt;<i>  Iulian,
+</I>&gt;<i>
+</I>&gt;<i> You can also place into your application code :
+</I>&gt;<i> MsqDebug::enable(1);
+</I>&gt;<i> MsqDebug::enable(2);
+</I>&gt;<i> MsqDebug::enable(3);
+</I>&gt;<i>
+</I>&gt;<i> Also make sure you configure your mesquite library with &#8212;enable-debug to
+</I>&gt;<i> get the debugging macros enabled.
+</I>&gt;<i>
+</I>&gt;<i> Brian
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> On 2/16/12 12:39 AM, &quot;Iulian Grindeanu&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">iulian.grindeanu at gmail.com</A>&gt;
+</I>&gt;<i> wrote:
+</I>&gt;<i>
+</I>&gt;<i> Hello,
+</I>&gt;<i> I have a program that uses mesquite through the itaps interfaces, and I
+</I>&gt;<i> can't figure out where my error is.
+</I>&gt;<i> I have compiled my code and mesquite with debugging turned on (-g).
+</I>&gt;<i> I see that there is a MSQ_DBGOUT macro that (I am hoping) can help in
+</I>&gt;<i> tracing. How do I enable it? And how do I use it?
+</I>&gt;<i>
+</I>&gt;<i> Thanks,
+</I>&gt;<i> Iulian
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> My program shows an error like this
+</I>&gt;<i>
+</I>&gt;<i> ITAPS ERROR: Tag Not Found
+</I>&gt;<i> Mesquite error in the ShapeImprover surface mesh smoothing=MESQUITE ERROR
+</I>&gt;<i> 13 : ITAPS ERROR: Tag Not Found
+</I>&gt;<i>   at virtual void Mesquite3::MsqIMesh::vertices_get_byte(void* const*,
+</I>&gt;<i> unsigned char*, size_t, Mesquite3::MsqError&amp;) at MsqIMesh.cpp:506
+</I>&gt;<i>   in void Mesquite3::PatchData::set_mesh_entities(std::vector&lt;void*,
+</I>&gt;<i> std::allocator&lt;void*&gt; &gt;&amp;, std::vector&lt;void*, std::allocator&lt;void*&gt; &gt;&amp;,
+</I>&gt;<i> Mesquite3::MsqError&amp;) at Mesh/PatchData.cpp:1917
+</I>&gt;<i>   in double
+</I>&gt;<i> Mesquite3::QualityAssessor::loop_over_mesh_internal(Mesquite3::Mesh*,
+</I>&gt;<i> Mesquite3::MeshDomain*, const Mesquite3::Settings*,
+</I>&gt;<i> Mesquite3::ParallelHelper*, Mesquite3::MsqError&amp;) at
+</I>&gt;<i> QualityAssessor/QualityAssessor.cpp:658
+</I>&gt;<i>   in virtual void
+</I>&gt;<i> Mesquite3::InstructionQueue::run_common(Mesquite3::Mesh*,
+</I>&gt;<i> Mesquite3::ParallelMesh*, Mesquite3::MeshDomain*, Mesquite3::Settings*,
+</I>&gt;<i> Mesquite3::MsqError&amp;) at Control/InstructionQueue.cpp:353
+</I>&gt;<i>   in virtual void
+</I>&gt;<i> Mesquite3::SizeAdaptShapeWrapper::run_wrapper(Mesquite3::Mesh*,
+</I>&gt;<i> Mesquite3::ParallelMesh*, Mesquite3::MeshDomain*, Mesquite3::Settings*,
+</I>&gt;<i> Mesquite3::QualityAssessor*, Mesquite3::MsqError&amp;) at
+</I>&gt;<i> Wrappers/SizeAdaptShapeWrapper.cpp:97
+</I>&gt;<i>   in virtual void Mesquite3::Wrapper::run_common(Mesquite3::Mesh*,
+</I>&gt;<i> Mesquite3::ParallelMesh*, Mesquite3::MeshDomain*, Mesquite3::Settings*,
+</I>&gt;<i> Mesquite3::MsqError&amp;) at Wrappers/Wrapper.cpp:46
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> I was able to stop with the debugger in my code, and indeed, for some
+</I>&gt;<i> node, the fixed tag that I defined before, was not defined anymore.
+</I>&gt;<i> So I am assuming that somewhere in my code, I am trashing memory.
+</I>&gt;<i> I tried valgrind, and it didn't give me any clue
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20120217/059c8cef/attachment.html">https://software.sandia.gov/pipermail/mesquite/attachments/20120217/059c8cef/attachment.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000093.html">[Mesquite] turn on debugging ?
+</A></li>
+	<LI>Next message: <A HREF="000095.html">[Mesquite] turn on debugging ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#94">[ date ]</a>
+              <a href="thread.html#94">[ thread ]</a>
+              <a href="subject.html#94">[ subject ]</a>
+              <a href="author.html#94">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

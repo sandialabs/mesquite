@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] mesquite compilation problem
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20mesquite%20compilation%20problem&In-Reply-To=%3CCAC5DD6B.510E%25miller125%40llnl.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000077.html">
+   <LINK REL="Next"  HREF="000079.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] mesquite compilation problem</H1>
+    <B>Miller, Brian J.</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20mesquite%20compilation%20problem&In-Reply-To=%3CCAC5DD6B.510E%25miller125%40llnl.gov%3E"
+       TITLE="[Mesquite] mesquite compilation problem">miller125 at llnl.gov
+       </A><BR>
+    <I>Thu Oct 20 15:15:07 MDT 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000077.html">[Mesquite] mesquite compilation problem
+</A></li>
+        <LI>Next message: <A HREF="000079.html">[Mesquite] mesquite compilation problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#78">[ date ]</a>
+              <a href="thread.html#78">[ thread ]</a>
+              <a href="subject.html#78">[ subject ]</a>
+              <a href="author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Wayne,
+
+Did you previously configure --enable-imesh and --enable-igeom?
+
+Brian
+
+
+On 10/20/11 2:03 PM, &quot;Wayne Christopher&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">wayne at 4raccoons.com</A>&gt; wrote:
+
+&gt;<i> I'm trying to compile mesquite-2.1.4 on ubuntu 11.04 with gcc version
+</I>&gt;<i> 4.5.2.  It fails with undefined symbols.  Any thoughts?
+</I>&gt;<i> 
+</I>&gt;<i> Thanks,
+</I>&gt;<i> 
+</I>&gt;<i>      Wayne
+</I>&gt;<i> 
+</I>&gt;<i> ./configure --enable-64bit --enable-shared --enable-debug
+</I>&gt;<i> make
+</I>&gt;<i> 
+</I>&gt;<i> ....
+</I>&gt;<i> 
+</I>&gt;<i> /bin/bash ../libtool --tag=CXX   --mode=link c++ -Wall -pipe -g  -m64
+</I>&gt;<i> -o vtkrandom randomize.o domain.o ../libmesquite.la libmsqutil.la -lm
+</I>&gt;<i> libtool: link: c++ -Wall -pipe -g -m64 -o .libs/vtkrandom randomize.o
+</I>&gt;<i> domain.o  ../.libs/libmesquite.so ./.libs/libmsqutil.a -lm -Wl,-rpath
+</I>&gt;<i> -Wl,/home/wayne/mesquite/mesquite-install-2.1.4/lib
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_setIntArrData'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getArrData'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_setVtxCoord'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getTagSizeBytes'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getTagHandle'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getTagSizeValues'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to
+</I>&gt;<i> `iMesh_getGeometricDimension'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_destroyTag'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getNumOfType'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iGeom_getArrType'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getEntities'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getEntArrAdj'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getIntData'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getEntArrTopo'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iGeom_getEntNrmlPlXYZ'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getRootSet'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getTagName'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_createTag'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iGeom_getEntNrmlXYZ'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iRel_getEntEntRelation'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getTagType'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_isEntContained'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getIntArrData'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_setArrData'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iGeom_getEntClosestPt'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_getVtxArrCoords'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iGeom_getArrNrmlXYZ'
+</I>&gt;<i> ../.libs/libmesquite.so: undefined reference to `iMesh_setIntData'
+</I>&gt;<i> collect2: ld returned 1 exit status
+</I>&gt;<i> make[2]: *** [vtkrandom] Error 1
+</I>&gt;<i> make[2]: Leaving directory `/home/wayne/mesquite/mesquite-2.1.4/utils'
+</I>&gt;<i> make[1]: *** [all-recursive] Error 1
+</I>&gt;<i> make[1]: Leaving directory `/home/wayne/mesquite/mesquite-2.1.4'
+</I>&gt;<i> make: *** [all] Error 2
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Mesquite mailing list
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000077.html">[Mesquite] mesquite compilation problem
+</A></li>
+	<LI>Next message: <A HREF="000079.html">[Mesquite] mesquite compilation problem
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#78">[ date ]</a>
+              <a href="thread.html#78">[ thread ]</a>
+              <a href="subject.html#78">[ subject ]</a>
+              <a href="author.html#78">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] node dependencies
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20node%20dependencies&In-Reply-To=%3C13E09084BA74384E842DB8D3C1B7D9CD2478FC%40win-data.ad.stellba.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000069.html">
+   <LINK REL="Next"  HREF="000071.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] node dependencies</H1>
+    <B>Becker, Martin</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20node%20dependencies&In-Reply-To=%3C13E09084BA74384E842DB8D3C1B7D9CD2478FC%40win-data.ad.stellba.de%3E"
+       TITLE="[Mesquite] node dependencies">M.Becker at stellba.de
+       </A><BR>
+    <I>Sat May 21 14:02:47 MDT 2011</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000069.html">[Mesquite] Build error
+</A></li>
+        <LI>Next message: <A HREF="000071.html">[Mesquite] node dependencies
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#70">[ date ]</a>
+              <a href="thread.html#70">[ thread ]</a>
+              <a href="subject.html#70">[ subject ]</a>
+              <a href="author.html#70">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+
+I'm using Mesquite for smoothing meshes coming from my own simple mesh generator for hydraulic turbines.
+The 3D-mesh consists of several 2D slices on which I do the smoothing with the ShapeImprovement wrapper.
+Currently, I fix all the boundary nodes. This is working fine.
+
+Turbomachine simulations often take advantage of rotational periodicity by meshing only one blade passage with periodic boundary conditions. The periodic boundaries are meshed with matching nodes on left and right side.
+I could now further improve my mesh quality by introducing dependencies between those matching node pairs and so give Mesquite the chance to move those nodes in at least one axis direction, specifying that the polar angle between these nodes should be fixed to 360&#176;/number_of_blades. Is something like that possible?
+
+It would be great if someone could point me to some example or to the relevant lines of code ...
+
+Thanks a lot for your help!
+
+Martin
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000069.html">[Mesquite] Build error
+</A></li>
+	<LI>Next message: <A HREF="000071.html">[Mesquite] node dependencies
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#70">[ date ]</a>
+              <a href="thread.html#70">[ thread ]</a>
+              <a href="subject.html#70">[ subject ]</a>
+              <a href="author.html#70">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

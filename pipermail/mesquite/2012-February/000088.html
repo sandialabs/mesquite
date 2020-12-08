@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] mesquite build problems with gcc-4.6
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20mesquite%20build%20problems%20with%20gcc-4.6&In-Reply-To=%3C728cb8c9-0a66-4621-a61b-3a96fb2d4af0%40zms02.zcs%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000085.html">
+   <LINK REL="Next"  HREF="000091.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] mesquite build problems with gcc-4.6</H1>
+    <B>boyd at elemtech.com</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20mesquite%20build%20problems%20with%20gcc-4.6&In-Reply-To=%3C728cb8c9-0a66-4621-a61b-3a96fb2d4af0%40zms02.zcs%3E"
+       TITLE="[Mesquite] mesquite build problems with gcc-4.6">boyd at elemtech.com
+       </A><BR>
+    <I>Wed Feb  1 13:08:26 MST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000085.html">[Mesquite] mesquite build problems with gcc-4.6
+</A></li>
+        <LI>Next message: <A HREF="000091.html">[Mesquite] turn on debugging ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#88">[ date ]</a>
+              <a href="thread.html#88">[ thread ]</a>
+              <a href="subject.html#88">[ subject ]</a>
+              <a href="author.html#88">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Oliver,
+
+  The fix is indeed easy.  Just add the include for &lt;cstddef&gt; to src/include/Mesquite.hpp  
+I haven't tested this on gcc 4.6 because I'm running CentOS 6 that does not currently support 4.6 but you shouldn't have any problem.
+
+  We will add the change to the Mesquite source once we can test it with 4.6.
+
+Good Luck!
+
+  Boyd Tidwell
+  Mesquite Support Team
+
+
+----- Original Message -----
+From: Oliver Borm &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">oli.borm at web.de</A>&gt;
+To: <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>
+Sent: Wed, 01 Feb 2012 10:26:23 -0700 (MST)
+Subject: [Mesquite] mesquite build problems with gcc-4.6
+
+Hi,
+
+I cannot compile mesquite with gcc-4.6 out of the box. With gcc-4.5 
+everything is working fine. The following error occurred:
+
+libtool: compile:  c++ -DHAVE_CONFIG_H -I. -I./include -I./itaps 
+-DMSQ_TRAP_FPE -DHAVE_TERMIOS_H -DHAVE_SYS_IOCTL_H -DHAVE_VSNPRINTF 
+-DHAVE_VSPRINTF -DHAVE_CLOCK -DHAVE_TIMES -DHAVE_CBRT 
+-DHAVE_FEENABLEEXCEPT -Iinclude -Iitaps -I./include -I./src/Mesh 
+-I./src/Control -I./src/Control/Wrappers -I./src/MappingFunction 
+-I./src/MappingFunction/Lagrange -I./src/MappingFunction/Linear 
+-I./src/Misc -I./src/ObjectiveFunction -I./src/QualityAssessor 
+-I./src/QualityImprover -I./src/QualityImprover/TopologyModifier 
+-I./src/QualityImprover/VertexMover 
+-I./src/QualityImprover/VertexMover/ConjugateGradient 
+-I./src/QualityImprover/VertexMover/Relaxation 
+-I./src/QualityImprover/VertexMover/SteepestDescent 
+-I./src/QualityImprover/VertexMover/NonSmoothDescent 
+-I./src/QualityImprover/VertexMover/FeasibleNewton 
+-I./src/QualityImprover/VertexMover/Randomize 
+-I./src/QualityImprover/VertexMover/TrustRegion 
+-I./src/QualityImprover/VertexMover/QuasiNewton -I./src/QualityMetric 
+-I./src/QualityMetric/Shape -I./src/QualityMetric/Smoothness 
+-I./src/QualityMetric/TMP -I./src/QualityMetric/TMP/2D 
+-I./src/QualityMetric/TMP/3D -I./src/QualityMetric/Untangle 
+-I./src/QualityMetric/Volume -I./src/TargetCalculator -I./itaps 
+-I./itaps -I./itaps -Wall -pipe -g -O2 -g -O2 -Wall -c 
+src/ObjectiveFunction/CompositeOFAdd.cpp  -fPIC -DPIC -o 
+.libs/CompositeOFAdd.o
+In file included from src/ObjectiveFunction/CompositeOFAdd.cpp:36:0:
+src/ObjectiveFunction/ObjectiveFunction.hpp:273:27: error: 'size_t' has 
+not been declared
+make[3]: *** [CompositeOFAdd.lo] Error 1
+
+It seems to be a known &quot;problem&quot;, as the &lt;cstddef&gt; header is no longer 
+included by default (<A HREF="http://gcc.gnu.org/gcc-4.6/porting_to.html">http://gcc.gnu.org/gcc-4.6/porting_to.html</A>). That 
+means one has to fix this manually. Has this already be done by someone? 
+Maybe it is trivial, if it is included at some essential header files 
+from mesquite. But I don't know which one ...
+
+Thanks,
+Oliver
+
+
+_______________________________________________
+Mesquite mailing list
+<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+
+
+
+</PRE>
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000085.html">[Mesquite] mesquite build problems with gcc-4.6
+</A></li>
+	<LI>Next message: <A HREF="000091.html">[Mesquite] turn on debugging ?
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#88">[ date ]</a>
+              <a href="thread.html#88">[ thread ]</a>
+              <a href="subject.html#88">[ subject ]</a>
+              <a href="author.html#88">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

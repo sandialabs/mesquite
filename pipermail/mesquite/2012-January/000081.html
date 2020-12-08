@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] untangling quadratic hex mesh
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20untangling%20quadratic%20hex%20mesh&In-Reply-To=%3CCANnpLWfVdVuOuVmokGEA0EBwQVeGUbyFW47G3-kYGqjHvdFSJw%40mail.gmail.com%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000082.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] untangling quadratic hex mesh</H1>
+    <B>Iulian Grindeanu</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20untangling%20quadratic%20hex%20mesh&In-Reply-To=%3CCANnpLWfVdVuOuVmokGEA0EBwQVeGUbyFW47G3-kYGqjHvdFSJw%40mail.gmail.com%3E"
+       TITLE="[Mesquite] untangling quadratic hex mesh">iulian.grindeanu at gmail.com
+       </A><BR>
+    <I>Tue Jan 31 09:05:30 MST 2012</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000082.html">[Mesquite] untangling quadratic hex mesh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#81">[ date ]</a>
+              <a href="thread.html#81">[ thread ]</a>
+              <a href="subject.html#81">[ subject ]</a>
+              <a href="author.html#81">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello,
+I need help in untangling a huge mesh; it has about 1 million quadratic
+hexa elements, of which around 300 are inverted.
+I am not sure where they are.
+I created a fixed tag, (1 on the skin, 0 in the interior).
+
+What is the best way to untangle it?
+I modified the testSuite/imesh/main.cpp example, according to the attached
+patch
+
+It didn't work well, it ended up after one step with many more inverted
+elements.
+Can you point me to some documentation about using untangler with quadratic
+hex elements?
+
+Thanks,
+Iulian
+-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20120131/8fe23e0f/attachment.html">https://software.sandia.gov/pipermail/mesquite/attachments/20120131/8fe23e0f/attachment.html</A> 
+-------------- next part --------------
+A non-text attachment was scrubbed...
+Name: patch
+Type: application/octet-stream
+Size: 1164 bytes
+Desc: not available
+Url : <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20120131/8fe23e0f/attachment.obj">https://software.sandia.gov/pipermail/mesquite/attachments/20120131/8fe23e0f/attachment.obj</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000082.html">[Mesquite] untangling quadratic hex mesh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#81">[ date ]</a>
+              <a href="thread.html#81">[ thread ]</a>
+              <a href="subject.html#81">[ subject ]</a>
+              <a href="author.html#81">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

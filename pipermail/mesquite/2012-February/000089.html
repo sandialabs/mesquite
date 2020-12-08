@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] [EXTERNAL] Re:  untangling quadratic hex mesh
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20%5BEXTERNAL%5D%20Re%3A%20%20untangling%20quadratic%20hex%20mesh&In-Reply-To=%3CCB4EFB27.2B4B%25pknupp%40sandia.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000087.html">
+   <LINK REL="Next"  HREF="000090.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] [EXTERNAL] Re:  untangling quadratic hex mesh</H1>
+    <B>Knupp, Patrick</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20%5BEXTERNAL%5D%20Re%3A%20%20untangling%20quadratic%20hex%20mesh&In-Reply-To=%3CCB4EFB27.2B4B%25pknupp%40sandia.gov%3E"
+       TITLE="[Mesquite] [EXTERNAL] Re:  untangling quadratic hex mesh">pknupp at sandia.gov
+       </A><BR>
+    <I>Wed Feb  1 14:33:50 MST 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000087.html">[Mesquite] [EXTERNAL] Re:  untangling quadratic hex mesh
+</A></li>
+        <LI>Next message: <A HREF="000090.html">[Mesquite] [EXTERNAL] Re:  untangling quadratic hex mesh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#89">[ date ]</a>
+              <a href="thread.html#89">[ thread ]</a>
+              <a href="subject.html#89">[ subject ]</a>
+              <a href="author.html#89">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>
+      To clarify my previous message: the sample-point-based
+      Target metrics in Mesquite can be used (in theory) to
+      improve the quality of quadratic element meshes.  One
+      of my summer students was able to do that using a metric
+      similar to TSizeNB1 (I forget which one exactly). He
+      first untangled the mesh with this area-like metric and
+      then applied another (barrier) metric to improve shape.
+      So I know that Mesquite has this capability.  However, I've
+      lost track of exactly which smoothing methods &amp; metrics
+      within Mesquite this actually works on.   Brian Miller
+      has been improving quadratic meshes using Mesquite and he
+      can probably shed some light on this.
+
+      When I said that there are no methods for directly untangling
+      Quadratic meshes in Mesquite or elsewhere, I meant that no
+      papers have been written specifically about such a capability.
+      As you know, untangling linear mesh elements using an 'untangle
+      metric' is already a difficult problem.  Your idea could possibly
+      work, but I think a sample-point based method which not
+      only untangle the mesh, but simultaneously smoothes it is
+      the best long-term solution.
+
+
+On 2/1/12 12:58 PM, &quot;Tim Tautges&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">tautges at mcs.anl.gov</A>&gt; wrote:
+
+&gt;<i>Would there be some merit to posing smoothing of quadratic meshes as
+</I>&gt;<i>smoothing of a linear mesh derived from subdividing
+</I>&gt;<i>the quadratic mesh?  In other words, interpret a quadratic hex, for
+</I>&gt;<i>example, as eight linear hexes, composed from the
+</I>&gt;<i>corner and higher order nodes of the quadratic hex?
+</I>&gt;<i>
+</I>&gt;<i>- tim
+</I>&gt;<i>
+</I>&gt;<i>On 02/01/2012 12:01 PM, Knupp, Patrick wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Sorry Julian, but there currently are no methods either within Mesquite
+</I>&gt;&gt;<i>or
+</I>&gt;&gt;<i> elsewhere for directly untangling quadratic element meshes. Sometimes
+</I>&gt;&gt;<i> one can untangle a tangled mesh by simply using ShapeImprovementWrapper.
+</I>&gt;&gt;<i> We have also used, with some success, as a substitute, Mesquite's
+</I>&gt;&gt;<i>TSizeNB1 or AWSizeNB1
+</I>&gt;&gt;<i> metrics. These metrics try to make all local determinants the same value
+</I>&gt;&gt;<i> (the value must be input). If you are fortunate, the mesh will become
+</I>&gt;&gt;<i>untangled.
+</I>&gt;&gt;<i> You can then improve the shape of the elements using
+</I>&gt;&gt;<i>ShapeImprovementWrapper.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> From: Iulian Grindeanu &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">iulian.grindeanu at gmail.com</A>
+</I>&gt;&gt;<i>&lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">iulian.grindeanu at gmail.com</A>&gt;&gt;
+</I>&gt;&gt;<i> Date: Wed, 1 Feb 2012 10:50:25 -0600
+</I>&gt;&gt;<i> To: &quot;Miller, Brian J.&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">miller125 at llnl.gov</A> &lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">miller125 at llnl.gov</A>&gt;&gt;
+</I>&gt;&gt;<i> Cc: &quot;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>
+</I>&gt;&gt;<i>&lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>&gt;&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>
+</I>&gt;&gt;<i> &lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>&gt;&gt;
+</I>&gt;&gt;<i> Subject: [EXTERNAL] Re: [Mesquite] untangling quadratic hex mesh
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> Hello,
+</I>&gt;&gt;<i> Thanks for the hint,
+</I>&gt;&gt;<i> I see that the UntangleBetaQualityMetric::evaluate is using only corner
+</I>&gt;&gt;<i>positions for hexas
+</I>&gt;&gt;<i> Would that affect my problem, as I am trying to untangle quadratic
+</I>&gt;&gt;<i>meshes?
+</I>&gt;&gt;<i> If I linearize the hexas, everything is positive jacobian. Only when I
+</I>&gt;&gt;<i>consider midnodes some hexas are inverted
+</I>&gt;&gt;<i> So is there an untangler metric for quadratic hex?
+</I>&gt;&gt;<i> Thanks,
+</I>&gt;&gt;<i> Iulian
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> On Tue, Jan 31, 2012 at 11:54 AM, Miller, Brian J. &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">miller125 at llnl.gov</A>
+</I>&gt;&gt;<i>&lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">miller125 at llnl.gov</A>&gt;&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     Iulian,
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     Look at the implementation of ShapeImprovementWrapper.cpp. It first
+</I>&gt;&gt;<i>makes a pass with a solver which tries to
+</I>&gt;&gt;<i>     untangle elements then follows with a shape improving pass.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     Ask if you need more details.
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     Brian
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>     On 1/31/12 8:05 AM, &quot;Iulian Grindeanu&quot; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">iulian.grindeanu at gmail.com</A>
+</I>&gt;&gt;<i>&lt;<A HREF="http://iulian.grindeanu@gmail.com">http://iulian.grindeanu@gmail.com</A>&gt;&gt; wrote:
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         Hello,
+</I>&gt;&gt;<i>         I need help in untangling a huge mesh; it has about 1 million
+</I>&gt;&gt;<i>quadratic hexa elements, of which around 300 are
+</I>&gt;&gt;<i>         inverted.
+</I>&gt;&gt;<i>         I am not sure where they are.
+</I>&gt;&gt;<i>         I created a fixed tag, (1 on the skin, 0 in the interior).
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         What is the best way to untangle it?
+</I>&gt;&gt;<i>         I modified the testSuite/imesh/main.cpp example, according to
+</I>&gt;&gt;<i>the attached patch
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         It didn't work well, it ended up after one step with many more
+</I>&gt;&gt;<i>inverted elements.
+</I>&gt;&gt;<i>         Can you point me to some documentation about using untangler
+</I>&gt;&gt;<i>with quadratic hex elements?
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>         Thanks,
+</I>&gt;&gt;<i>         Iulian
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________ Mesquite mailing list
+</I>&gt;&gt;<i><A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;&gt;<i> &lt;mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>&gt;
+</I>&gt;&gt;<i><A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i>
+</I>&gt;&gt;<i> _______________________________________________
+</I>&gt;&gt;<i> Mesquite mailing list
+</I>&gt;&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>&gt;<i>
+</I>&gt;<i>-- 
+</I>&gt;<i>================================================================
+</I>&gt;<i>&quot;You will keep in perfect peace him whose mind is
+</I>&gt;<i>   steadfast, because he trusts in you.&quot;               Isaiah 26:3
+</I>&gt;<i>
+</I>&gt;<i>              Tim Tautges            Argonne National Laboratory
+</I>&gt;<i>          (<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">tautges at mcs.anl.gov</A>)      (telecommuting from UW-Madison)
+</I>&gt;<i>  phone (gvoice): (608) 354-1459      1500 Engineering Dr.
+</I>&gt;<i>             fax: (608) 263-4499      Madison, WI 53706
+</I>&gt;<i>
+</I>&gt;<i>
+</I>
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000087.html">[Mesquite] [EXTERNAL] Re:  untangling quadratic hex mesh
+</A></li>
+	<LI>Next message: <A HREF="000090.html">[Mesquite] [EXTERNAL] Re:  untangling quadratic hex mesh
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#89">[ date ]</a>
+              <a href="thread.html#89">[ thread ]</a>
+              <a href="subject.html#89">[ subject ]</a>
+              <a href="author.html#89">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

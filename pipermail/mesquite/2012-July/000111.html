@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Compeiling mesquite problem
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Compeiling%20mesquite%20problem&In-Reply-To=%3C1055a301-1dc1-4d54-93d3-33b2cd13e404%40zms02.zcs%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000110.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Compeiling mesquite problem</H1>
+    <B>boyd at elemtech.com</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Compeiling%20mesquite%20problem&In-Reply-To=%3C1055a301-1dc1-4d54-93d3-33b2cd13e404%40zms02.zcs%3E"
+       TITLE="[Mesquite] Compeiling mesquite problem">boyd at elemtech.com
+       </A><BR>
+    <I>Mon Jul  9 10:09:03 MDT 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000110.html">[Mesquite]  Compeiling mesquite problem
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#111">[ date ]</a>
+              <a href="thread.html#111">[ thread ]</a>
+              <a href="subject.html#111">[ subject ]</a>
+              <a href="author.html#111">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hello Shang, 
+
+  Sounds like you are missing the Tribits directory definition.  Here is how to fix it; open cmake (cmake-gui) and search for &quot;Trilinos_TRIBITS_DIR&quot;.  Change the &quot;Value&quot; field to &quot;&lt;trilinos_location&gt;/Trilinos/cmake/tribits&quot;
+
+then 'Congigure'.   That should do it.
+
+  If you have any other problems, let us know.
+
+
+  Boyd Tidwell
+  Mesquite Support Team
+
+
+
+
+----- Original Message -----
+From: &#23578;&#33778;&#33778; &lt;<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">shangfeids at gmail.com</A>&gt;
+To: <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>
+Sent: Sun, 08 Jul 2012 20:24:36 -0600 (MDT)
+
+Subject: [Mesquite]  Compeiling mesquite problem
+
+Hello all, I have a problem when  compiling mesquite.
+Using cmake-gui, select the two folder. After pressing the
+*configure*button, I get a error telling &quot; Error in configuration
+process, project
+files may be invalid&quot; and
+&quot; CMake Error at itaps/CMakeLists.txt:3 (INCLUDE):
+
+ include could not find load file:
+
+ TribitsLibraryMacros&quot;
+
+This occurs in compiling mesquite-2.2.0 and mesquite-2.99, but it won't
+happen in compiling mesquite-2.1.4.
+
+I find the files&quot; itaps/CMakeLists.txt:3&quot; in different versions. They are
+totally different. So maybe it is the key.
+
+I want to know how to solve this problem.
+
+
+Thanks!
+
+
+Shang Feifei
+
+
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000110.html">[Mesquite]  Compeiling mesquite problem
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#111">[ date ]</a>
+              <a href="thread.html#111">[ thread ]</a>
+              <a href="subject.html#111">[ subject ]</a>
+              <a href="author.html#111">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

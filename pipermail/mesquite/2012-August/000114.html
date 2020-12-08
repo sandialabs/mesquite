@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Can Mesquite improve any kind of surface meshes?
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Can%20Mesquite%20improve%20any%20kind%20of%20surface%20meshes%3F&In-Reply-To=%3C5023CCB4.3070804%40itis.ethz.ch%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000113.html">
+   <LINK REL="Next"  HREF="000115.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Can Mesquite improve any kind of surface meshes?</H1>
+    <B>Bryn Lloyd</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Can%20Mesquite%20improve%20any%20kind%20of%20surface%20meshes%3F&In-Reply-To=%3C5023CCB4.3070804%40itis.ethz.ch%3E"
+       TITLE="[Mesquite] Can Mesquite improve any kind of surface meshes?">lloyd at itis.ethz.ch
+       </A><BR>
+    <I>Thu Aug  9 08:44:04 MDT 2012</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000113.html">[Mesquite]  Can Mesquite improve any kind of surface meshes?
+</A></li>
+        <LI>Next message: <A HREF="000115.html">[Mesquite] Using ArrayMesh with specific Wrapper functions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#114">[ date ]</a>
+              <a href="thread.html#114">[ thread ]</a>
+              <a href="subject.html#114">[ subject ]</a>
+              <a href="author.html#114">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Hi Shang, hi list
+
+I recently tried to do something very similar, i.e. create my own 
+MeshDomain, which uses a surface mesh (vtkPolyData) as definition. The 
+header looks something like what I pasted below. I used VTK 
+(www.vtk.org) to implement the snapping and surface data structures 
+(using an OBB tree to locate the triangles or quads quickly).
+
+If I understand correctly, you should have a mapping of each vertex in 
+the mesh to be smoothed to some geometric entity (e.g. surface patch 
+defined by triangles, or edges, etc.). Since your quad mesh does in 
+general not have the same vertices as the triangle mesh, you need some 
+kind of assignment of vertices in the reference triangle mesh function 
+for functions like &quot;snap_to&quot; to be able to snap the vertex to the 
+geometric entity assigned to the vertex handle. Note, in the simplest 
+case, if you have only one geometric entity, you could ignore the vertex 
+handle in &quot;snap_to&quot;.
+
+BTW. My implementation seems to work, however, I am not sure if I did it 
+in the most optimal way, because I am not sure about the assumptions 
+made in the interface of the MeshDomain class. My main confusion is 
+related to the &quot;domain_DoF&quot; function.
+
+Questions: What is the purpose of the &quot;domain_DoF&quot; function? Will the 
+caller (=smoother) for instance not try to project a vertex which is a 
+DOF=3 or DOF=0 vertex or must the MeshDomain::snap_to handle this case 
+itself?
+
+Any clues would be very welcome.
+
+Good luck Shang!
+Cheers, Bryn
+
+-----------------------------
+header file of MeshDomain derived class
+-----------------------------
+#pragma once
+
+#include &quot;MeshingApi.h&quot;
+#include &quot;MeshInterface.hpp&quot;
+
+class vtkPolyData;
+
+namespace MESQUITE_NS
+{
+     class MESHING_API CTriangleSurfaceDomain : public MeshDomain
+     {
+     public:
+         CTriangleSurfaceDomain(vtkPolyData* surface, unsigned short* 
+dof_array, size_t len);
+         virtual ~CTriangleSurfaceDomain();
+
+         ///@{
+         /// Overrides from MeshDomain
+         virtual void snap_to(Mesh::VertexHandle entity_handle,
+             Vector3D &amp;coordinate) const;
+
+         virtual void vertex_normal_at(Mesh::VertexHandle entity_handle,
+             Vector3D &amp;coordinate) const;
+
+         virtual void element_normal_at(Mesh::ElementHandle entity_handle,
+             Vector3D &amp;coordinate) const;
+
+         virtual void vertex_normal_at( const Mesh::VertexHandle* handles,
+             Vector3D coordinates[],
+             unsigned count,
+             MsqError&amp; err ) const;
+
+         virtual void closest_point( Mesh::VertexHandle handle,
+             const Vector3D&amp; position,
+             Vector3D&amp; closest,
+             Vector3D&amp; normal,
+             MsqError&amp; err ) const;
+
+         /// number of DOF of vertex, e.g. 0 for fixed, 2 for surface, 3 
+for free inside volume
+         virtual void domain_DoF( const Mesh::EntityHandle* handle_array,
+             unsigned short* dof_array,
+             size_t num_handles,
+             MsqError&amp; err ) const;
+         ///@}
+
+     protected:
+         void closest_point(const Vector3D&amp; position,
+             Vector3D&amp; closest,
+             Vector3D&amp; normal) const;
+
+     };
+}
+
+
+On 8/9/2012 2:05 PM, Shang Feifei wrote:
+&gt;<i> Hi all, I would like to use Mesquite for smoothing surface meshes. But 
+</I>&gt;<i> they are not simple surfaces like planar surfaces or spherical 
+</I>&gt;<i> surfaces. I know it is possible to smooth simple surface mesh using 
+</I>&gt;<i> Geometric Domains.
+</I>&gt;<i> I want to know that  is it possible to smooth any kind of surface 
+</I>&gt;<i> meshes. For example, I want to smooth a quadrilateral surface mesh of 
+</I>&gt;<i> a tower model. I also have a high-quality triangle mesh of the same 
+</I>&gt;<i> model. Maybe the triangle mesh to the quadrilateral mesh is like the 
+</I>&gt;<i> SphericalDomain to the spherical surface mesh. Is it possible to 
+</I>&gt;<i> smooth the quadrilateral mesh use the ralationship between it and 
+</I>&gt;<i> triangle mesh by Mesquite?
+</I>&gt;<i> Thanks!
+</I>&gt;<i> Shang Feifei
+</I>&gt;<i>
+</I>&gt;<i>
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Mesquite mailing list
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>-------------- next part --------------
+An HTML attachment was scrubbed...
+URL: <A HREF="https://software.sandia.gov/pipermail/mesquite/attachments/20120809/9f830342/attachment.html">https://software.sandia.gov/pipermail/mesquite/attachments/20120809/9f830342/attachment.html</A> 
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000113.html">[Mesquite]  Can Mesquite improve any kind of surface meshes?
+</A></li>
+	<LI>Next message: <A HREF="000115.html">[Mesquite] Using ArrayMesh with specific Wrapper functions
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#114">[ date ]</a>
+              <a href="thread.html#114">[ thread ]</a>
+              <a href="subject.html#114">[ subject ]</a>
+              <a href="author.html#114">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

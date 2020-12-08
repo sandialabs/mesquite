@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Accessing Mesh Data
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Accessing%20Mesh%20Data&In-Reply-To=%3CFDD724529494FF4595F7C6BD415BB76312A392A3%40NDMSSCC07.ndc.nasa.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000023.html">
+   <LINK REL="Next"  HREF="000025.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Accessing Mesh Data</H1>
+    <B>Alter, Stephen J. (LARC-D305)</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Accessing%20Mesh%20Data&In-Reply-To=%3CFDD724529494FF4595F7C6BD415BB76312A392A3%40NDMSSCC07.ndc.nasa.gov%3E"
+       TITLE="[Mesquite] Accessing Mesh Data">stephen.j.alter at nasa.gov
+       </A><BR>
+    <I>Thu Apr  2 11:31:10 MDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000023.html">[Mesquite] Accessing Mesh Data
+</A></li>
+        <LI>Next message: <A HREF="000025.html">[Mesquite] Accessing Mesh Data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#24">[ date ]</a>
+              <a href="thread.html#24">[ thread ]</a>
+              <a href="subject.html#24">[ subject ]</a>
+              <a href="author.html#24">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>This may be redundant, but does Tecplot use the same &quot;canonical ordering&quot;?
+
+&gt;<i> -----Original Message-----
+</I>&gt;<i> From: Jason Kraftcheck [mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">kraftche at cae.wisc.edu</A>]
+</I>&gt;<i> Sent: Thursday, April 02, 2009 1:28 PM
+</I>&gt;<i> To: Alter, Stephen J. (LARC-D305)
+</I>&gt;<i> Cc: <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite at software.sandia.gov</A>; Ferlemann, Paul G. (LARC-D306)[ATK
+</I>&gt;<i> SPACE SYSTEMS, INC.]
+</I>&gt;<i> Subject: Re: Accessing Mesh Data
+</I>&gt;<i> 
+</I>&gt;<i> Alter, Stephen J. (LARC-D305) wrote:
+</I>&gt;<i> &gt; Jason,
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt;    From the example FORTRAN call that you sent, I get the impression
+</I>&gt;<i> I
+</I>&gt;<i> &gt; don't need to use the MESQUITE::MeshImpl class,
+</I>&gt;<i> 
+</I>&gt;<i> Use the MeshImpl class to communicate data through VTK files *or* use
+</I>&gt;<i> the
+</I>&gt;<i> ArrayMesh class to pass it in as arrays through a direct function call.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; but format my data in
+</I>&gt;<i> &gt; the vertices, vertex flags, and connectivity list that VTK would
+</I>&gt;<i> expect,
+</I>&gt;<i> &gt; correct?
+</I>&gt;<i> 
+</I>&gt;<i> No.  The data is a little simpler than the VTK file format.
+</I>&gt;<i> vertex coords:
+</I>&gt;<i>   { x1, y1, z1, z2, y2, z2, x3, y3, z3, ... }
+</I>&gt;<i> such that the coordinates of the first vertex are (x1, y1, z1), the
+</I>&gt;<i> coordinates of the second vertex are (x2, y2, z2), etc.
+</I>&gt;<i> 
+</I>&gt;<i> element connectivity:
+</I>&gt;<i>   { a0, b0, c0, d0, e0, f0, g0, h0, a1, b1, c1, d1, e1, f1, g1, h1, ...
+</I>&gt;<i> }
+</I>&gt;<i> where the corners of the first hexahedron are:
+</I>&gt;<i>   { a0, b0, c0, d0, e0, f0, g0, h0 }
+</I>&gt;<i> 
+</I>&gt;<i> The corners for a single hexahedron are ordered using the canonical
+</I>&gt;<i> ordering
+</I>&gt;<i> shared by VTK, Exodus, PATRAN, and others for linear hexahedral
+</I>&gt;<i> elements.
+</I>&gt;<i> Consider the vertices in the coordinate list to be numbered from 1 to
+</I>&gt;<i> N,
+</I>&gt;<i> such that the coordinates for any vertex i are at positions:
+</I>&gt;<i>   3*(i-1)+1, 3*(i-1)+2, 3*(i-1)+3
+</I>&gt;<i> The values in the connectivity array reference vertices using this
+</I>&gt;<i> enumeration scheme.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; Then send those arrays through the subroutine call?
+</I>&gt;<i> 
+</I>&gt;<i> Correct.
+</I>&gt;<i> 
+</I>&gt;<i> - jason
+</I>
+
+</PRE>
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000023.html">[Mesquite] Accessing Mesh Data
+</A></li>
+	<LI>Next message: <A HREF="000025.html">[Mesquite] Accessing Mesh Data
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#24">[ date ]</a>
+              <a href="thread.html#24">[ thread ]</a>
+              <a href="subject.html#24">[ subject ]</a>
+              <a href="author.html#24">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

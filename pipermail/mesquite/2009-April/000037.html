@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Babel Installation
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Babel%20Installation&In-Reply-To=%3C49D62BB8.9010206%40cae.wisc.edu%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000038.html">
+   <LINK REL="Next"  HREF="000039.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Babel Installation</H1>
+    <B>Jason Kraftcheck</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Babel%20Installation&In-Reply-To=%3C49D62BB8.9010206%40cae.wisc.edu%3E"
+       TITLE="[Mesquite] Babel Installation">kraftche at cae.wisc.edu
+       </A><BR>
+    <I>Fri Apr  3 09:31:04 MDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000038.html">[Mesquite] Babel Installation
+</A></li>
+        <LI>Next message: <A HREF="000039.html">[Mesquite] Babel Installation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#37">[ date ]</a>
+              <a href="thread.html#37">[ thread ]</a>
+              <a href="subject.html#37">[ subject ]</a>
+              <a href="author.html#37">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Alter, Stephen J. (LARC-D305) wrote:
+&gt;<i> Is there some place that can explain what I need to install and where? 
+</I>&gt;<i> 
+</I>
+Not that I know of.  You will need implementations of the Mesh, Geom, and
+Relation interfaces (e.g. MOAB, CGM, and Lasso).  If using Mesquite 2.0, you
+shouldn't need Babel.  You will then need to get your data into these tools.
+ To do that, you could use either intermediate file formats (probably the
+only option for the geometry data) or direct API calls (might be easiest for
+relating the mesh to the geometry.)
+
+So far, I've been assuming that you will use such tools.  Another option is
+to implement the subset of those APIs that are necessary for Mesquite on top
+of your own code.  For this case, the you shouldn't need any additional code
+other than Mesquite and your own.  From the point of view of integrating
+with Mesquite, this is just another way to provide Mesquite with callbacks
+to interrogate data.  The only difference is that you could implement then
+in C rather than C++ (or perhaps even in Fortran*).
+
+- jason
+
+
+* I don't know enough about Fortran to understand the complexities of this.
+ You'll need to do some stuff that is not typical for a Fortran code, such
+as passing function arguments by value and working with pointers.
+
+</PRE>
+
+
+
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000038.html">[Mesquite] Babel Installation
+</A></li>
+	<LI>Next message: <A HREF="000039.html">[Mesquite] Babel Installation
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#37">[ date ]</a>
+              <a href="thread.html#37">[ thread ]</a>
+              <a href="subject.html#37">[ subject ]</a>
+              <a href="author.html#37">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,170 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mesquite] Functions and Inputs
+   </TITLE>
+   <LINK REL="Index" HREF="index.html" >
+   <LINK REL="made" HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Functions%20and%20Inputs&In-Reply-To=%3CFDD724529494FF4595F7C6BD415BB763110EE9%40NDMSSCC07.ndc.nasa.gov%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000013.html">
+   <LINK REL="Next"  HREF="000016.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mesquite] Functions and Inputs</H1>
+    <B>Alter, Stephen J. (LARC-D305)</B> 
+    <A HREF="mailto:mesquite%40software.sandia.gov?Subject=Re:%20%5BMesquite%5D%20Functions%20and%20Inputs&In-Reply-To=%3CFDD724529494FF4595F7C6BD415BB763110EE9%40NDMSSCC07.ndc.nasa.gov%3E"
+       TITLE="[Mesquite] Functions and Inputs">stephen.j.alter at nasa.gov
+       </A><BR>
+    <I>Mon Mar 30 11:08:47 MDT 2009</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000013.html">[Mesquite] Functions and Inputs
+</A></li>
+        <LI>Next message: <A HREF="000016.html">[Mesquite] Functions and Inputs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14">[ date ]</a>
+              <a href="thread.html#14">[ thread ]</a>
+              <a href="subject.html#14">[ subject ]</a>
+              <a href="author.html#14">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Pat,
+
+   I hope I haven't offended you, but the response to my original request about the functions and utilities left me somewhat put off by being told that I simply had to think in terms of classes. I completely understand the position you are in with respect to funding. I just want to try and help solve a need that may offer expanded opportunities to using your suite of tools. 
+
+   One thing that is also rolling around in my head is your suggestion that it is up to the user to develop wrappers. In order to develop a wrapper, I really do need to understand what functions and utilities are available. For this reason, I am going to begin with the doxygen stuff and see what is in this suite of software.
+
+   I am also curious if you know of any good books on learning C++. According to other colleagues, I should first learn C, then move onto C++. Some have said I do not need to know C to program in C++. Which would you recommend?
+
+&gt;<i> -----Original Message-----
+</I>&gt;<i> From: Knupp, Patrick [mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">pknupp at sandia.gov</A>]
+</I>&gt;<i> Sent: Monday, March 30, 2009 12:49 PM
+</I>&gt;<i> To: Alter, Stephen J. (LARC-D305); Jason Kraftcheck
+</I>&gt;<i> Cc: Mesquite
+</I>&gt;<i> Subject: RE: [Mesquite] Functions and Inputs
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i>    Steve,
+</I>&gt;<i> 
+</I>&gt;<i>      I understand where you are coming from, being an old Fortran
+</I>&gt;<i> programmer
+</I>&gt;<i>      myself.   These days there are Fortran, C++, Java, and other
+</I>&gt;<i> programming
+</I>&gt;<i>      languages in use, so no matter which language we choose to write
+</I>&gt;<i> our API
+</I>&gt;<i>      in, some folks will be unhappy.   C++ is in wide-spread use within
+</I>&gt;<i> the unstructured
+</I>&gt;<i>      meshing community, which is our main target.  A Fortran API would
+</I>&gt;<i> be nice
+</I>&gt;<i>      to have, but with our limiting funding, we cannot undertake it at
+</I>&gt;<i> this time.
+</I>&gt;<i> 
+</I>&gt;<i>    Regards,
+</I>&gt;<i>     Patrick
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> -----Original Message-----
+</I>&gt;<i> From: <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">mesquite-bounces at software.sandia.gov</A> [mailto:mesquite-
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">bounces at software.sandia.gov</A>] On Behalf Of Alter, Stephen J. (LARC-D305)
+</I>&gt;<i> Sent: Monday, March 30, 2009 10:26 AM
+</I>&gt;<i> To: Jason Kraftcheck
+</I>&gt;<i> Cc: Mesquite
+</I>&gt;<i> Subject: Re: [Mesquite] Functions and Inputs
+</I>&gt;<i> 
+</I>&gt;<i> As a FORTRAN programmer, I have no idea what you mean by classes or
+</I>&gt;<i> object-oriented programming. So I am clueless when you say &quot;assemble
+</I>&gt;<i> classes&quot;. I think in terms of physical items. An object to me is a
+</I>&gt;<i> bolt, a nut, a rivet, a wing, an aircraft. So if you know of a way to
+</I>&gt;<i> break down this tremendous language barrier, aside from attempting to
+</I>&gt;<i> develop a FORTRAN API, then I would really like to know. Otherwise, I'm
+</I>&gt;<i> left with no other choice than to build on what I know and understand
+</I>&gt;<i> to something new. I need a foundation, and FORTRAN is it when it comes
+</I>&gt;<i> to writing computer codes. Actually, I began my coding career by
+</I>&gt;<i> writing macro assembler code for an old Z-80 and on the TI-59 where I
+</I>&gt;<i> was using memory registers to hold other memory locations to do array
+</I>&gt;<i> processing.
+</I>&gt;<i> 
+</I>&gt;<i> &gt;From macro assembler I learned FORTRAN. From FORTRAN I learned Basic
+</I>&gt;<i> and C-Shell and TCL programming. I've even written my own grid
+</I>&gt;<i> manipulation language. But to simply pick up an entirely different set
+</I>&gt;<i> of terms from a language where I have never had any exposure, makes it
+</I>&gt;<i> extremely difficult for me to move forward and use your software.
+</I>&gt;<i> 
+</I>&gt;<i> &gt; -----Original Message-----
+</I>&gt;<i> &gt; From: Jason Kraftcheck [mailto:<A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">kraftche at cae.wisc.edu</A>]
+</I>&gt;<i> &gt; Sent: Friday, March 27, 2009 3:13 PM
+</I>&gt;<i> &gt; To: Alter, Stephen J. (LARC-D305)
+</I>&gt;<i> &gt; Cc: Mesquite
+</I>&gt;<i> &gt; Subject: Re: [Mesquite] Functions and Inputs
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Alter, Stephen J. (LARC-D305) wrote:
+</I>&gt;<i> &gt; &gt; Understand how to build a FORTRAN API to MESQUITE. The example you
+</I>&gt;<i> &gt; sent
+</I>&gt;<i> &gt; &gt; leaves me with the necessity to still program a wrapper in C++. But
+</I>&gt;<i> &gt; to do
+</I>&gt;<i> &gt; &gt; that, I need to know all the functions that are possible and all
+</I>&gt;<i> the
+</I>&gt;<i> &gt; &gt; capabilities of these functions, and the inputs to the functions.
+</I>&gt;<i> &gt; &gt; The wrapper that is provided seems to work for a specific problem.
+</I>&gt;<i> &gt; &gt; Based
+</I>&gt;<i> &gt; on
+</I>&gt;<i> &gt; &gt; what Pat Knupp told me, MESQUITE is designed to allow me to build
+</I>&gt;<i> my
+</I>&gt;<i> &gt; own
+</I>&gt;<i> &gt; &gt; algorithm for smoothing using the variety of functions available in
+</I>&gt;<i> &gt; &gt; MESQUITE. With knowing what those are, there's no clear method for
+</I>&gt;<i> &gt; &gt; me
+</I>&gt;<i> &gt; to
+</I>&gt;<i> &gt; &gt; determine how to do such a task.
+</I>&gt;<i> &gt; &gt;
+</I>&gt;<i> &gt; &gt; This is why I'm so interested in a FORTRAN API. With a FORTRAN API,
+</I>&gt;<i> &gt; the
+</I>&gt;<i> &gt; &gt; language barrier is gone and I focus my energy on determining
+</I>&gt;<i> object
+</I>&gt;<i> &gt; &gt; functions and how to smooth a grid with MESQUITE. Around NASA
+</I>&gt;<i> &gt; Langley,
+</I>&gt;<i> &gt; &gt; most engineers are still using FORTRAN, not C or C++.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; Mesquite is fairly object-oriented.  It isn't functions and arguments
+</I>&gt;<i> &gt; you need to know about to construct custom optimizers, but rather
+</I>&gt;<i> &gt; classes and how to assemble them.  A FORTRAN API for this would be a
+</I>&gt;<i> &gt; lot of work given Mesquite's object-oriented implementation.
+</I>&gt;<i> &gt;
+</I>&gt;<i> &gt; - jason
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> 
+</I>&gt;<i> _______________________________________________
+</I>&gt;<i> Mesquite mailing list
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">Mesquite at software.sandia.gov</A>
+</I>&gt;<i> <A HREF="http://software.sandia.gov/mailman/listinfo/mesquite">http://software.sandia.gov/mailman/listinfo/mesquite</A>
+</I>
+
+
+</PRE>
+
+
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000013.html">[Mesquite] Functions and Inputs
+</A></li>
+	<LI>Next message: <A HREF="000016.html">[Mesquite] Functions and Inputs
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#14">[ date ]</a>
+              <a href="thread.html#14">[ thread ]</a>
+              <a href="subject.html#14">[ subject ]</a>
+              <a href="author.html#14">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="http://software.sandia.gov/mailman/listinfo/mesquite">More information about the Mesquite
+mailing list</a><br>
+</body></html>
